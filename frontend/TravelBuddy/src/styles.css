@@ -1,3 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+h1 {
+  color: #AD9C8E;
+  font-weight: bold;
+  text-align: center;
+  font-size: xx-large;
+}
+
+h2 {
+  color: #D9BBB0;
+  font-weight: semi-bold;
+  text-align: center;
+  font-size: large;
+}
+
+body {
+  font-family: Arial, sans-serif;
+   background: linear-gradient(45deg, #F7E6CA, #E8D59E, #D9BBB0);
+}
+
+.btn-primary {
+  background-color: #E8D59E !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: bold !important;
+}
+
+.btn-primary:hover {
+  background-color: #D9BBB0 !important;
+}
