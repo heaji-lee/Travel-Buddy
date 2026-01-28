@@ -1,33 +1,80 @@
-<div class="h-full flex items-center justify-center">
+<div class="min-h-full flex items-center justify-center">
     <div class="bg-white p-5 rounded-xl shadow-lg text-center max-w-md w-full flex flex-col">
         <h1>Let's plan a new trip</h1>
 
-        <p-accordion [value]="['0']" [multiple]="true" class="flex-1">
+        <p-accordion [value]="['0']" class="flex-1">
             <p-accordion-panel value="0">
                 <p-accordion-header>Basic Information</p-accordion-header>
                 <p-accordion-content>
-                    <p>Where are you going?</p>
+                    <div class="flex flex-row justify-between pb-5 gap-5">
+                        <div>
+                            <label for="tripName">Trip Name:</label>
+                            <input type="text" pInputText />
+                        </div>
+
+                        <div>
+                            <label for="destination">Destination:</label>
+                            <input id="destination" type="text" pInputText />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row justify-between gap-5">
+                        <div>
+                            <label for="startDate">Start Date:</label>
+                            <p-datepicker ngSkipHydration appendTo="body"></p-datepicker>
+                        </div>
+                        <div>
+                            <label for="endDate">End Date:</label>
+                            <p-datepicker ngSkipHydration appendTo="body"></p-datepicker>
+                        </div>
+                    </div>
                 </p-accordion-content>
             </p-accordion-panel>
 
             <p-accordion-panel value="1">
                 <p-accordion-header>Preferences</p-accordion-header>
                 <p-accordion-content>
-                    <p>Where are you going?</p>
+                    <div>
+                        <label for="accommodationType">Who are you going with?</label>
+                        <p-select
+                            [options]="['Alone', 'Friend/s', 'Family']"
+                            placeholder="Select an option"
+                        ></p-select>
+                    </div>
+
+                    <div>
+                        <label for="travelStyle">Travel Style</label>
+                        <p-select
+                            [options]="['Budget', 'Luxury', 'Adventure', 'Relaxation']"
+                            placeholder="Select an option"
+                        ></p-select>
+                    </div>
+
+                    <div>
+                        <label for="interests">Interests</label>
+                        <p-select
+                            [options]="['Culture', 'Nature', 'Food', 'History', 'Nightlife']"
+                            placeholder="Select an option"
+                            multiple="true"
+                        ></p-select>
+                    </div>
                 </p-accordion-content>
             </p-accordion-panel>
 
             <p-accordion-panel value="2">
                 <p-accordion-header>Itinerary</p-accordion-header>
                 <p-accordion-content>
-                    <p>Where are you going?</p>
+                    <p>Disabled until dates are filled</p>
+                    <p>Create a table with dates</p>
+                    <p>Daily cost?</p>
                 </p-accordion-content>
             </p-accordion-panel>
 
             <p-accordion-panel value="3">
                 <p-accordion-header>Budget Breakdown</p-accordion-header>
                 <p-accordion-content>
-                    <p>Where are you going?</p>
+                    <p>Total budget</p>
+                    <p>Remaining budget indicator</p>
                 </p-accordion-content>
             </p-accordion-panel>
         </p-accordion>
