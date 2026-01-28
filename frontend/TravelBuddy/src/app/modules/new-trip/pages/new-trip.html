@@ -1,1 +1,39 @@
-<p>new-trip works!</p>
+<div class="h-full flex items-center justify-center">
+    <div class="bg-white p-5 rounded-xl shadow-lg text-center max-w-md w-full flex flex-col">
+        <h1>Let's plan a new trip</h1>
+
+        <p-accordion [value]="['0']" [multiple]="true" class="flex-1">
+            <p-accordion-panel value="0">
+                <p-accordion-header>Basic Information</p-accordion-header>
+                <p-accordion-content>
+                    <p>Where are you going?</p>
+                </p-accordion-content>
+            </p-accordion-panel>
+
+            <p-accordion-panel value="1">
+                <p-accordion-header>Preferences</p-accordion-header>
+                <p-accordion-content>
+                    <p>Where are you going?</p>
+                </p-accordion-content>
+            </p-accordion-panel>
+
+            <p-accordion-panel value="2">
+                <p-accordion-header>Itinerary</p-accordion-header>
+                <p-accordion-content>
+                    <p>Where are you going?</p>
+                </p-accordion-content>
+            </p-accordion-panel>
+
+            <p-accordion-panel value="3">
+                <p-accordion-header>Budget Breakdown</p-accordion-header>
+                <p-accordion-content>
+                    <p>Where are you going?</p>
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
+
+        <div class="flex justify-end mt-4">
+            <p-button pButton type="button" label="Submit" [rounded]="true" />
+        </div>
+    </div>
+</div>
