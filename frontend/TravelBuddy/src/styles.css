@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap');
 @import 'tailwindcss';
+@import 'primeicons/primeicons.css';
 
 h1 {
     color: #ad9c8e;
@@ -18,16 +19,15 @@ h2 {
 body {
     font-family: 'Josefin Sans', cursive;
     background: linear-gradient(45deg, #f7e6ca, #e8d59e, #d9bbb0);
+    overflow: hidden;
 }
 
 /* Button styles */
-.btn-primary .p-button,
 .p-button {
     background-color: #ad9c8e !important;
     border-color: #ad9c8e !important;
 }
 
-.btn-primary .p-button:hover,
 .p-button:hover {
     background-color: #9a8a7e !important;
     border-color: #9a8a7e !important;
