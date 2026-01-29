@@ -1,3 +1,5 @@
+# ‼️Currently still in development‼️
+
 # 🌍 Travel Buddy
 
 A modern, full-stack travel planning application that helps users organize their trips, manage itineraries, and track budgets all in one place.
@@ -157,4 +159,5 @@ Create comprehensive trip plans with:
 - Add user authentication and profiles
 - Integrate Google Maps API to show destinations and activities
 - Integrate Weather API to display live weather for trip locations
+
 - Improve UI/UX animations
