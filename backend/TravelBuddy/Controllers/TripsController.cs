@@ -1,22 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TravelBuddy.Data;
-using TravelBuddy.Models;
+using TravelBuddy.Services;
+using TravelBuddy.Repository.Models.DTOs;
 
 namespace TravelBuddy.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class TripsController : ControllerBase {
-  private readonly AppDbContext _context;
+[Route("api/[controller]")]
+public class TripsController(TripsService tripsService) : ControllerBase {
 
-  public TripsController(AppDbContext context) {
-    _context = context;
-  }
-
+  // GET: api/trips?skip=0&take=10
   [HttpGet]
-  public async Task<ActionResult> GetTrips() {
-    var trips = await _context.Trips.AsNoTracking().ToListAsync();
-    return Ok(trips);
+  public async Task<IActionResult> GetTrips(
+      [FromQuery] int skip = 0,
+      [FromQuery] int take = 10
+  ) {
+    var (trips, total) = await tripsService.GetTripsPage(skip, take);
+
+    var dtoTrips = trips
+        .Select(TripDto.FromModel)
+        .ToList();
+
+    return Ok(new {
+      items = dtoTrips,
+      total,
+      skip,
+      take
+    });
   }
 }

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Data;
+using TravelBuddy.Services;
+using TravelBuddy.Repositories;
 using Supabase;
 using DotNetEnv;
 
@@ -19,6 +21,9 @@ builder.Services.AddScoped<Supabase.Client>(_ => {
     AutoConnectRealtime = true
   });
 });
+
+builder.Services.AddScoped<TripsRepository>();
+builder.Services.AddScoped<TripsService>();
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson();
