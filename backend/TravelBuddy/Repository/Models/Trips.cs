@@ -10,7 +10,7 @@ public class Trip {
   public int Id { get; set; }
 
   [Column("name")]
-  public required string Name { get; set; } = string.Empty;
+  public string? Name { get; set; } = string.Empty;
 
   [Column("city")]
   public required string City { get; set; } = string.Empty;

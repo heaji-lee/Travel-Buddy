@@ -1,5 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, resource, signal } from '@angular/core';
+import { first, firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { TableModule } from 'primeng/table';
@@ -19,15 +19,16 @@ export class TripsListComponent {
     skip = computed(() => (this.page() - 1) * PAGE_SIZE);
     tripId: string = '';
 
-    trips = rxResource<TripsApiResponse, { skip: number }>({
-        request: () => ({
-            skip: this.skip(),
-        }),
-        loader: ({ request }) => this.tripsService.getPaginatedTrips(request.skip, PAGE_SIZE),
-        defaultValue: { items: [], total: 0 }
-    });
+    trips = resource({
+      loader: () => firstValueFrom(
+        this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)
+      )
+    })
 
-    totalRecords = computed(() => this.trips.value().total ?? 0);
+    totalRecords = computed(() => {
+      const value = this.trips.value();
+      return (value as TripsApiResponse)?.total || 0;
+    })
 
     goToNextPage() {
         const maxPage = Math.ceil(this.totalRecords() / PAGE_SIZE);
