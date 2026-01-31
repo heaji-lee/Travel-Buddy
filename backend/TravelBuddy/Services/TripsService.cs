@@ -19,4 +19,8 @@ public class TripsService(TripsRepository tripsRepository) {
   public async Task<Trip> CreateTrip(Trip trip) {
     return await tripsRepository.CreateTrip(trip);
   }
+
+  public async Task DeleteTrip(int id) {
+    await tripsRepository.DeleteTrip(id);
+  }
 }

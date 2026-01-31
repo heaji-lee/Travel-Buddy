@@ -38,4 +38,14 @@ public class TripsRepository {
     await  _context.SaveChangesAsync();
     return trip;
   }
+
+  public async Task DeleteTrip(int id) {
+    var trip = await _context.Trips.FindAsync(id);
+    if (trip == null) {
+      throw new Exception("Trip not found");
+    }
+
+    _context.Trips.Remove(trip);
+    await _context.SaveChangesAsync();
+  }
 }

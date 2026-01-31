@@ -34,10 +34,8 @@ public class TripsController(TripsService tripsService) : ControllerBase {
   public async Task<IActionResult> CreateTrip([FromBody] TripDto tripDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
-    Trip? createdTrip = null;
-
     try {
-      createdTrip = new Trip {
+      Trip? createdTrip = new Trip {
         Name = tripDto.Name,
         City = tripDto.City,
         Country = tripDto.Country,
@@ -47,7 +45,20 @@ public class TripsController(TripsService tripsService) : ControllerBase {
       createdTrip = await tripsService.CreateTrip(createdTrip);
 
       return Ok(TripDto.FromModel(createdTrip));
-    } catch (Exception ex) {
+    }
+    catch (Exception ex) {
+      return BadRequest(ex.Message);
+    }
+  }
+
+  // DELETE: api/trips/{id}
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteTrip(int id) {
+    try {
+      await tripsService.DeleteTrip(id);
+      return NoContent();
+    }
+    catch (Exception ex) {
       return BadRequest(ex.Message);
     }
   }
