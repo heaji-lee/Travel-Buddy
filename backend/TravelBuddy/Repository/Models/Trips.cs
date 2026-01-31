@@ -9,6 +9,9 @@ public class Trip {
   [Column("id")]
   public int Id { get; set; }
 
+  [Column("name")]
+  public required string Name { get; set; } = string.Empty;
+
   [Column("city")]
   public required string City { get; set; } = string.Empty;
 

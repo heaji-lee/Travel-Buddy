@@ -47,6 +47,7 @@ export class TripsControlComponent implements OnInit {
 
     constructor() {
         this.form = this.fb.group({
+            name: ['', Validators.required],
             city: ['', Validators.required],
             country: ['', Validators.required],
             startAt: ['', Validators.required],
@@ -91,7 +92,7 @@ export class TripsControlComponent implements OnInit {
             next: (trip: Trip) => {
                 this.savedTripValue.set(trip);
                 this.formIsAltered.set(false);
-                this.router.navigate(['/trips', trip.id]);
+                this.router.navigate(['/trips']);
             },
             error: (error: any) => {
                 console.error('Error submitting trip form:', error);

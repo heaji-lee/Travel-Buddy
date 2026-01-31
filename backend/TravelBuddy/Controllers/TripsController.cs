@@ -38,6 +38,7 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
     try {
       createdTrip = new Trip {
+        Name = tripDto.Name,
         City = tripDto.City,
         Country = tripDto.Country,
         StartAt = tripDto.StartAt,
