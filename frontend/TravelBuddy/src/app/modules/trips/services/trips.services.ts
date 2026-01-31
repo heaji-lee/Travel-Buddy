@@ -39,4 +39,8 @@ export class TripsService {
     getTripById(id: string) {
         return this.http.get<Trip>(`${API_URL}/api/trips/${id}`);
     }
+
+    deleteTrip(id: string) {
+        return this.http.delete<void>(`${API_URL}/api/trips/${id}`);
+    }
 }

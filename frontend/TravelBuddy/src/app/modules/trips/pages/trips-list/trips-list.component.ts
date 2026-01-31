@@ -3,13 +3,14 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { TripsService } from '../../services/trips.services';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule],
+    imports: [TableModule, CommonModule, ButtonModule],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })
@@ -38,5 +39,11 @@ export class TripsListComponent {
 
     goToPreviousPage() {
         this.page.update((p) => (p > 1 ? p - 1 : p));
+    }
+
+    deleteTrip(tripId: string) {
+      this.tripsService.deleteTrip(tripId).subscribe(() => {
+        this.trips.reload();
+      });
     }
 }
