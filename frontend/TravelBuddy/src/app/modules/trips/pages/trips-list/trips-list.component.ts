@@ -1,11 +1,12 @@
 import { Component, computed, inject, resource, signal } from '@angular/core';
-import { first, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { TableModule } from 'primeng/table';
 import { TripsService } from '../../services/trips.services';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
+
 @Component({
     selector: 'app-trips-list',
     imports: [TableModule, CommonModule],
