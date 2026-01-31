@@ -1,11 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 
+import { TableModule } from 'primeng/table';
+import { TripsService } from '../../services/trips.services';
+import { PAGE_SIZE } from '../../../../shared/constants';
+import { TripsApiResponse } from '../../models/trips.models';
 @Component({
-  selector: 'app-trips-list',
-  imports: [],
-  templateUrl: './trips-list.component.html',
-  styleUrl: './trips-list.component.css',
+    selector: 'app-trips-list',
+    imports: [TableModule, CommonModule],
+    templateUrl: './trips-list.component.html',
+    styleUrl: './trips-list.component.css',
 })
 export class TripsListComponent {
+    private readonly tripsService = inject(TripsService);
 
+    page = signal(1);
+    skip = computed(() => (this.page() - 1) * PAGE_SIZE);
+    tripId: string = '';
+
+    trips = rxResource<TripsApiResponse, { skip: number }>({
+        request: () => ({
+            skip: this.skip(),
+        }),
+        loader: ({ request }) => this.tripsService.getPaginatedTrips(request.skip, PAGE_SIZE),
+        defaultValue: { items: [], total: 0 }
+    });
+
+    totalRecords = computed(() => this.trips.value().total ?? 0);
+
+    goToNextPage() {
+        const maxPage = Math.ceil(this.totalRecords() / PAGE_SIZE);
+        this.page.update((p) => (p < maxPage ? p + 1 : p));
+    }
+
+    goToPreviousPage() {
+        this.page.update((p) => (p > 1 ? p - 1 : p));
+    }
 }

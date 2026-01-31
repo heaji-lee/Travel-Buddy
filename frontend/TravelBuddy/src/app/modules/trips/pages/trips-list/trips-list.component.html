@@ -1,1 +1,24 @@
-<p>trips works!</p>
+<div class="min-h-full flex items-center justify-center p-6">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+    <p-table [value]="[]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Trip Name</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-trip>
+        <tr>
+          <td>{{ trip.name }}</td>
+          <td>{{ trip.city }}</td>
+          <td>{{ trip.country }}</td>
+          <td>{{ trip.startAt }}</td>
+          <td>{{ trip.endAt }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
