@@ -15,4 +15,8 @@ public class TripsService(TripsRepository tripsRepository) {
 
     return await tripsRepository.GetTripsPage(skip, take);
   }
+
+  public async Task<Trip> CreateTrip(Trip trip) {
+    return await tripsRepository.CreateTrip(trip);
+  }
 }

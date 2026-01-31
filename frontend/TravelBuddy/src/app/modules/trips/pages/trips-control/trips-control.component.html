@@ -1,0 +1,242 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="min-h-full flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+            <div class="text-center border-b-2 border-gray-200 mb-8">
+                <h1>{{ title }}</h1>
+                <p class="text-gray-500 text-sm pb-5">{{ subTitle }}</p>
+            </div>
+
+            <p-accordion [value]="['0']">
+                <p-accordion-panel value="0">
+                    <p-accordion-header><p>Basic Information</p></p-accordion-header>
+                    <p-accordion-content>
+                        <div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="flex flex-col gap-1">
+                                    <label for="tripName" class="font-semibold text-gray-700"
+                                        >Trip Name</label
+                                    >
+                                    <input
+                                        id="tripName"
+                                        type="text"
+                                        pInputText
+                                        placeholder="e.g., Summer in Paris"
+                                        class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
+                                    />
+                                    <small class="text-gray-400 italic text-xs"
+                                        >Give your trip a memorable name</small
+                                    >
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label for="destination" class="font-semibold text-gray-700"
+                                        >Destination</label
+                                    >
+                                    <input
+                                        id="destination"
+                                        type="text"
+                                        pInputText
+                                        placeholder="e.g., Paris, France"
+                                        class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
+                                        formControlName="city"
+                                    />
+                                    <small class="text-gray-400 italic text-xs"
+                                        >Where are you headed?</small
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-6 mt-6">
+                                <div class="flex flex-col gap-1">
+                                    <label for="startDate" class="font-semibold text-gray-700"
+                                        >Start Date</label
+                                    >
+                                    <p-datepicker
+                                        id="startDate"
+                                        ngSkipHydration
+                                        appendTo="body"
+                                        placeholder="Select start date"
+                                        class="w-full border-gray-200 rounded-xl"
+                                        formControlName="startAt"
+                                    />
+                                    <small class="text-gray-400 italic text-xs"
+                                        >When does your adventure begin?</small
+                                    >
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label for="endDate" class="font-semibold text-gray-700"
+                                        >End Date</label
+                                    >
+                                    <p-datepicker
+                                        id="endDate"
+                                        ngSkipHydration
+                                        appendTo="body"
+                                        placeholder="Select end date"
+                                        class="w-full border-gray-200 rounded-xl"
+                                        formControlName="endAt"
+                                    />
+                                    <small class="text-gray-400 italic text-xs"
+                                        >When do you return?</small
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordion-content>
+                </p-accordion-panel>
+
+                <p-accordion-panel value="1">
+                    <p-accordion-header><p>Travel Preferences</p></p-accordion-header>
+                    <p-accordion-content>
+                        <div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="flex flex-col gap-1">
+                                    <label
+                                        for="travelCompanions"
+                                        class="font-semibold text-gray-700"
+                                        >Who are you traveling with?</label
+                                    >
+                                    <p-select
+                                        id="travelCompanions"
+                                        [options]="['Alone', 'Friend/s', 'Family', 'Partner']"
+                                        placeholder="Select travel companions"
+                                        class="w-full border-2 border-gray-200 rounded-xl"
+                                    />
+                                    <small class="text-gray-400 italic text-sm"
+                                        >This helps us plan better</small
+                                    >
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label for="travelStyle" class="font-semibold text-gray-700"
+                                        >Travel Style</label
+                                    >
+                                    <p-select
+                                        id="travelStyle"
+                                        [options]="['Budget', 'Luxury', 'Adventure', 'Relaxation']"
+                                        placeholder="Choose your style"
+                                        class="w-full border-2 border-gray-200 rounded-xl"
+                                    />
+                                    <small class="text-gray-400 italic text-sm"
+                                        >How do you like to travel?</small
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-1 mt-6">
+                                <label for="interests" class="font-semibold text-gray-700"
+                                    >Interests (Select multiple)</label
+                                >
+                                <p-select
+                                    id="interests"
+                                    [options]="[
+                                        'Culture',
+                                        'Nature',
+                                        'Food',
+                                        'History',
+                                        'Nightlife',
+                                        'Shopping',
+                                        'Art',
+                                        'Sports',
+                                    ]"
+                                    placeholder="What interests you?"
+                                    multiple="true"
+                                    class="w-full border-2 border-gray-200 rounded-xl"
+                                />
+                                <small class="text-gray-400 italic text-sm"
+                                    >Select all that apply to personalize your experience</small
+                                >
+                            </div>
+                        </div>
+                    </p-accordion-content>
+                </p-accordion-panel>
+
+                <p-accordion-panel value="2">
+                    <p-accordion-header><p>Itinerary Planning</p></p-accordion-header>
+                    <p-accordion-content>
+                        <div
+                            class="py-6 bg-yellow-50 border-l-4 border-yellow-300 rounded-lg shadow-sm p-6"
+                        >
+                            <p class="text-sm text-gray-600 mb-2">📅 Daily itinerary builder</p>
+                            <p class="text-xs text-gray-500">
+                                This section will be enabled once you select your travel dates above
+                            </p>
+                            <ul class="mt-4 text-xs text-gray-500 list-disc list-inside space-y-1">
+                                <li>Plan activities for each day</li>
+                                <li>Estimate daily costs</li>
+                                <li>Add notes and reminders</li>
+                            </ul>
+                        </div>
+                    </p-accordion-content>
+                </p-accordion-panel>
+
+                <p-accordion-panel value="3">
+                    <p-accordion-header><p>Budget Breakdown</p></p-accordion-header>
+                    <p-accordion-content>
+                        <div>
+                            <div class="flex flex-col gap-1">
+                                <label for="totalBudget" class="font-semibold text-gray-700"
+                                    >Total Budget</label
+                                >
+                                <input
+                                    id="totalBudget"
+                                    type="number"
+                                    pInputText
+                                    placeholder="e.g., 5000"
+                                    class="w-full p-3 border-2 border-gray-200 rounded-xl"
+                                />
+                                <small class="text-gray-400 italic text-sm"
+                                    >Enter your total trip budget</small
+                                >
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-3 mt-6">
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    ✈️ Transportation
+                                </div>
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    🏨 Accommodation
+                                </div>
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    🍽️ Food & Dining
+                                </div>
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    🎭 Activities
+                                </div>
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    🛍️ Shopping
+                                </div>
+                                <div
+                                    class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
+                                >
+                                    💵 Miscellaneous
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordion-content>
+                </p-accordion-panel>
+            </p-accordion>
+
+            <div class="flex justify-end gap-3 mt-8">
+                <p-button
+                    type="submit"
+                    icon="pi pi-check"
+                    rounded="true"
+                    class="text-white transition px-6 py-3 font-semibold"
+                >
+                    {{ submitLabel }}
+                </p-button>
+            </div>
+        </div>
+    </div>
+</form>

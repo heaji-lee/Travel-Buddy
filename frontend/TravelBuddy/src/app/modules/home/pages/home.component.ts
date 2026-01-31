@@ -5,7 +5,7 @@ import { Button } from 'primeng/button';
 @Component({
     selector: 'app-home',
     imports: [Button, RouterLink],
-    templateUrl: './home.html',
-    styleUrl: './home.css',
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
 })
-export class Home {}
+export class HomeComponent {}

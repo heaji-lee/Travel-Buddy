@@ -10,10 +10,10 @@ public class Trip {
   public int Id { get; set; }
 
   [Column("city")]
-  public string City { get; set; } = string.Empty;
+  public required string City { get; set; } = string.Empty;
 
   [Column("country")]
-  public string Country { get; set; } = string.Empty;
+  public required string Country { get; set; } = string.Empty;
 
   [Column("start_at")]
   public DateTime StartAt { get; set; }

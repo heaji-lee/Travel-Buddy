@@ -32,4 +32,10 @@ public class TripsRepository {
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id);
   }
+
+  public async Task<Trip> CreateTrip (Trip trip) {
+    _context.Trips.Add(trip);
+    await  _context.SaveChangesAsync();
+    return trip;
+  }
 }

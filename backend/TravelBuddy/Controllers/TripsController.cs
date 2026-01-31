@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.Services;
 using TravelBuddy.Repository.Models.DTOs;
+using TravelBuddy.Repository.Models;
 
 namespace TravelBuddy.Controllers;
 
@@ -26,5 +27,27 @@ public class TripsController(TripsService tripsService) : ControllerBase {
       skip,
       take
     });
+  }
+
+  // POST: api/trips
+  [HttpPost]
+  public async Task<IActionResult> CreateTrip([FromBody] TripDto tripDto) {
+    if (!ModelState.IsValid) { return BadRequest(ModelState); }
+
+    Trip? createdTrip = null;
+
+    try {
+      createdTrip = new Trip {
+        City = tripDto.City,
+        Country = tripDto.Country,
+        StartAt = tripDto.StartAt,
+        EndAt = tripDto.EndAt
+      };
+      createdTrip = await tripsService.CreateTrip(createdTrip);
+
+      return Ok(TripDto.FromModel(createdTrip));
+    } catch (Exception ex) {
+      return BadRequest(ex.Message);
+    }
   }
 }

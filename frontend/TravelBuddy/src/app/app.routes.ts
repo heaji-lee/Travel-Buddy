@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
-import { Home } from './modules/home/pages/home';
-import { NewTrip } from './modules/new-trip/pages/new-trip';
-import { AllTrips } from './modules/all-trips/pages/all-trips';
-import { Manage } from './modules/manage/manage';
+import { HomeComponent } from './modules/home/pages/home.component';
+import { TripsControlComponent } from './modules/trips/pages/trips-control/trips-control.component';
+import { TripsListComponent } from './modules/trips/pages/trips-list/trips-list.component';
+import { ManageComponent } from './modules/manage/manage.component';
 
 export const routes: Routes = [
-    { path: '', component: Home },
-    { path: 'home', component: Home },
-    { path: 'new-trip', component: NewTrip },
-    { path: 'all-trips', component: AllTrips },
-    { path: 'manage', component: Manage },
+    { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
+    { path: 'trips/new', component: TripsControlComponent },
+    { path: 'trips/:id', component: TripsControlComponent },
+    { path: 'trips', component: TripsListComponent },
+    { path: 'manage', component: ManageComponent },
 ];
