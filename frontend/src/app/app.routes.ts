@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/pages/home.component';
 import { TripsControlComponent } from './modules/trips/pages/trips-control/trips-control.component';
 import { TripsListComponent } from './modules/trips/pages/trips-list/trips-list.component';
-import { ManageComponent } from './modules/manage/manage.component';
+import { ManageComponent } from './modules/manage/pages/manage.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },

@@ -9,6 +9,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
+import { ChipModule } from 'primeng/chip';
 
 import { TripsService } from '../../services/trips.service';
 import { Trip } from '../../models/trips.models';
@@ -23,6 +24,7 @@ import { Trip } from '../../models/trips.models';
         SelectModule,
         ReactiveFormsModule,
         CommonModule,
+        ChipModule,
     ],
     templateUrl: './trips-control.component.html',
     styleUrl: './trips-control.component.css',

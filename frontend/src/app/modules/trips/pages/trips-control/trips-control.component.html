@@ -6,7 +6,7 @@
                 <p class="text-gray-500 text-sm pb-5">{{ subTitle }}</p>
             </div>
 
-            <p-accordion [value]="['0']">
+            <p-accordion [value]="['0']" [multiple]="true">
                 <p-accordion-panel value="0">
                     <p-accordion-header><p>Basic Information</p></p-accordion-header>
                     <p-accordion-content>
@@ -24,9 +24,6 @@
                                         class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
                                         formControlName="name"
                                     />
-                                    <small class="text-gray-400 italic text-xs"
-                                        >Give your trip a memorable name</small
-                                    >
                                 </div>
 
                                 <div class="flex flex-col gap-1">
@@ -41,9 +38,6 @@
                                         class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
                                         formControlName="city"
                                     />
-                                    <small class="text-gray-400 italic text-xs"
-                                        >Where are you headed?</small
-                                    >
                                 </div>
                             </div>
 
@@ -63,12 +57,6 @@
                                         dateFormat="dd-MM-yy"
                                         formControlName="startAt"
                                     />
-                                    <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
-                                        Start date must be before end date.
-                                    </div>
-                                    <small class="text-gray-400 italic text-xs"
-                                        >When does your  begin?</small
-                                    >
                                 </div>
 
                                 <div class="flex flex-col gap-1">
@@ -77,7 +65,7 @@
                                     >
                                     <p-datepicker
                                         id="endDate"
-                                        ngSkipHydrationz
+                                        ngSkipHydration
                                         appendTo="body"
                                         placeholder="Select end date"
                                         class="w-full border-gray-200 rounded-xl"
@@ -86,12 +74,6 @@
                                         dateFormat="dd-MM-yy"
                                         formControlName="endAt"
                                     />
-                                    <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
-                                        End date must be after start date.
-                                    </div>
-                                    <small class="text-gray-400 italic text-xs"
-                                        >When do you return?</small
-                                    >
                                 </div>
                             </div>
                         </div>
@@ -115,9 +97,6 @@
                                         placeholder="Select travel companions"
                                         class="w-full border-2 border-gray-200 rounded-xl"
                                     />
-                                    <small class="text-gray-400 italic text-sm"
-                                        >This helps us plan better</small
-                                    >
                                 </div>
 
                                 <div class="flex flex-col gap-1">
@@ -130,9 +109,6 @@
                                         placeholder="Choose your style"
                                         class="w-full border-2 border-gray-200 rounded-xl"
                                     />
-                                    <small class="text-gray-400 italic text-sm"
-                                        >How do you like to travel?</small
-                                    >
                                 </div>
                             </div>
 
@@ -156,9 +132,6 @@
                                     multiple="true"
                                     class="w-full border-2 border-gray-200 rounded-xl"
                                 />
-                                <small class="text-gray-400 italic text-sm"
-                                    >Select all that apply to personalize your experience</small
-                                >
                             </div>
                         </div>
                     </p-accordion-content>
@@ -197,10 +170,7 @@
                                     pInputText
                                     placeholder="e.g., 5000"
                                     class="w-full p-3 border-2 border-gray-200 rounded-xl"
-                                />
-                                <small class="text-gray-400 italic text-sm"
-                                    >Enter your total trip budget</small
-                                >
+                                />=
                             </div>
 
                             <div class="grid grid-cols-3 gap-3 mt-6">
