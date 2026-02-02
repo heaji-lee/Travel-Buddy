@@ -22,6 +22,7 @@ public class CompanionsRepository {
 
     var total = items.Count;
 
+
     return (items, total);
   }
 

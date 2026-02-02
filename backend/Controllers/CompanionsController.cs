@@ -28,7 +28,7 @@ public class CompanionsController(CompanionsService companionsService) : Control
     });
   }
 
-  // POST: api/companions/
+  // POST: api/companions
   [HttpPost]
   public async Task<IActionResult> CreateCompanion([FromBody] CompanionDto companionDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }

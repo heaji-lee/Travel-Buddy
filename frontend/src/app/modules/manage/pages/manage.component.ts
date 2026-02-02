@@ -1,6 +1,8 @@
 import { Component, computed, inject, resource, signal } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { ManageService } from '../services/manage.services';
+import { CompanionsService } from '../services/companions.services';
+import { InterestsService } from '../services/interests.services';
+import { TravelStylesService } from '../services/travelStyles.services';
 import { PAGE_SIZE } from '../../../shared/constants';
 import { firstValueFrom } from 'rxjs';
 
@@ -13,20 +15,23 @@ import { firstValueFrom } from 'rxjs';
   styleUrl: './manage.component.css',
 })
 export class ManageComponent {
-  private readonly manageService = inject(ManageService);
+  private readonly companionsService = inject(CompanionsService);
+  private readonly interestsService = inject(InterestsService);
+  private readonly travelStylesService = inject(TravelStylesService);
+
 
   page = signal(1);
   skip = computed(() => (this.page() - 1) * PAGE_SIZE);
 
   companions = resource({
-    loader: () => firstValueFrom(this.manageService.getPaginatedCompanions(this.skip(), PAGE_SIZE))
+    loader: () => firstValueFrom(this.companionsService.getPaginatedCompanions(this.skip(), PAGE_SIZE))
   })
 
   interests = resource({
-    loader: () => firstValueFrom(this.manageService.getPaginatedInterests(this.skip(), PAGE_SIZE))
+    loader: () => firstValueFrom(this.interestsService.getPaginatedInterests(this.skip(), PAGE_SIZE))
   })
 
   travelStyles = resource({
-    loader: () => firstValueFrom(this.manageService.getPaginatedTravelStyles(this.skip(), PAGE_SIZE))
+    loader: () => firstValueFrom(this.travelStylesService.getPaginatedTravelStyles(this.skip(), PAGE_SIZE))
   })
 }

@@ -16,7 +16,7 @@ public class TravelStylesService(TravelStylesRepository travelStylesRepository) 
     return await travelStylesRepository.GetTravelStylesPage(skip, take);
   }
 
-  public async Task<TravelStyle> CreateInterest(TravelStyle travelStyle) {
+  public async Task<TravelStyle> CreateTravelStyle(TravelStyle travelStyle) {
     return await travelStylesRepository.CreateTravelStyle(travelStyle);
   }
 

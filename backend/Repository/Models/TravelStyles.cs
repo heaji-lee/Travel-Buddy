@@ -10,5 +10,5 @@ public class TravelStyle {
   public int Id { get; set; }
 
   [Column("style")]
-  public required string style { get; set; }
+  public required string Style { get; set; }
 }

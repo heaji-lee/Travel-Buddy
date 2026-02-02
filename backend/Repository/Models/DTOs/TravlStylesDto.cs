@@ -7,7 +7,7 @@ public class TravelStyleDto {
   public static TravelStyleDto FromModel(TravelStyle travelStyle) {
     return new TravelStyleDto {
       Id = travelStyle.Id,
-      Style = travelStyle.style
+      Style = travelStyle.Style
     };
   }
 }

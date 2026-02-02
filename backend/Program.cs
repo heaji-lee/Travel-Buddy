@@ -24,6 +24,12 @@ builder.Services.AddScoped<Supabase.Client>(_ => {
 
 builder.Services.AddScoped<TripsRepository>();
 builder.Services.AddScoped<TripsService>();
+builder.Services.AddScoped<CompanionsRepository>();
+builder.Services.AddScoped<CompanionsService>();
+builder.Services.AddScoped<InterestsRepository>();
+builder.Services.AddScoped<InterestsService>();
+builder.Services.AddScoped<TravelStylesRepository>();
+builder.Services.AddScoped<TravelStylesService>();
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson();
