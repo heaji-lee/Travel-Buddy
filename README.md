@@ -32,25 +32,29 @@ A modern, full-stack travel planning application that helps users organize their
 ```
 Travel-Buddy/
 ├── frontend/
-│   └── TravelBuddy/
-│       ├── src/
-│       │   ├── app/
-│       │   │   ├── components/
-│       │   │   │   └── navbar/          # Navigation component
-│       │   │   └── modules/
-│       │   │       ├── home/            # Home page
-│       │   │       ├── new-trip/        # Trip creation page
-│       │   │       └── all-trips/       # Trips list page
-│       │   └── styles.css               # Global styles
-│       ├── angular.json
-│       └── package.json
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/
+│   │   │   │   └── navbar/
+│   │   │   └── modules/
+│   │   │       ├── home/
+│   │   │       ├── new-trip/
+│   │   │       └── all-trips/
+│   │   ├── styles.css
+│   │   └── main.ts
+│   ├── angular.json
+│   ├── package.json
+│   └── tsconfig.json
 │
-└── backend/
-    └── TravelBuddy/
-        ├── Controllers/                  # API controllers
-        ├── Program.cs                    # Application entry point
-        ├── TravelBuddy.csproj
-        └── appsettings.json
+├── backend/
+│   ├── Controllers/
+│   ├── Program.cs
+│   ├── TravelBuddy.csproj
+│   └── appsettings.json
+│
+├── .gitignore
+├── README.md
+└── travel-buddy.sln
 
 ```
 
@@ -161,3 +165,4 @@ Create comprehensive trip plans with:
 - Integrate Weather API to display live weather for trip locations
 
 - Improve UI/UX animations
+
