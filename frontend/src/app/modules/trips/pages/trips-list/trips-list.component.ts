@@ -1,6 +1,7 @@
 import { Component, computed, inject, resource, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -10,7 +11,7 @@ import { TripsApiResponse } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule, ButtonModule],
+    imports: [TableModule, CommonModule, ButtonModule, RouterLink],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })

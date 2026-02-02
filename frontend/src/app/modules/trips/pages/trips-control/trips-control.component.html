@@ -37,7 +37,7 @@
                                         id="destination"
                                         type="text"
                                         pInputText
-                                        placeholder="e.g., Paris, France"
+                                        placeholder="e.g., Paris"
                                         class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
                                         formControlName="city"
                                     />
@@ -58,6 +58,9 @@
                                         appendTo="body"
                                         placeholder="Select start date"
                                         class="w-full border-gray-200 rounded-xl"
+                                        showIcon
+                                        iconDisplay="input"
+                                        dateFormat="dd-MM-yy"
                                         formControlName="startAt"
                                     />
                                     <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
@@ -78,6 +81,9 @@
                                         appendTo="body"
                                         placeholder="Select end date"
                                         class="w-full border-gray-200 rounded-xl"
+                                        showIcon
+                                        iconDisplay="input"
+                                        dateFormat="dd-MM-yy"
                                         formControlName="endAt"
                                     />
                                     <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
@@ -241,6 +247,7 @@
                     icon="pi pi-check"
                     rounded="true"
                     class="text-white transition px-6 py-3 font-semibold"
+                    [disabled]="!form.get('name')?.value || !form.get('city')?.value"
                 />
             </div>
         </div>

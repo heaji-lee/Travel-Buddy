@@ -40,19 +40,38 @@ public class TripsRepository {
   }
 
   public async Task DeleteTrip(int id) {
-    // var trip = await _context.Trips.FindAsync(id);
-    // if (trip == null) {
-    //   throw new Exception("Trip not found");
-    // }
+    var trip = await _context.Trips.FindAsync(id);
+    if (trip == null) {
+      throw new InvalidOperationException("Trip not found");
+    }
 
-    // _context.Trips.Remove(trip);
-    // await _context.SaveChangesAsync();
+    _context.Trips.Remove(trip);
+    await _context.SaveChangesAsync();
+  }
 
-    var rows = await _context.Trips
-        .Where(t => t.Id == id)
-        .ExecuteDeleteAsync();
+  public async Task<Trip> GetTripById(int id) {
+    var trip = await _context.Trips
+        .AsNoTracking()
+        .FirstOrDefaultAsync(t => t.Id == id);
+    if (trip == null) {
+      throw new InvalidOperationException("Trip not found");
+    }
+    return trip;
+  }
 
-    if (rows == 0)
-        throw new Exception("Trip not found");
+  public async Task<bool> UpdateTrip(Trip trip) {
+    var existingTrip = await _context.Trips.FindAsync(trip.Id);
+    if (existingTrip == null) {
+      return false;
+    }
+
+    existingTrip.Name = trip.Name;
+    existingTrip.City = trip.City;
+    existingTrip.Country = trip.Country;
+    existingTrip.StartAt = trip.StartAt;
+    existingTrip.EndAt = trip.EndAt;
+
+    await _context.SaveChangesAsync();
+    return true;
   }
 }

@@ -62,4 +62,41 @@ public class TripsController(TripsService tripsService) : ControllerBase {
       return BadRequest(ex.Message);
     }
   }
+
+  // GET: api/trips/{id}
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetTripById(int id) {
+    try {
+      var trip = await tripsService.GetTripById(id);
+      var dtoTrip = trip != null ? TripDto.FromModel(trip) : null;
+      return Ok(dtoTrip);
+    }
+    catch (Exception ex) {
+      return BadRequest(ex.Message);
+    }
+  }
+
+  // PUT: api/trips/{id}
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdateTrip([FromRoute]int id, [FromBody] TripDto tripDto) {
+    if (!ModelState.IsValid) { return BadRequest(ModelState); }
+
+    try {
+      var existingTrip = await tripsService.GetTripById(id);
+      if (existingTrip == null) {
+        return NotFound($"Trip with ID {id} not found.");
+      }
+      existingTrip.Name = tripDto.Name;
+      existingTrip.City = tripDto.City;
+      existingTrip.Country = tripDto.Country;
+      existingTrip.StartAt = tripDto.StartAt;
+      existingTrip.EndAt = tripDto.EndAt;
+
+      var updatedTrip = await tripsService.UpdateTrip(existingTrip);
+      return Ok(updatedTrip ? TripDto.FromModel(existingTrip) : null);
+    }
+    catch (Exception ex) {
+      return BadRequest(ex.Message);
+    }
+  }
 }
