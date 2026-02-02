@@ -17,7 +17,7 @@ export class TravelStylesService {
         };
 
         return this.http
-            .get<TravelStylesApiResponse>(`${API_URL}/api/travel-styles`, { params })
+            .get<TravelStylesApiResponse>(`${API_URL}/api/travelstyles`, { params })
             .pipe(
                 map((response) => ({
                     ...response,
@@ -29,10 +29,10 @@ export class TravelStylesService {
     }
 
     createTravelStyle(travelStyle: TravelStyle) {
-        return this.http.post<TravelStyle>(`${API_URL}/api/travel-styles`, travelStyle);
+        return this.http.post<TravelStyle>(`${API_URL}/api/travelstyles`, travelStyle);
     }
 
     deleteTravelStyle(id: string) {
-        return this.http.delete(`${API_URL}/api/travel-styles/${id}`);
+        return this.http.delete(`${API_URL}/api/travelstyles/${id}`);
     }
 }

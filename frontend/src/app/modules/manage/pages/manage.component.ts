@@ -19,7 +19,6 @@ export class ManageComponent {
   private readonly interestsService = inject(InterestsService);
   private readonly travelStylesService = inject(TravelStylesService);
 
-
   page = signal(1);
   skip = computed(() => (this.page() - 1) * PAGE_SIZE);
 

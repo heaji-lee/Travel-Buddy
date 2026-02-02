@@ -7,7 +7,7 @@ namespace TravelBuddy.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class IntererstsController(InterestsService interestsService) : ControllerBase {
+public class InterestsController(InterestsService interestsService) : ControllerBase {
 
   // GET: api/interests?skip=0&take=10
   [HttpGet]
