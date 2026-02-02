@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { TripsService } from '../../services/trips.services';
+import { TripsService } from '../../services/trips.service';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
 

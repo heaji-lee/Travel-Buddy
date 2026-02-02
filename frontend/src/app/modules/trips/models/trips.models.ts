@@ -11,3 +11,17 @@ export interface TripsApiResponse {
     items: Trip[];
     total: number;
 }
+
+export interface CountryMap {
+    [code: string]: string;
+}
+
+export interface City {
+    name: string;
+    country: string;
+}
+
+export interface Destination {
+  city: string;
+  country: string;
+}

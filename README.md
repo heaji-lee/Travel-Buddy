@@ -72,13 +72,13 @@ Travel-Buddy/
 
 2. **Setup Frontend**
    ```bash
-   cd frontend/TravelBuddy
+   cd frontend
    npm install
    ```
 
 3. **Setup Backend**
    ```bash
-   cd backend/TravelBuddy
+   cd backend
    dotnet restore
    ```
 
@@ -86,17 +86,17 @@ Travel-Buddy/
 
 #### Frontend (Angular)
 ```bash
-cd frontend/TravelBuddy
+cd frontend
 npm start
 ```
 The frontend will run on `http://localhost:4200`
 
 #### Backend (.NET API)
 ```bash
-cd backend/TravelBuddy
+cd backend
 dotnet run
 ```
-The API will run on `https://localhost:5001` (or the port specified in launchSettings.json)
+The API will run on `https://localhost:5282` (or the port specified in launchSettings.json)
 
 ## 📦 Available Scripts
 

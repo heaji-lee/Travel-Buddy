@@ -33,3 +33,5 @@ bld/
 Thumbs.db
 
 .env
+node_modules
+.angular

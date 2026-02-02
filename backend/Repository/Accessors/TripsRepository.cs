@@ -40,12 +40,19 @@ public class TripsRepository {
   }
 
   public async Task DeleteTrip(int id) {
-    var trip = await _context.Trips.FindAsync(id);
-    if (trip == null) {
-      throw new Exception("Trip not found");
-    }
+    // var trip = await _context.Trips.FindAsync(id);
+    // if (trip == null) {
+    //   throw new Exception("Trip not found");
+    // }
 
-    _context.Trips.Remove(trip);
-    await _context.SaveChangesAsync();
+    // _context.Trips.Remove(trip);
+    // await _context.SaveChangesAsync();
+
+    var rows = await _context.Trips
+        .Where(t => t.Id == id)
+        .ExecuteDeleteAsync();
+
+    if (rows == 0)
+        throw new Exception("Trip not found");
   }
 }

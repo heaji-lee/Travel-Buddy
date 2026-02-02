@@ -60,8 +60,11 @@
                                         class="w-full border-gray-200 rounded-xl"
                                         formControlName="startAt"
                                     />
+                                    <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
+                                        Start date must be before end date.
+                                    </div>
                                     <small class="text-gray-400 italic text-xs"
-                                        >When does your adventure begin?</small
+                                        >When does your  begin?</small
                                     >
                                 </div>
 
@@ -71,12 +74,15 @@
                                     >
                                     <p-datepicker
                                         id="endDate"
-                                        ngSkipHydration
+                                        ngSkipHydrationz
                                         appendTo="body"
                                         placeholder="Select end date"
                                         class="w-full border-gray-200 rounded-xl"
                                         formControlName="endAt"
                                     />
+                                    <div *ngIf="form.errors?.['dateRangeInvalid']" class="text-red-500 text-xs">
+                                        End date must be after start date.
+                                    </div>
                                     <small class="text-gray-400 italic text-xs"
                                         >When do you return?</small
                                     >

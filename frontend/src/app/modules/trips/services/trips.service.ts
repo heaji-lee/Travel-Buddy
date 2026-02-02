@@ -41,6 +41,6 @@ export class TripsService {
     }
 
     deleteTrip(id: string) {
-        return this.http.delete<void>(`${API_URL}/api/trips/${id}`);
+        return this.http.delete(`${API_URL}/api/trips/${id}`);
     }
 }

@@ -1,0 +1,154 @@
+<div class="flex flex-col min-h-screen">
+    <lib-header 
+        [pathParams]="[{label: 'Assignees'}]" 
+        title="Assignees" 
+        subtitle="View and manage assignees"
+        >
+            <p-button
+                label="Add Assignee"
+                size="large"
+                action
+                [routerLink]="'/assignees/new'"
+                icon="pi pi-plus"
+            ></p-button>
+        </lib-header>
+
+    <div class="bg-(--background-color) flex-1 w-full flex flex-col">
+        <div class="px-7 pt-7 pb-2">
+            <div class="bg-white rounded-md h-full flex flex-col border border-(--border-color)">
+                <p-table
+                    [value]="assignees.value()?.items || []"
+                    #assigneesTable
+                    class="rounded-lg overflow-hidden"
+                    size="small"
+                    [customSort]="true"
+                    (sortFunction)="sortBy($event)"
+                >
+                    <ng-template #caption>
+                        <div class="flex justify-between">
+                            <h3 class="pt-1">Assignees Details</h3>
+                            <p-iconfield iconPosition="left">
+                                <p-inputicon>
+                                    <i class="pi pi-search"></i>
+                                </p-inputicon>
+                                <input
+                                    pInputText
+                                    type="text"
+                                    (input)="handleSearch($event)"
+                                    placeholder="Search"
+                                    class="h-8"
+                                />
+                            </p-iconfield>
+                        </div>
+                    </ng-template>
+                    <ng-template #header>
+                        <tr>
+                            <th
+                                class="text-(--dark-text-color) font-semibold"
+                                pSortableColumn="fullName"
+                                style="width: 20%"
+                            >
+                                Name
+                                <p-sortIcon field="fullName" />
+                            </th>
+                            <th class="text-(--dark-text-color) font-semibold" style="width: 20%">
+                                User ID
+                            </th>
+                            <th
+                                class="text-(--dark-text-color) font-semibold"
+                                style="width: 15%"
+                                pSortableColumn="expiryDate"
+                            >
+                                Access expiry
+                                <p-sortIcon field="expiryDate" />
+                            </th>
+                            <th class="text-(--dark-text-color) font-semibold" style="width: 15%">
+                                Role
+                            </th>
+                            <th style="width: 5%"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-item>
+                        <tr>
+                            <td class="text-(--subHeader-color)">{{ item.fullName }}</td>
+                            <td class="text-(--subHeader-color)">{{ item.id }}</td>
+                            <td class="text-(--subHeader-color)">{{ item.expiryDate | date: 'yyyy-MM-dd' }}</td>
+                            <td class="text-(--subHeader-color)">{{ item.roleLabel }}</td>
+                            <td>
+                                <div class="flex gap-2 justify-end">
+                                    <p-button
+                                        [routerLink]="'/assignees/' + item.id"
+                                        icon="pi pi-pencil"
+                                        severity="secondary"
+                                    ></p-button>
+                                    <p-button
+                                        (onClick)="openDeleteDialog(item)"
+                                        icon="pi pi-trash"
+                                        severity="secondary"
+                                    ></p-button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="5">
+                                @if(assignees.isLoading()){
+                                <p>Loading assignees...</p>
+                                } @else if(assignees.error()){
+                                <p>Error loading assignees.</p>
+                                } @else {
+                                <p>No assignees available.</p>
+                                }
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="mt-auto flex justify-center pb-3">
+            <lib-pagination
+                [totalRecords]="totalRecords()"
+                [rows]="pageSize"
+                [first]="skip()"
+                (previous)="goToPreviousPage()"
+                (next)="goToNextPage()"
+            >
+            </lib-pagination>
+        </div>
+    </div>
+
+    <!-- Delete assignee confirmation dialog -->
+    <p-dialog
+        [styleClass]="'pt-5 w-82'"
+        [showHeader]="false"
+        [modal]="true"
+        [(visible)]="isDeleteDialogOpened"
+        [closable]="false"
+    >
+        <h3>Confirmation</h3>
+        <p class="paragraph my-4">Are you sure to delete {{ selectedAssignee()?.fullName }}?</p>
+        <div class="flex justify-end gap-2">
+            <p-button
+                size="small"
+                label="Cancel"
+                severity="secondary"
+                (click)="isDeleteDialogOpened = false"
+            />
+            <p-button
+                size="small"
+                label="Confirm"
+                (click)="handleConfirmDelete(selectedAssignee()?.id ?? '')"
+            />
+        </div>
+    </p-dialog>
+
+    <!-- Review whitelist changes Dialog -->
+    <app-review-changes-dialog
+        [(isVisible)]="reviewChangesDialogIsVisible"
+        [(assigneeUpdates)]="assigneeUpdates"
+        (whitelistDeploymentCompleted)="handleConfirmDelete(selectedAssignee()!.id)"
+        [isSingleDeleteOperation]="true"
+        [showDeploymentConfirmation]="true"
+    ></app-review-changes-dialog>
+</div>
