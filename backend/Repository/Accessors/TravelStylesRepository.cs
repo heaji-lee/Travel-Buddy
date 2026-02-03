@@ -16,6 +16,7 @@ public class TravelStylesRepository {
   ) {
     var query = _context.TravelStyles.AsNoTracking();
     var items = await query
+        .OrderBy(t => t.Id)
         .Skip(skip)
         .Take(take)
         .ToListAsync();

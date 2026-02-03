@@ -16,6 +16,7 @@ public class InterestsRepository {
   ) {
     var query = _context.Interests.AsNoTracking();
     var items = await query
+        .OrderBy(t => t.Id)
         .Skip(skip)
         .Take(take)
         .ToListAsync();

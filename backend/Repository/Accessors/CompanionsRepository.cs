@@ -16,6 +16,7 @@ public class CompanionsRepository {
   ) {
     var query = _context.Companions.AsNoTracking();
     var items = await query
+        .OrderBy(t => t.Id)
         .Skip(skip)
         .Take(take)
         .ToListAsync();
@@ -24,7 +25,7 @@ public class CompanionsRepository {
     return (items, total);
   }
 
-  public async Task<Companion> CreateCompanion (Companion companion) {
+  public async Task<Companion> CreateCompanion(Companion companion) {
     _context.Companions.Add(companion);
     await _context.SaveChangesAsync();
     return companion;

@@ -93,9 +93,12 @@
                                     >
                                     <p-select
                                         id="travelCompanions"
-                                        [options]="['Alone', 'Friend/s', 'Family', 'Partner']"
+                                        [options]="companions"
+                                        optionLabel="name"
+                                        optionsValue="name"
                                         placeholder="Select travel companions"
                                         class="w-full border-2 border-gray-200 rounded-xl"
+                                        [filter]="true" filterBy="name" [virtualScroll]="true"
                                     />
                                 </div>
 
@@ -105,10 +108,12 @@
                                     >
                                     <p-select
                                         id="travelStyle"
-                                        [options]="['Budget', 'Luxury', 'Adventure', 'Relaxation']"
+                                        [options]="travelStyles"
+                                        optionLabel="name"
+                                        optionsValue="name"
                                         placeholder="Choose your style"
                                         class="w-full border-2 border-gray-200 rounded-xl"
-                                    />
+                                        />
                                 </div>
                             </div>
 
@@ -118,16 +123,9 @@
                                 >
                                 <p-select
                                     id="interests"
-                                    [options]="[
-                                        'Culture',
-                                        'Nature',
-                                        'Food',
-                                        'History',
-                                        'Nightlife',
-                                        'Shopping',
-                                        'Art',
-                                        'Sports',
-                                    ]"
+                                    [options]="interests"
+                                    optionLabel="name"
+                                    optionsValue="name"
                                     placeholder="What interests you?"
                                     multiple="true"
                                     class="w-full border-2 border-gray-200 rounded-xl"
