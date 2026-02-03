@@ -8,8 +8,8 @@
             <p>Loading trips...</p>
         }
 
-        @if (trips.value()) {
-            <p-table [value]="trips.value()?.items || []">
+        @if (trips.hasValue()) {
+            <p-table [value]="trips.value().items || []">
                 <ng-template pTemplate="header">
                     <tr>
                         <th scope="col">Trip Name</th>

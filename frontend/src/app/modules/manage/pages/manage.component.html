@@ -15,8 +15,8 @@
                     @if (companions.isLoading()) {
                         <p>Loading...</p>
                     }
-                    @if (companions.value()) {
-                        @for (companion of companions.value()?.items; track companion.id) {
+                    @if (companions.hasValue()) {
+                        @for (companion of companions.value().items; track companion.id) {
                             <li class="flex justify-between items-center">
                                 <span>{{ companion.name }}</span>
                                 <button
@@ -56,8 +56,8 @@
                     @if (interests.isLoading()) {
                         <p>Loading...</p>
                     }
-                    @if (interests.value()) {
-                        @for (interest of interests.value()?.items; track interest.id) {
+                    @if (interests.hasValue()) {
+                        @for (interest of interests.value().items; track interest.id) {
                             <li class="flex justify-between items-center">
                                 <span>{{ interest.name }}</span>
                                 <button
@@ -98,8 +98,8 @@
                     @if (travelStyles.isLoading()) {
                         <p>Loading...</p>
                     }
-                    @if (travelStyles.value()) {
-                        @for (style of travelStyles.value()?.items; track style.id) {
+                    @if (travelStyles.hasValue()) {
+                        @for (style of travelStyles.value().items; track style.id) {
                             <li class="flex justify-between items-center">
                                 <span>{{ style.name }}</span>
                                 <button

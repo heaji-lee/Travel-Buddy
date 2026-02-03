@@ -13,7 +13,14 @@ var supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");
 var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString, npgsqlOptions => {
+      npgsqlOptions.EnableRetryOnFailure(
+          maxRetryCount: 3,
+          maxRetryDelay: TimeSpan.FromSeconds(5),
+          errorCodesToAdd: null);
+
+      npgsqlOptions.CommandTimeout(60);
+    }));
 
 builder.Services.AddScoped<Supabase.Client>(_ => {
   return new Supabase.Client(supabaseUrl!, supabaseKey!, new SupabaseOptions {
