@@ -21,14 +21,12 @@ public class CompanionsRepository {
         .ToListAsync();
 
     var total = items.Count;
-
-
     return (items, total);
   }
 
   public async Task<Companion> CreateCompanion (Companion companion) {
     _context.Companions.Add(companion);
-    await  _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
     return companion;
   }
 

@@ -9,6 +9,6 @@ public class TravelStyle {
   [Column("id")]
   public int Id { get; set; }
 
-  [Column("style")]
-  public required string Style { get; set; }
+  [Column("name")]
+  public required string Name { get; set; }
 }

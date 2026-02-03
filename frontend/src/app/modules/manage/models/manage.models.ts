@@ -5,12 +5,12 @@ export interface Companion {
 
 export interface Interest {
     id?: string;
-    interest: string;
+    name: string;
 }
 
 export interface TravelStyle {
   id?: string;
-  style: string;
+  name: string;
 }
 
 export interface CompanionsApiResponse {

@@ -15,8 +15,8 @@ public class TravelStylesController(TravelStylesService travelStylesService) : C
       [FromQuery] int skip = 0,
       [FromQuery] int take = 10
   ) {
-    var (trips, total) = await travelStylesService.GetTravelStylesPage(skip, take);
-    var dtoTravelStyles = trips
+    var (travelStyles, total) = await travelStylesService.GetTravelStylesPage(skip, take);
+    var dtoTravelStyles = travelStyles
         .Select(TravelStyleDto.FromModel)
         .ToList();
 
@@ -35,7 +35,7 @@ public class TravelStylesController(TravelStylesService travelStylesService) : C
 
     try {
       TravelStyle? createdTravelStyle = new TravelStyle {
-        Style = travelStyleDto.Style
+        Name = travelStyleDto.Name
       };
       createdTravelStyle = await travelStylesService.CreateTravelStyle(createdTravelStyle);
 

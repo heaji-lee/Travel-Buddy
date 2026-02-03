@@ -15,8 +15,8 @@ public class CompanionsController(CompanionsService companionsService) : Control
       [FromQuery] int skip = 0,
       [FromQuery] int take = 10
   ) {
-    var (trips, total) = await companionsService.GetCompanionsPage(skip, take);
-    var dtoCompanions = trips
+    var (companions, total) = await companionsService.GetCompanionsPage(skip, take);
+    var dtoCompanions = companions
         .Select(CompanionDto.FromModel)
         .ToList();
 

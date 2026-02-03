@@ -1,46 +1,75 @@
-<div class="h-full flex items-center justify-center">
-    <div class="bg-white p-5 rounded-xl shadow-lg text-center max-w-md w-full">
+<div class="min-h-full flex items-center justify-center p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-5xl">
         <h1>Manage your preferences</h1>
 
-        <div class="flex flex-row">
-            <p-table [value]="companions.value()?.items || []">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th scope="col">Companion</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-companion>
-                    <tr>
-                        <td>{{ companion.name }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-3">
+            <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
+                <h2 class="text-xl font-semibold mb-4">
+                    <i class="pi pi-users"></i> Companions <i class="pi pi-users"></i>
+                </h2>
+      
+                <ul class="space-y-2">
+                    @for (companion of companions.value()?.items; track companion.id) {
+                        <li class="flex justify-between items-center">
+                            <span>{{ companion.name }}</span>
+                            <button
+                                (click)="deleteCompanion(companion.id!)"
+                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                            ></button>
+                        </li>
+                    }
+                </ul>
 
-            <p-table [value]="interests.value()?.items || []">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th scope="col">Interest</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-interest>
-                    <tr>
-                        <td>{{ interest.name }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
+                <div class="flex justify-between gap-3 pt-4 items-center">
+                    <input type="text" pInputText placeholder="Add new companion" [(ngModel)]="newCompanionName" class="w-full"/>
+                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createCompanion(newCompanionName)"/>
+                </div>
+            </div>
+            <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
+                <h2 class="text-xl font-semibold mb-4">
+                    <i class="pi pi-heart"></i> Interests <i class="pi pi-heart"></i>
+                </h2>
 
-            <p-table [value]="travelStyles.value()?.items || []">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th scope="col">Travel Style</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-style>
-                    <tr>
-                        <td>{{ style.style }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
+                <ul class="space-y-2">
+                    @for (interest of interests.value()?.items; track interest.id) {
+                        <li class="flex justify-between items-center">
+                            <span>{{ interest.name }}</span>
+                            <button
+                                (click)="deleteInterest(interest.id!)"
+                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                            ></button>
+                        </li>
+                    }
+                </ul>
+
+                <div class="flex justify-between gap-3 pt-4 items-center">
+                    <input type="text" pInputText placeholder="Add new interest" [(ngModel)]="newInterestName" class="w-full"/>
+                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createInterest(newInterestName)"/>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
+                <h2 class="text-xl font-semibold mb-4">
+                    <i class="pi pi-briefcase"></i> Travel Styles <i class="pi pi-briefcase"></i>
+                </h2>
+
+                <ul class="space-y-2">
+                    @for (style of travelStyles.value()?.items; track style.id) {
+                        <li class="flex justify-between items-center">
+                            <span>{{ style.name }}</span>
+                            <button
+                                (click)="deleteTravelStyle(style.id!)"
+                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                            ></button>
+                        </li>
+                    }
+                </ul>
+
+                <div class="flex justify-between gap-3 pt-4 items-center">
+                    <input type="text" pInputText placeholder="Add new travel style" [(ngModel)]="newTravelStyleName" class="w-full"/>
+                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createTravelStyle(newTravelStyleName)"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>

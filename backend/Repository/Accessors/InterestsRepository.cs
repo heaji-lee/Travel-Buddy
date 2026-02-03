@@ -21,13 +21,12 @@ public class InterestsRepository {
         .ToListAsync();
 
     var total = items.Count;
-
     return (items, total);
   }
 
   public async Task<Interest> CreateInterest (Interest interest) {
     _context.Interests.Add(interest);
-    await  _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
     return interest;
   }
 

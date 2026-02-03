@@ -16,14 +16,7 @@ export class InterestsService {
             take,
         };
 
-        return this.http.get<InterestsApiResponse>(`${API_URL}/api/interests`, { params }).pipe(
-            map((response) => ({
-                ...response,
-                items: response.items.map((a) => ({
-                    ...a,
-                })),
-            })),
-        );
+        return this.http.get<InterestsApiResponse>(`${API_URL}/api/interests`, { params });
     }
 
     createInterest(interest: Interest) {

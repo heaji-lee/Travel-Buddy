@@ -15,8 +15,8 @@ public class InterestsController(InterestsService interestsService) : Controller
       [FromQuery] int skip = 0,
       [FromQuery] int take = 10
   ) {
-    var (trips, total) = await interestsService.GetInterestsPage(skip, take);
-    var dtoCompanions = trips
+    var (interests, total) = await interestsService.GetInterestsPage(skip, take);
+    var dtoCompanions = interests
         .Select(InterestsDto.FromModel)
         .ToList();
 

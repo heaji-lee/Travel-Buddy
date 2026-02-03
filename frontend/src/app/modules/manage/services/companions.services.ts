@@ -16,14 +16,7 @@ export class CompanionsService {
             take,
         };
 
-        return this.http.get<CompanionsApiResponse>(`${API_URL}/api/companions`, { params }).pipe(
-            map((response) => ({
-                ...response,
-                items: response.items.map((a) => ({
-                    ...a,
-                })),
-            })),
-        );
+        return this.http.get<CompanionsApiResponse>(`${API_URL}/api/companions`, { params })
     }
 
     createCompanion(companion: Companion) {

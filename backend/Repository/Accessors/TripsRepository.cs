@@ -23,7 +23,6 @@ public class TripsRepository {
         .ToListAsync();
 
     var total = items.Count;
-
     return (items, total);
   }
 
@@ -35,7 +34,7 @@ public class TripsRepository {
 
   public async Task<Trip> CreateTrip (Trip trip) {
     _context.Trips.Add(trip);
-    await  _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
     return trip;
   }
 

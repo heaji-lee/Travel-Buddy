@@ -16,16 +16,7 @@ export class TravelStylesService {
             take,
         };
 
-        return this.http
-            .get<TravelStylesApiResponse>(`${API_URL}/api/travelstyles`, { params })
-            .pipe(
-                map((response) => ({
-                    ...response,
-                    items: response.items.map((a) => ({
-                        ...a,
-                    })),
-                })),
-            );
+        return this.http.get<TravelStylesApiResponse>(`${API_URL}/api/travelstyles`, { params });
     }
 
     createTravelStyle(travelStyle: TravelStyle) {
