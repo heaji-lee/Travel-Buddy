@@ -7,22 +7,41 @@
                 <h2 class="text-xl font-semibold mb-4">
                     <i class="pi pi-users"></i> Companions <i class="pi pi-users"></i>
                 </h2>
-      
+
                 <ul class="space-y-2">
-                    @for (companion of companions.value()?.items; track companion.id) {
-                        <li class="flex justify-between items-center">
-                            <span>{{ companion.name }}</span>
-                            <button
-                                (click)="deleteCompanion(companion.id!)"
-                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                            ></button>
-                        </li>
+                    @if (companions.error()) {
+                        <p class="text-red-500">Failed to load companions</p>
+                    }
+                    @if (companions.isLoading()) {
+                        <p>Loading...</p>
+                    }
+                    @if (companions.value()) {
+                        @for (companion of companions.value()?.items; track companion.id) {
+                            <li class="flex justify-between items-center">
+                                <span>{{ companion.name }}</span>
+                                <button
+                                    (click)="deleteCompanion(companion.id!)"
+                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                ></button>
+                            </li>
+                        }
                     }
                 </ul>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
-                    <input type="text" pInputText placeholder="Add new companion" [(ngModel)]="newCompanionName" class="w-full"/>
-                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createCompanion(newCompanionName)"/>
+                    <input
+                        type="text"
+                        pInputText
+                        placeholder="Add new companion"
+                        [(ngModel)]="newCompanionName"
+                        class="w-full"
+                    />
+                    <p-button
+                        icon="pi pi-check"
+                        [rounded]="true"
+                        size="small"
+                        (onClick)="createCompanion(newCompanionName)"
+                    />
                 </div>
             </div>
             <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
@@ -31,20 +50,39 @@
                 </h2>
 
                 <ul class="space-y-2">
-                    @for (interest of interests.value()?.items; track interest.id) {
-                        <li class="flex justify-between items-center">
-                            <span>{{ interest.name }}</span>
-                            <button
-                                (click)="deleteInterest(interest.id!)"
-                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                            ></button>
-                        </li>
+                    @if (interests.error()) {
+                        <p class="text-red-500">Failed to load interests</p>
+                    }
+                    @if (interests.isLoading()) {
+                        <p>Loading...</p>
+                    }
+                    @if (interests.value()) {
+                        @for (interest of interests.value()?.items; track interest.id) {
+                            <li class="flex justify-between items-center">
+                                <span>{{ interest.name }}</span>
+                                <button
+                                    (click)="deleteInterest(interest.id!)"
+                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                ></button>
+                            </li>
+                        }
                     }
                 </ul>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
-                    <input type="text" pInputText placeholder="Add new interest" [(ngModel)]="newInterestName" class="w-full"/>
-                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createInterest(newInterestName)"/>
+                    <input
+                        type="text"
+                        pInputText
+                        placeholder="Add new interest"
+                        [(ngModel)]="newInterestName"
+                        class="w-full"
+                    />
+                    <p-button
+                        icon="pi pi-check"
+                        [rounded]="true"
+                        size="small"
+                        (onClick)="createInterest(newInterestName)"
+                    />
                 </div>
             </div>
 
@@ -54,20 +92,39 @@
                 </h2>
 
                 <ul class="space-y-2">
-                    @for (style of travelStyles.value()?.items; track style.id) {
-                        <li class="flex justify-between items-center">
-                            <span>{{ style.name }}</span>
-                            <button
-                                (click)="deleteTravelStyle(style.id!)"
-                                class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                            ></button>
-                        </li>
+                    @if (travelStyles.error()) {
+                        <p class="text-red-500">Failed to load travel styles</p>
+                    }
+                    @if (travelStyles.isLoading()) {
+                        <p>Loading...</p>
+                    }
+                    @if (travelStyles.value()) {
+                        @for (style of travelStyles.value()?.items; track style.id) {
+                            <li class="flex justify-between items-center">
+                                <span>{{ style.name }}</span>
+                                <button
+                                    (click)="deleteTravelStyle(style.id!)"
+                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                ></button>
+                            </li>
+                        }
                     }
                 </ul>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
-                    <input type="text" pInputText placeholder="Add new travel style" [(ngModel)]="newTravelStyleName" class="w-full"/>
-                    <p-button icon="pi pi-check" [rounded]="true" size="small" (onClick)="createTravelStyle(newTravelStyleName)"/>
+                    <input
+                        type="text"
+                        pInputText
+                        placeholder="Add new travel style"
+                        [(ngModel)]="newTravelStyleName"
+                        class="w-full"
+                    />
+                    <p-button
+                        icon="pi pi-check"
+                        [rounded]="true"
+                        size="small"
+                        (onClick)="createTravelStyle(newTravelStyleName)"
+                    />
                 </div>
             </div>
         </div>
