@@ -40,6 +40,7 @@ Travel-Buddy/
 │   │   │       ├── home/
 │   │   │       ├── new-trip/
 │   │   │       └── all-trips/
+|   |   |       └── manage/
 │   │   ├── styles.css
 │   │   └── main.ts
 │   ├── angular.json
@@ -48,6 +49,12 @@ Travel-Buddy/
 │
 ├── backend/
 │   ├── Controllers/
+│   ├── Repositories/
+│   │   ├── Accessors/
+│   │   ├── Models/
+│   │   │   ├── DTOs/
+|   |   |   └── Models/
+│   ├── Services/
 │   ├── Program.cs
 │   ├── TravelBuddy.csproj
 │   └── appsettings.json
@@ -65,6 +72,7 @@ Travel-Buddy/
 - **Node.js** (v20 or higher)
 - **npm** (v10 or higher)
 - **.NET 10.0 SDK**
+- **[Supabase account](https://supabase.com)**  (free)
 
 ### Installation
 
@@ -153,6 +161,19 @@ Create comprehensive trip plans with:
 - API settings in `appsettings.json`
 - Database connection strings
 - CORS policies
+
+## 🔑 Backend Environment Setp 
+Before connecting our backend to the database, you'll need to sign up for a free [Supabase](https://supabase.com) account.
+
+Once you have your account: 
+- Create a .env file in the `backend` folder.
+- Paste the following environment variables into it: 
+  ```
+  SUPABASE_URL=YOUR_SUPABASE_URL
+  SUPABASE_KEY=YOUR_SUPABASE_KEY
+  CONNECTION_STRING=YOUR_CONNECTION_STRING
+  ```
+- Save the file and ensure your backend code reads these variables when connecting to Supabase/PostgresSQL
 
 ## 🔜 Next Steps (In Progress)
 
