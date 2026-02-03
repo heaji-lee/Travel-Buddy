@@ -91,14 +91,16 @@
                                         class="font-semibold text-gray-700"
                                         >Who are you traveling with?</label
                                     >
-                                    <p-select
+                                    <p-multiselect
                                         id="travelCompanions"
+                                        formControlName="companions"
                                         [options]="companions"
                                         optionLabel="name"
-                                        optionsValue="name"
+                                        optionsValue="id"
                                         placeholder="Select travel companions"
                                         class="w-full border-2 border-gray-200 rounded-xl"
-                                        [filter]="true" filterBy="name" [virtualScroll]="true"
+                                        [filter]="true"
+                                        display="chip"
                                     />
                                 </div>
 
@@ -106,13 +108,16 @@
                                     <label for="travelStyle" class="font-semibold text-gray-700"
                                         >Travel Style</label
                                     >
-                                    <p-select
+                                    <p-multiselect
                                         id="travelStyle"
                                         [options]="travelStyles"
+                                        formControlName="travelStyles"
                                         optionLabel="name"
-                                        optionsValue="name"
+                                        optionsValue="id"
                                         placeholder="Choose your style"
                                         class="w-full border-2 border-gray-200 rounded-xl"
+                                        [filter]="true"
+                                        display="chip"
                                         />
                                 </div>
                             </div>
@@ -123,12 +128,15 @@
                                 >
                                 <p-select
                                     id="interests"
+                                    formControlName="interests"
                                     [options]="interests"
                                     optionLabel="name"
-                                    optionsValue="name"
+                                    optionsValue="id"
                                     placeholder="What interests you?"
                                     multiple="true"
                                     class="w-full border-2 border-gray-200 rounded-xl"
+                                    [filter]="true"
+                                    display="chip"
                                 />
                             </div>
                         </div>

@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { ChipModule } from 'primeng/chip';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { TripsService } from '../../services/trips.service';
 import { Trip } from '../../models/trips.models';
@@ -29,6 +30,7 @@ import { Companion, Interest, TravelStyle } from '../../../manage/models/manage.
         ReactiveFormsModule,
         CommonModule,
         ChipModule,
+        MultiSelectModule
     ],
     templateUrl: './trips-control.component.html',
     styleUrl: './trips-control.component.css',
@@ -70,6 +72,9 @@ export class TripsControlComponent implements OnInit {
             country: ['', Validators.required],
             startAt: ['', Validators.required],
             endAt: ['', Validators.required],
+            companions: [[]],
+            interests: [[]],
+            travelStyles: [[]]
         });
     }
 
