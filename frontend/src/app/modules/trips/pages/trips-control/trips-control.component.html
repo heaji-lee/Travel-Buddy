@@ -126,14 +126,13 @@
                                 <label for="interests" class="font-semibold text-gray-700"
                                     >Interests (Select multiple)</label
                                 >
-                                <p-select
+                                <p-multiselect
                                     id="interests"
                                     formControlName="interests"
                                     [options]="interests"
                                     optionLabel="name"
                                     optionsValue="id"
                                     placeholder="What interests you?"
-                                    multiple="true"
                                     class="w-full border-2 border-gray-200 rounded-xl"
                                     [filter]="true"
                                     display="chip"

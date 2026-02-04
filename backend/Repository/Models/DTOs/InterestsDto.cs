@@ -1,11 +1,11 @@
 namespace TravelBuddy.Repository.Models.DTOs;
 
-public class InterestsDto {
+public class InterestDto {
   public int Id { get; set; }
   public required string Name { get; set; }
 
-  public static InterestsDto FromModel(Interest interest) {
-    return new InterestsDto {
+  public static InterestDto FromModel(Interest interest) {
+    return new InterestDto {
       Id = interest.Id,
       Name = interest.Name
     };

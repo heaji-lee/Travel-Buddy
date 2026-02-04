@@ -30,7 +30,7 @@ import { Companion, Interest, TravelStyle } from '../../../manage/models/manage.
         ReactiveFormsModule,
         CommonModule,
         ChipModule,
-        MultiSelectModule
+        MultiSelectModule,
     ],
     templateUrl: './trips-control.component.html',
     styleUrl: './trips-control.component.css',
@@ -121,6 +121,9 @@ export class TripsControlComponent implements OnInit {
                         ...trip,
                         startAt: trip.startAt ? new Date(trip.startAt) : null,
                         endAt: trip.endAt ? new Date(trip.endAt) : null,
+                        companions: trip.companions?.map(c => c.id) || [],
+                        interests: trip.interests?.map(i => i.id) || [],
+                        travelStyles: trip.travelStyles?.map(t => t.id) || []
                     });
                     this.setInitialValues();
                 },
@@ -138,9 +141,16 @@ export class TripsControlComponent implements OnInit {
     }
 
     onSubmit() {
+        const payload = {
+            ...this.form.value,
+            companionIds: this.form.value.companions.map((c: Companion) => c.id),
+            interestIds: this.form.value.interests.map((c: Interest) => c.id),
+            travelStyleIds: this.form.value.travelStyles.map((c: TravelStyle) => c.id),
+        };
+
         const submitAction = this.isExistingTrip
-            ? this.tripsService.updateTrip(this.id, { ...this.form.value, id: this.id })
-            : this.tripsService.createTrip(this.form.value);
+            ? this.tripsService.updateTrip(this.id, { ...payload, id: this.id })
+            : this.tripsService.createTrip(payload);
 
         this.handleSubmitAction(submitAction);
     }
@@ -155,7 +165,7 @@ export class TripsControlComponent implements OnInit {
 
     private handleSubmitAction(submitAction: Observable<Trip>) {
         submitAction.subscribe({
-            next: (trip: Trip) => {
+            next: () => {
                 this.navigateToTripsList();
             },
             error: (error: any) => {

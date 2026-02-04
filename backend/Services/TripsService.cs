@@ -16,8 +16,8 @@ public class TripsService(TripsRepository tripsRepository) {
     return await tripsRepository.GetTripsPage(skip, take);
   }
 
-  public async Task<Trip> CreateTrip(Trip trip) {
-    return await tripsRepository.CreateTrip(trip);
+  public async Task<Trip> CreateTrip(ModifyTripRequestDto modifyTripRequestDto) {
+    return await tripsRepository.CreateTrip(modifyTripRequestDto);
   }
 
   public async Task DeleteTrip(int id) {
@@ -28,7 +28,7 @@ public class TripsService(TripsRepository tripsRepository) {
     return await tripsRepository.GetTripById(id);
   }
 
-  public async Task<bool> UpdateTrip(Trip trip) {
-    return await tripsRepository.UpdateTrip(trip);
+  public async Task<bool> UpdateTrip(int id, ModifyTripRequestDto modifyTripRequestDto) {
+    return await tripsRepository.UpdateTrip(id, modifyTripRequestDto);
   }
 }

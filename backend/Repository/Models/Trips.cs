@@ -23,4 +23,8 @@ public class Trip {
 
   [Column("end_at")]
   public DateTime EndAt { get; set; }
+
+  public ICollection<Companion> Companions { get; set; } = new List<Companion>();
+  public ICollection<Interest> Interests { get; set; } = new List<Interest>();
+  public ICollection<TravelStyle> TravelStyles { get; set; } = new List<TravelStyle>();
 }

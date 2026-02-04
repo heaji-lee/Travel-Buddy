@@ -8,6 +8,10 @@ public class TripDto {
   public DateTime StartAt { get; set; }
   public DateTime EndAt { get; set; }
 
+  public List<CompanionDto> Companions { get; set; } = new();
+  public List<InterestDto> Interests { get; set; } = new();
+  public List<TravelStyleDto> TravelStyles { get; set; } = new();
+
   public static TripDto FromModel(Trip trip) {
     return new TripDto {
       Id = trip.Id,
@@ -15,7 +19,10 @@ public class TripDto {
       City = trip.City,
       Country = trip.Country,
       StartAt = trip.StartAt,
-      EndAt = trip.EndAt
+      EndAt = trip.EndAt,
+      Companions = trip.Companions?.Select(CompanionDto.FromModel).ToList() ?? new(),
+      Interests = trip.Interests?.Select(InterestDto.FromModel).ToList() ?? new(),
+      TravelStyles = trip.TravelStyles?.Select(TravelStyleDto.FromModel).ToList() ?? new()
     };
   }
 }

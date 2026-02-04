@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Data;
 using TravelBuddy.Repository.Models;
+using TravelBuddy.Repository.Models.DTOs;
 
 namespace TravelBuddy.Repositories;
 
@@ -17,7 +18,7 @@ public class TripsRepository {
     var query = _context.Trips.AsNoTracking();
 
     var items = await query
-        .OrderBy(t => t.StartAt)
+        .OrderBy(t => t.Id)
         .Skip(skip)
         .Take(take)
         .ToListAsync();
@@ -32,9 +33,33 @@ public class TripsRepository {
         .FirstOrDefaultAsync(t => t.Id == id);
   }
 
-  public async Task<Trip> CreateTrip (Trip trip) {
+  public async Task<Trip> CreateTrip (ModifyTripRequestDto modifyTripRequestDto) {
+    var companions = await _context.Companions  
+      .Where(c => modifyTripRequestDto.CompanionIds.Contains(c.Id))
+      .ToListAsync();
+
+    var interests = await _context.Interests  
+      .Where(c => modifyTripRequestDto.InterestIds.Contains(c.Id))
+      .ToListAsync();
+
+    var travelStyles = await _context.TravelStyles  
+      .Where(c => modifyTripRequestDto.TravelStyleIds.Contains(c.Id))
+      .ToListAsync();
+
+    var trip = new Trip {
+      Name = modifyTripRequestDto.Name,
+      City = modifyTripRequestDto.City,
+      Country = modifyTripRequestDto.Country,
+      StartAt = modifyTripRequestDto.StartAt, 
+      EndAt = modifyTripRequestDto.EndAt, 
+      Companions = companions,
+      Interests = interests, 
+      TravelStyles = travelStyles
+    };
+
     _context.Trips.Add(trip);
     await _context.SaveChangesAsync();
+
     return trip;
   }
 
@@ -51,24 +76,44 @@ public class TripsRepository {
   public async Task<Trip> GetTripById(int id) {
     var trip = await _context.Trips
         .AsNoTracking()
+        .Include(t => t.Companions)
+        .Include(t => t.Interests)
+        .Include(t => t.TravelStyles)
+        .AsSplitQuery()
         .FirstOrDefaultAsync(t => t.Id == id);
+
     if (trip == null) {
       throw new InvalidOperationException("Trip not found");
     }
     return trip;
   }
 
-  public async Task<bool> UpdateTrip(Trip trip) {
-    var existingTrip = await _context.Trips.FindAsync(trip.Id);
-    if (existingTrip == null) {
-      return false;
-    }
+  public async Task<bool> UpdateTrip(int id, ModifyTripRequestDto modifyTripRequestDto) {
+    var trip = await _context.Trips
+      .Include(t => t.Companions)
+      .Include(t => t.Interests)
+      .Include(t => t.TravelStyles)
+      .FirstOrDefaultAsync(t => t.Id == id);
 
-    existingTrip.Name = trip.Name;
-    existingTrip.City = trip.City;
-    existingTrip.Country = trip.Country;
-    existingTrip.StartAt = trip.StartAt;
-    existingTrip.EndAt = trip.EndAt;
+    if (trip == null) return false; 
+
+    trip.Name = modifyTripRequestDto.Name;
+    trip.City = modifyTripRequestDto.City;
+    trip.Country = modifyTripRequestDto.Country;
+    trip.StartAt = modifyTripRequestDto.StartAt;
+    trip.EndAt = modifyTripRequestDto.EndAt;
+
+    trip.Companions = await _context.Companions
+      .Where(c => modifyTripRequestDto.CompanionIds.Contains(c.Id))
+      .ToListAsync();
+    
+    trip.Interests = await _context.Interests
+      .Where(c => modifyTripRequestDto.InterestIds.Contains(c.Id))
+      .ToListAsync();
+    
+    trip.TravelStyles = await _context.TravelStyles
+      .Where(c => modifyTripRequestDto.TravelStyleIds.Contains(c.Id))
+      .ToListAsync();
 
     await _context.SaveChangesAsync();
     return true;

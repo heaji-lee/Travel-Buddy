@@ -31,19 +31,11 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // POST: api/trips
   [HttpPost]
-  public async Task<IActionResult> CreateTrip([FromBody] TripDto tripDto) {
+  public async Task<IActionResult> CreateTrip([FromBody] ModifyTripRequestDto modifyTripRequestDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
     try {
-      Trip? createdTrip = new Trip {
-        Name = tripDto.Name,
-        City = tripDto.City,
-        Country = tripDto.Country,
-        StartAt = tripDto.StartAt,
-        EndAt = tripDto.EndAt
-      };
-      createdTrip = await tripsService.CreateTrip(createdTrip);
-
+      var createdTrip = await tripsService.CreateTrip(modifyTripRequestDto);
       return Ok(TripDto.FromModel(createdTrip));
     }
     catch (Exception ex) {
@@ -78,7 +70,7 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // PUT: api/trips/{id}
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateTrip([FromRoute]int id, [FromBody] TripDto tripDto) {
+  public async Task<IActionResult> UpdateTrip([FromRoute]int id, [FromBody] ModifyTripRequestDto modifyTripRequestDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
     try {
@@ -86,14 +78,12 @@ public class TripsController(TripsService tripsService) : ControllerBase {
       if (existingTrip == null) {
         return NotFound($"Trip with ID {id} not found.");
       }
-      existingTrip.Name = tripDto.Name;
-      existingTrip.City = tripDto.City;
-      existingTrip.Country = tripDto.Country;
-      existingTrip.StartAt = tripDto.StartAt;
-      existingTrip.EndAt = tripDto.EndAt;
 
-      var updatedTrip = await tripsService.UpdateTrip(existingTrip);
-      return Ok(updatedTrip ? TripDto.FromModel(existingTrip) : null);
+      var updated = await tripsService.UpdateTrip(id, modifyTripRequestDto);
+      if (!updated) return NotFound($"Trip with ID {id} could not be updated");
+
+      var updatedTrip = await tripsService.GetTripById(id);
+      return Ok(TripDto.FromModel(updatedTrip));
     }
     catch (Exception ex) {
       return BadRequest(ex.Message);

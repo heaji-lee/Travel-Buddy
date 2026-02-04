@@ -17,7 +17,7 @@ public class InterestsController(InterestsService interestsService) : Controller
   ) {
     var (interests, total) = await interestsService.GetInterestsPage(skip, take);
     var dtoCompanions = interests
-        .Select(InterestsDto.FromModel)
+        .Select(InterestDto.FromModel)
         .ToList();
 
     return Ok(new {
@@ -30,7 +30,7 @@ public class InterestsController(InterestsService interestsService) : Controller
 
   // POST: api/interests
   [HttpPost]
-  public async Task<IActionResult> CreateInterest([FromBody] InterestsDto interestsDto) {
+  public async Task<IActionResult> CreateInterest([FromBody] InterestDto interestsDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
     try {
@@ -39,7 +39,7 @@ public class InterestsController(InterestsService interestsService) : Controller
       };
       createdInterest = await interestsService.CreateInterest(createdInterest);
 
-      return Ok(InterestsDto.FromModel(createdInterest));
+      return Ok(InterestDto.FromModel(createdInterest));
     }
     catch (Exception ex) {
       return BadRequest(ex.Message);

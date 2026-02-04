@@ -1,3 +1,5 @@
+import { Companion, Interest, TravelStyle } from "../../manage/models/manage.models";
+
 export interface Trip {
     id?: string;
     name: string;
@@ -5,6 +7,9 @@ export interface Trip {
     country: string;
     startAt: Date;
     endAt: Date;
+    companions?: Companion[];
+    interests?: Interest[];
+    travelStyles?: TravelStyle[];
 }
 
 export interface TripsApiResponse {
