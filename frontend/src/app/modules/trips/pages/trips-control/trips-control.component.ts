@@ -69,7 +69,6 @@ export class TripsControlComponent implements OnInit {
         this.form = this.fb.group({
             name: ['', Validators.required],
             city: ['', Validators.required],
-            country: ['', Validators.required],
             startAt: ['', Validators.required],
             endAt: ['', Validators.required],
             companions: [[]],
