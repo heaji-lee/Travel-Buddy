@@ -11,10 +11,7 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // GET: api/trips?skip=0&take=10
   [HttpGet]
-  public async Task<IActionResult> GetTrips(
-      [FromQuery] int skip = 0,
-      [FromQuery] int take = 10
-  ) {
+  public async Task<IActionResult> GetTrips([FromQuery] int skip = 0, [FromQuery] int take = 10) {
     var (trips, total) = await tripsService.GetTripsPage(skip, take);
 
     var dtoTrips = trips
@@ -70,7 +67,7 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // PUT: api/trips/{id}
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateTrip([FromRoute]int id, [FromBody] ModifyTripRequestDto modifyTripRequestDto) {
+  public async Task<IActionResult> UpdateTrip([FromRoute] int id, [FromBody] ModifyTripRequestDto modifyTripRequestDto) {
     if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
     try {

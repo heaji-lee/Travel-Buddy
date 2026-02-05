@@ -10,10 +10,7 @@ public class InterestsRepository {
     _context = context;
   }
 
-  public async Task<(List<Interest> Items, int Total)> GetInterestsPage(
-      int skip,
-      int take
-  ) {
+  public async Task<(List<Interest> Items, int Total)> GetInterestsPage(int skip, int take) {
     var query = _context.Interests.AsNoTracking();
     var items = await query
         .OrderBy(t => t.Id)

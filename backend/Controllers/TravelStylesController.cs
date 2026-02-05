@@ -11,10 +11,7 @@ public class TravelStylesController(TravelStylesService travelStylesService) : C
 
   // GET: api/travelStyles?skip=0&take=10
   [HttpGet]
-  public async Task<IActionResult> GetTravelStyles(
-      [FromQuery] int skip = 0,
-      [FromQuery] int take = 10
-  ) {
+  public async Task<IActionResult> GetTravelStyles([FromQuery] int skip = 0, [FromQuery] int take = 10) {
     var (travelStyles, total) = await travelStylesService.GetTravelStylesPage(skip, take);
     var dtoTravelStyles = travelStyles
         .Select(TravelStyleDto.FromModel)

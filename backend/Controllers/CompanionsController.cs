@@ -11,10 +11,7 @@ public class CompanionsController(CompanionsService companionsService) : Control
 
   // GET: api/companions?skip=0&take=10
   [HttpGet]
-  public async Task<IActionResult> GetCompanions(
-      [FromQuery] int skip = 0,
-      [FromQuery] int take = 10
-  ) {
+  public async Task<IActionResult> GetCompanions([FromQuery] int skip = 0, [FromQuery] int take = 10) {
     var (companions, total) = await companionsService.GetCompanionsPage(skip, take);
     var dtoCompanions = companions
         .Select(CompanionDto.FromModel)

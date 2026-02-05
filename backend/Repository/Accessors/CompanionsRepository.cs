@@ -10,10 +10,7 @@ public class CompanionsRepository {
     _context = context;
   }
 
-  public async Task<(List<Companion> Items, int Total)> GetCompanionsPage(
-      int skip,
-      int take
-  ) {
+  public async Task<(List<Companion> Items, int Total)> GetCompanionsPage(int skip, int take) {
     var query = _context.Companions.AsNoTracking();
     var items = await query
         .OrderBy(t => t.Id)

@@ -14,35 +14,37 @@
                     <th scope="col"></th>
                 </tr>
             </ng-template>
-            @if (trips.error()) {
-                <p>Error while loading trips</p>
-            }
-            @if (trips.isLoading()) {
-                <p>Loading trips...</p>
-            }
-            @if (trips.hasValue()) {
-                <ng-template pTemplate="body" let-trip>
-                    <tr>
-                        <td>{{ trip.name }}</td>
-                        <td>{{ trip.city }}</td>
-                        <td>{{ trip.startAt | date: `dd-MM-yyyy` }}</td>
-                        <td>{{ trip.endAt | date: `dd-MM-yyyy` }}</td>
-                        <td>{{ trip.companions }}</td>
-                        <td>{{ trip.interests }}</td>
-                        <td>{{ trip.travelStyles }}</td>
-                        <td>
-                            <i
-                                [routerLink]="['/trips', trip.id]"
-                                class="pi pi-pen-to-square cursor-pointer"
-                            ></i>
-                        </td>
-                        <td>
-                            <i (click)="deleteTrip(trip.id)" class="pi pi-trash cursor-pointer"></i>
-                        </td>
-                    </tr>
-                </ng-template>
-            }
-            
+
+            <ng-template pTemplate="body" let-trip>
+                <tr>
+                    <td>{{ trip.name }}</td>
+                    <td>{{ trip.city }}</td>
+                    <td>{{ trip.startAt | date: `dd-MM-yyyy` }}</td>
+                    <td>{{ trip.endAt | date: `dd-MM-yyyy` }}</td>
+                    <td>{{ trip.companions }}</td>
+                    <td>{{ trip.interests }}</td>
+                    <td>{{ trip.travelStyles }}</td>
+                    <td>
+                        <i
+                            [routerLink]="['/trips', trip.id]"
+                            class="pi pi-pen-to-square cursor-pointer"
+                        ></i>
+                    </td>
+                    <td>
+                        <i (click)="deleteTrip(trip.id)" class="pi pi-trash cursor-pointer"></i>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template #emptymessage>
+                @if (trips.error()) {
+                    <p>Error while loading trips</p>
+                } @else if (trips.isLoading()) {
+                    <p>Loading trips...</p>
+                } @else {
+                    <p>No trips available.</p>
+                }
+            </ng-template>
         </p-table>
     </div>
 </div>

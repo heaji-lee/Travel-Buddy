@@ -11,10 +11,7 @@ public class InterestsController(InterestsService interestsService) : Controller
 
   // GET: api/interests?skip=0&take=10
   [HttpGet]
-  public async Task<IActionResult> GetInterests(
-      [FromQuery] int skip = 0,
-      [FromQuery] int take = 10
-  ) {
+  public async Task<IActionResult> GetInterests([FromQuery] int skip = 0, [FromQuery] int take = 10) {
     var (interests, total) = await interestsService.GetInterestsPage(skip, take);
     var dtoCompanions = interests
         .Select(InterestDto.FromModel)

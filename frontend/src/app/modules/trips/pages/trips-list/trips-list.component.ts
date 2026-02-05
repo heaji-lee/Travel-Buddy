@@ -30,7 +30,7 @@ export class TripsListComponent {
 
     totalRecords = computed(() => {
       const value = this.trips.value();
-      return (value as TripsApiResponse)?.total || 0;
+      return (value as any as TripsApiResponse)?.total || 0;
     })
 
     goToNextPage() {

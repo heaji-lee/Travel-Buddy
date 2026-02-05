@@ -10,10 +10,7 @@ public class TravelStylesRepository {
     _context = context;
   }
 
-  public async Task<(List<TravelStyle> Items, int Total)> GetTravelStylesPage(
-      int skip,
-      int take
-  ) {
+  public async Task<(List<TravelStyle> Items, int Total)> GetTravelStylesPage(int skip, int take) {
     var query = _context.TravelStyles.AsNoTracking();
     var items = await query
         .OrderBy(t => t.Id)

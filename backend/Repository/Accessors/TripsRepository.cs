@@ -11,10 +11,7 @@ public class TripsRepository {
     _context = context;
   }
 
-  public async Task<(List<Trip> Items, int Total)> GetTripsPage(
-      int skip,
-      int take
-  ) {
+  public async Task<(List<Trip> Items, int Total)> GetTripsPage(int skip, int take) {
     var query = _context.Trips.AsNoTracking();
 
     var items = await query
@@ -33,27 +30,26 @@ public class TripsRepository {
         .FirstOrDefaultAsync(t => t.Id == id);
   }
 
-  public async Task<Trip> CreateTrip (ModifyTripRequestDto modifyTripRequestDto) {
-    var companions = await _context.Companions  
+  public async Task<Trip> CreateTrip(ModifyTripRequestDto modifyTripRequestDto) {
+    var companions = await _context.Companions
       .Where(c => modifyTripRequestDto.CompanionIds.Contains(c.Id))
       .ToListAsync();
 
-    var interests = await _context.Interests  
+    var interests = await _context.Interests
       .Where(c => modifyTripRequestDto.InterestIds.Contains(c.Id))
       .ToListAsync();
 
-    var travelStyles = await _context.TravelStyles  
+    var travelStyles = await _context.TravelStyles
       .Where(c => modifyTripRequestDto.TravelStyleIds.Contains(c.Id))
       .ToListAsync();
 
     var trip = new Trip {
       Name = modifyTripRequestDto.Name,
       City = modifyTripRequestDto.City,
-      Country = modifyTripRequestDto.Country,
-      StartAt = modifyTripRequestDto.StartAt, 
-      EndAt = modifyTripRequestDto.EndAt, 
+      StartAt = modifyTripRequestDto.StartAt,
+      EndAt = modifyTripRequestDto.EndAt,
       Companions = companions,
-      Interests = interests, 
+      Interests = interests,
       TravelStyles = travelStyles
     };
 
@@ -95,22 +91,21 @@ public class TripsRepository {
       .Include(t => t.TravelStyles)
       .FirstOrDefaultAsync(t => t.Id == id);
 
-    if (trip == null) return false; 
+    if (trip == null) return false;
 
     trip.Name = modifyTripRequestDto.Name;
     trip.City = modifyTripRequestDto.City;
-    trip.Country = modifyTripRequestDto.Country;
     trip.StartAt = modifyTripRequestDto.StartAt;
     trip.EndAt = modifyTripRequestDto.EndAt;
 
     trip.Companions = await _context.Companions
       .Where(c => modifyTripRequestDto.CompanionIds.Contains(c.Id))
       .ToListAsync();
-    
+
     trip.Interests = await _context.Interests
       .Where(c => modifyTripRequestDto.InterestIds.Contains(c.Id))
       .ToListAsync();
-    
+
     trip.TravelStyles = await _context.TravelStyles
       .Where(c => modifyTripRequestDto.TravelStyleIds.Contains(c.Id))
       .ToListAsync();
