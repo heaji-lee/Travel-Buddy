@@ -39,7 +39,10 @@ builder.Services.AddScoped<TravelStylesRepository>();
 builder.Services.AddScoped<TravelStylesService>();
 
 builder.Services.AddControllers()
-    .AddNewtonsoftJson();
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddOpenApi();
 

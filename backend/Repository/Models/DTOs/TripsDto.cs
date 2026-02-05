@@ -13,14 +13,14 @@ public class TripDto {
 
   public static TripDto FromModel(Trip trip) {
     return new TripDto {
-      Id = trip.Id,
+      Id = trip.Id, 
       Name = trip.Name,
       City = trip.City,
       StartAt = trip.StartAt,
       EndAt = trip.EndAt,
-      Companions = trip.Companions?.Select(CompanionDto.FromModel).ToList() ?? new(),
-      Interests = trip.Interests?.Select(InterestDto.FromModel).ToList() ?? new(),
-      TravelStyles = trip.TravelStyles?.Select(TravelStyleDto.FromModel).ToList() ?? new()
+      Companions = trip.TripCompanions?.Select(tc => CompanionDto.FromModel(tc.Companion)).ToList() ?? new(),
+      Interests = trip.TripInterests?.Select(tc => InterestDto.FromModel(tc.Interest)).ToList() ?? new(),
+      TravelStyles = trip.TripTravelStyles?.Select(tts => TravelStyleDto.FromModel(tts.TravelStyle)).ToList() ?? new()
     };
   }
 }

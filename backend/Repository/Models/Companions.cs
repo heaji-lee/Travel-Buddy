@@ -11,4 +11,5 @@ public class Companion {
 
   [Column("name")]
   public required string Name { get; set; }
+  public ICollection<TripCompanion> TripCompanions { get; set; } = new List<TripCompanion>();
 }

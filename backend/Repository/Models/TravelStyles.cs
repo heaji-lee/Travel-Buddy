@@ -11,4 +11,5 @@ public class TravelStyle {
 
   [Column("name")]
   public required string Name { get; set; }
+  public ICollection<TripTravelStyle> TripTravelStyles { get; set; } = new List<TripTravelStyle>();
 }

@@ -33,7 +33,8 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
     try {
       var createdTrip = await tripsService.CreateTrip(modifyTripRequestDto);
-      return Ok(TripDto.FromModel(createdTrip));
+      var trip = await tripsService.GetTripById(createdTrip.Id);
+      return Ok(TripDto.FromModel(trip));
     }
     catch (Exception ex) {
       return BadRequest(ex.Message);

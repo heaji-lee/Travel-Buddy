@@ -47,6 +47,8 @@ export class TripsControlComponent implements OnInit {
     savedTripValue = signal<Trip | null>(null);
     formIsAltered = signal(false);
 
+    isSubmitting = false;
+
     form: FormGroup;
     isExistingTrip = false;
     title = '';
@@ -73,7 +75,7 @@ export class TripsControlComponent implements OnInit {
             endAt: ['', Validators.required],
             companions: [[]],
             interests: [[]],
-            travelStyles: [[]]
+            travelStyles: [[]],
         });
     }
 
@@ -120,9 +122,9 @@ export class TripsControlComponent implements OnInit {
                         ...trip,
                         startAt: trip.startAt ? new Date(trip.startAt) : null,
                         endAt: trip.endAt ? new Date(trip.endAt) : null,
-                        companions: trip.companions?.map(c => c.id) || [],
-                        interests: trip.interests?.map(i => i.id) || [],
-                        travelStyles: trip.travelStyles?.map(t => t.id) || []
+                        companions: trip.companions?.map((c) => c.id) || [],
+                        interests: trip.interests?.map((i) => i.id) || [],
+                        travelStyles: trip.travelStyles?.map((t) => t.id) || [],
                     });
                     this.setInitialValues();
                 },
@@ -140,11 +142,17 @@ export class TripsControlComponent implements OnInit {
     }
 
     onSubmit() {
+        if (this.isSubmitting) return;
+        this.isSubmitting = true;
+        const formValue = this.form.value;
         const payload = {
-            ...this.form.value,
-            companionIds: this.form.value.companions.map((c: Companion) => c.id),
-            interestIds: this.form.value.interests.map((c: Interest) => c.id),
-            travelStyleIds: this.form.value.travelStyles.map((c: TravelStyle) => c.id),
+            name: formValue.name,
+            city: formValue.city,
+            startAt: formValue.startAt,
+            endAt: formValue.endAt,
+            companionIds: formValue.companions.map((c: Companion) => c.id),
+            interestIds: formValue.interests.map((c: Interest) => c.id),
+            travelStyleIds: formValue.travelStyles.map((c: TravelStyle) => c.id),
         };
 
         const submitAction = this.isExistingTrip
@@ -169,6 +177,7 @@ export class TripsControlComponent implements OnInit {
             },
             error: (error: any) => {
                 console.error('Error submitting trip form:', error);
+                this.isSubmitting = false;
             },
         });
     }
