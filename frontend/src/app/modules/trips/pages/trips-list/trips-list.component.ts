@@ -5,13 +5,15 @@ import { RouterLink } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+
 import { TripsService } from '../../services/trips.service';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule, ButtonModule, RouterLink],
+    imports: [TableModule, CommonModule, ButtonModule, RouterLink, PaginatorModule],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })
@@ -19,32 +21,27 @@ export class TripsListComponent {
     private readonly tripsService = inject(TripsService);
 
     page = signal(1);
+    pageSize = PAGE_SIZE;
     skip = computed(() => (this.page() - 1) * PAGE_SIZE);
     tripId: string = '';
 
     trips = resource({
-      loader: () => firstValueFrom(
-        this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)
-      )
-    })
+        loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
+    });
 
     totalRecords = computed(() => {
-      const value = this.trips.value();
-      return (value as any as TripsApiResponse)?.total || 0;
-    })
+        const value = this.trips.value();
+        return (value as any as TripsApiResponse)?.total || 0;
+    });
 
-    goToNextPage() {
-        const maxPage = Math.ceil(this.totalRecords() / PAGE_SIZE);
-        this.page.update((p) => (p < maxPage ? p + 1 : p));
-    }
-
-    goToPreviousPage() {
-        this.page.update((p) => (p > 1 ? p - 1 : p));
+    onPageChange(event: any) {
+        this.page.set(event.page + 1);
+        this.trips.reload();
     }
 
     deleteTrip(tripId: string) {
-      this.tripsService.deleteTrip(tripId).subscribe(() => {
-        this.trips.reload();
-      });
+        this.tripsService.deleteTrip(tripId).subscribe(() => {
+            this.trips.reload();
+        });
     }
 }
