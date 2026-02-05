@@ -122,9 +122,9 @@ export class TripsControlComponent implements OnInit {
                         ...trip,
                         startAt: trip.startAt ? new Date(trip.startAt) : null,
                         endAt: trip.endAt ? new Date(trip.endAt) : null,
-                        companions: trip.companions?.map((c) => c.id) || [],
-                        interests: trip.interests?.map((i) => i.id) || [],
-                        travelStyles: trip.travelStyles?.map((t) => t.id) || [],
+                        companions: trip.companions || [],
+                        interests: trip.interests || [],
+                        travelStyles: trip.travelStyles || [],
                     });
                     this.setInitialValues();
                 },
