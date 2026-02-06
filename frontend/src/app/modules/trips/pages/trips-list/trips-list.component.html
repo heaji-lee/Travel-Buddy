@@ -1,5 +1,5 @@
 <div class="min-h-full flex items-center justify-center p-6">
-    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-4xl">
+    <div class="bg-white p-5 rounded-xl shadow-2xl w-full max-w-4xl">
         <p-table [value]="trips.value()?.items || []">
             <ng-template pTemplate="header">
                 <tr>
@@ -12,20 +12,17 @@
             </ng-template>
 
             <ng-template pTemplate="body" let-trip>
-                <tr>
+                <tr (click)="showDraw(trip)">
                     <td>{{ trip.name }}</td>
                     <td>{{ trip.city }}</td>
                     <td>{{ trip.startAt | date: `dd-MM-yyyy` }}</td>
                     <td>{{ trip.endAt | date: `dd-MM-yyyy` }}</td>
                     <td>
-                        <i
-                            (click)="showDeleteDialog(trip.id)"
-                            class="pi pi-trash cursor-pointer"
-                        ></i>
+                        <i (click)="showDeleteDialog()" class="pi pi-trash cursor-pointer"></i>
                         <p-dialog
                             header="You are about to delete {{ trip.name }}"
                             [modal]="true"
-                            [(visible)]="isDialogVisible"
+                            [(visible)]="isDeleteDialogVisible"
                         >
                             <p>Are you sure you want to delete this trip?</p>
                             <p class="mb-4">This action cannot be undone.</p>
@@ -33,7 +30,7 @@
                             <div class="flex justify-end gap-2">
                                 <div
                                     class="px-4 py-2 bg-gray-300 text-gray-800 rounded-full cursor-pointer hover:bg-gray-400 transition"
-                                    (click)="isDialogVisible = false"
+                                    (click)="isDeleteDialogVisible = false"
                                 >
                                     Cancel
                                 </div>
@@ -73,5 +70,7 @@
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
             />
         </div>
+
+        <app-trip-drawer [(visible)]="isDrawOpened" [trip]="selectedTrip"> </app-trip-drawer>
     </div>
 </div>

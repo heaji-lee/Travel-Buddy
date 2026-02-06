@@ -1,0 +1,15 @@
+<p-drawer
+    header="{{ trip?.name || 'Trip Info' }}"
+    [(visible)]="visible"
+    position="right"
+    [style]="{ width: '30%' }"
+    (onHide)="close()"
+>
+    @if (trip) {
+        <div class="p-4">
+            <p><strong>City:</strong> {{ trip.city }}</p>
+            <p><strong>Start:</strong> {{ trip.startAt | date: 'dd-MM-yyyy' }}</p>
+            <p><strong>End:</strong> {{ trip.endAt | date: 'dd-MM-yyyy' }}</p>
+        </div>
+    }
+</p-drawer>

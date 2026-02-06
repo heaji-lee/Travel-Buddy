@@ -1,20 +1,21 @@
 import { Component, computed, inject, resource, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
+import { Drawer, DrawerModule } from 'primeng/drawer';
 
 import { TripsService } from '../../services/trips.service';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
+import { TripDrawerComponent } from '../../../../components/trip-drawer/trip-drawer.component'
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule, ButtonModule, RouterLink, PaginatorModule, DialogModule],
+    imports: [TableModule, CommonModule, ButtonModule, PaginatorModule, DialogModule, Drawer, DrawerModule, TripDrawerComponent],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })
@@ -25,7 +26,9 @@ export class TripsListComponent {
     pageSize = PAGE_SIZE;
     skip = computed(() => (this.page() - 1) * PAGE_SIZE);
     tripId: string = '';
-    isDialogVisible = false;
+    isDeleteDialogVisible = false;
+    isDrawOpened = false;
+    selectedTrip: any = null;
 
     trips = resource({
         loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
@@ -47,7 +50,12 @@ export class TripsListComponent {
         });
     }
 
-    showDeleteDialog(tripId: string) {
-        this.isDialogVisible = true;
+    showDeleteDialog() {
+        this.isDeleteDialogVisible = true;
+    }
+
+    showDraw(trip: any) {
+      this.selectedTrip = trip;
+      this.isDrawOpened = true;
     }
 }
