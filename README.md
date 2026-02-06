@@ -36,6 +36,7 @@ Travel-Buddy/
 │   │   ├── app/
 │   │   │   ├── components/
 │   │   │   │   └── navbar/
+│   │   │   │   └── toast/
 │   │   │   └── modules/
 │   │   │       ├── home/
 │   │   │       ├── new-trip/
@@ -177,13 +178,10 @@ Once you have your account:
 
 ## 🔜 Next Steps (In Progress)
 
-- Build backend API controllers
-- Connect frontend forms to the backend
-- Implement persistent database (EF Core + PostgreSQL)
 - Make the app fully responsive for mobile devices
 - Add user authentication and profiles
 - Integrate Google Maps API to show destinations and activities
 - Integrate Weather API to display live weather for trip locations
-
 - Improve UI/UX animations
+- Implement itinerary table when user inputs date
 

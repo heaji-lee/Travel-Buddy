@@ -11,6 +11,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { ChipModule } from 'primeng/chip';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { MessageService } from 'primeng/api';
 
 import { TripsService } from '../../services/trips.service';
 import { Trip } from '../../models/trips.models';
@@ -43,6 +44,7 @@ export class TripsControlComponent implements OnInit {
     private readonly companionsService = inject(CompanionsService);
     private readonly interestsService = inject(InterestsService);
     private readonly travelStylesService = inject(TravelStylesService);
+    private readonly messageService = inject(MessageService);
 
     savedTripValue = signal<Trip | null>(null);
     formIsAltered = signal(false);
@@ -173,16 +175,38 @@ export class TripsControlComponent implements OnInit {
     private handleSubmitAction(submitAction: Observable<Trip>) {
         submitAction.subscribe({
             next: () => {
+                this.showToastSuccess();
                 this.navigateToTripsList();
             },
-            error: (error: any) => {
-                console.error('Error submitting trip form:', error);
-                this.isSubmitting = false;
+            error: () => {
+                this.showToastError();
             },
         });
     }
 
     navigateToTripsList() {
         this.router.navigate(['/trips']);
+    }
+
+    showToastSuccess() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'success',
+            summary: this.isExistingTrip ? 'Trip updated' : 'Trip created',
+            detail: this.isExistingTrip
+                ? 'Your changes have been saved'
+                : 'Your trip is ready to go',
+            life: 3000,
+        });
+    }
+
+    showToastError() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'error',
+            summary: 'Something went wrong',
+            detail: 'Please try again later',
+            life: 3000,
+        });
     }
 }

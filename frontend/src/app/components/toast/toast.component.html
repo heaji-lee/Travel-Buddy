@@ -1,0 +1,40 @@
+<p-toast [baseZIndex]="5000" [preventOpenDuplicates]="true" key="globalToast">
+    <ng-template let-message #headless let-closeFn="closeFn">
+        <section class="px-4 pt-4 bg-white rounded-xl">
+            <div class="flex gap-5 items-center justify-between">
+                <h3 class="text-surface-900">{{ message.summary }}</h3>
+                <div class="flex gap-3">
+                    <p-tag
+                        styleClass="h-[25px] my-auto"
+                        [severity]="message.severity === 'success' ? 'success' : 'danger'"
+                    >
+                        <i
+                            [ngClass]="
+                                message.severity === 'success'
+                                    ? ''
+                                    : 'pi pi-exclamation-triangle text-[13px]'
+                            "
+                        ></i>
+                        {{ message.severity === 'success' ? 'Success' : 'Error' }}
+                    </p-tag>
+                    <i
+                        class="pi pi-times cursor-pointer text-red-500"
+                        (click)="closeFn($event)"
+                    ></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-4 pb-4 bg-white rounded-lg">
+            <p class="paragraph-medium text-surface-900">{{ message.detail }}</p>
+        </section>
+
+        @if (message.data) {
+            <section class="px-4 pb-4 bg-white rounded-lg">
+                <a [href]="message.data.url" target="_blank">
+                    <p-button size="small" class="mt-2" [label]="message.data.buttonLabel"
+                /></a>
+            </section>
+        }
+    </ng-template>
+</p-toast>
