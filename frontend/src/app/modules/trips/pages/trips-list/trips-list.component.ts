@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
 
 import { TripsService } from '../../services/trips.service';
 import { PAGE_SIZE } from '../../../../shared/constants';
@@ -13,7 +14,7 @@ import { TripsApiResponse } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule, ButtonModule, RouterLink, PaginatorModule],
+    imports: [TableModule, CommonModule, ButtonModule, RouterLink, PaginatorModule, DialogModule],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })
@@ -24,6 +25,7 @@ export class TripsListComponent {
     pageSize = PAGE_SIZE;
     skip = computed(() => (this.page() - 1) * PAGE_SIZE);
     tripId: string = '';
+    isDialogVisible = false;
 
     trips = resource({
         loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
@@ -43,5 +45,9 @@ export class TripsListComponent {
         this.tripsService.deleteTrip(tripId).subscribe(() => {
             this.trips.reload();
         });
+    }
+
+    showDeleteDialog(tripId: string) {
+        this.isDialogVisible = true;
     }
 }

@@ -1,5 +1,5 @@
 <div class="min-h-full flex items-center justify-center p-6">
-    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-4xl">
         <p-table [value]="trips.value()?.items || []">
             <ng-template pTemplate="header">
                 <tr>
@@ -7,10 +7,6 @@
                     <th scope="col">City</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
-                    <th scope="col">Companions</th>
-                    <th scope="col">Interests</th>
-                    <th scope="col">Travel Styles</th>
-                    <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
             </ng-template>
@@ -21,17 +17,33 @@
                     <td>{{ trip.city }}</td>
                     <td>{{ trip.startAt | date: `dd-MM-yyyy` }}</td>
                     <td>{{ trip.endAt | date: `dd-MM-yyyy` }}</td>
-                    <td>{{ trip.companions }}</td>
-                    <td>{{ trip.interests }}</td>
-                    <td>{{ trip.travelStyles }}</td>
                     <td>
                         <i
-                            [routerLink]="['/trips', trip.id]"
-                            class="pi pi-pen-to-square cursor-pointer"
+                            (click)="showDeleteDialog(trip.id)"
+                            class="pi pi-trash cursor-pointer"
                         ></i>
-                    </td>
-                    <td>
-                        <i (click)="deleteTrip(trip.id)" class="pi pi-trash cursor-pointer"></i>
+                        <p-dialog
+                            header="You are about to delete ${trip.name}"
+                            [modal]="true"
+                            [(visible)]="isDialogVisible"
+                        >
+                            <div>
+                                <p-button
+                                    label="Cancel"
+                                    severity="secondary"
+                                    icon="pi pi-check"
+                                    [rounded]="true"
+                                    size="small"
+                                    (click)="isDialogVisible = false"
+                                />
+                                <p-button
+                                    icon="pi pi-check"
+                                    [rounded]="true"
+                                    size="small"
+                                    (onClick)="deleteTrip(trip.id)"
+                                />
+                            </div>
+                        </p-dialog>
                     </td>
                 </tr>
             </ng-template>
