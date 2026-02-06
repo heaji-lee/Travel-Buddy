@@ -1,14 +1,34 @@
-<div>
-    <nav class="p-4 text-white">
-        <div class="container mx-auto flex justify-between items-center">
-            <a routerLink="/home" class="text-2xl font-bold">TravelBuddy</a>
+<div class="flex z-50 h-screen">
+    <nav class="w-55 bg-amber-400/20 text-white flex flex-col px-5 py-8">
+        <a routerLink="/home" class="text-3xl font-extrabold tracking-tight mb-16 text-center">
+            ✈️ TravelBuddy
+        </a>
 
-            <div class="space-x-4">
-                <a routerLink="/home" class="text-xl font-bold">🏠 Home</a>
-                <a routerLink="/trips/new" class="text-xl font-bold">📝 Plan</a>
-                <a routerLink="/trips" class="text-xl font-bold">👀 View</a>
-                <a routerLink="/manage" class="text-xl font-bold">🧑‍💻 Manage</a>
-            </div>
+        <div class="flex flex-col gap-10 text-center">
+            <a
+                routerLink="/home"
+                class="flex flex-col items-center gap-2 hover:opacity-80 hover:scale-110 transition-transform"
+            >
+                <span class="text-4xl">🏠</span>
+                <span class="text-2xl font-semibold">Home</span>
+            </a>
+
+            <a
+                routerLink="/trips/new"
+                class="flex flex-col items-center gap-2 hover:opacity-80 hover:scale-110 transition-transform"
+            >
+                <span class="text-4xl">📝</span>
+                <span class="text-2xl font-semibold">Plan</span>
+            </a>
+
+            <a
+                routerLink="/manage"
+                class="flex flex-col items-center gap-2 hover:opacity-80 hover:scale-110 transition-transform"
+            >
+                <span class="text-4xl">🧑‍💻</span>
+                <span class="text-2xl font-semibold">Manage</span>
+            </a>
         </div>
+
     </nav>
 </div>
