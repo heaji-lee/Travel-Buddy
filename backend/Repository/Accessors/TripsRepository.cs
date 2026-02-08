@@ -15,9 +15,6 @@ public class TripsRepository {
     public async Task<(List<Trip> Items, int Total)> GetTripsPage(int skip, int take) {
         var query = _context.Trips
             .AsNoTracking()
-            .Include(t => t.TripCompanions).ThenInclude(tc => tc.Companion)
-            .Include(t => t.TripInterests).ThenInclude(ti => ti.Interest)
-            .Include(t => t.TripTravelStyles).ThenInclude(tts => tts.TravelStyle)
             .AsSplitQuery()
             .OrderBy(t => t.Id);
 

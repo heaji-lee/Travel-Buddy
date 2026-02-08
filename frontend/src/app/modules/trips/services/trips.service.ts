@@ -23,9 +23,6 @@ export class TripsService {
                     ...a,
                     startAt: new Date(a.startAt as unknown as string),
                     endAt: new Date(a.endAt as unknown as string),
-                    companions: a.companions?.map((c: any) => c.name).join(', ') || '',
-                    interests: a.interests?.map((i: any) => i.name).join(', ') || '',
-                    travelStyles: a.travelStyles?.map((t: any) => t.name).join(', ') || ''
                 })),
             })),
         );

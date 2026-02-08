@@ -6,7 +6,7 @@ import { ManageComponent } from './modules/manage/pages/manage.component';
 export const routes: Routes = [
     { path: '', component: TripsListComponent },
     { path: 'home', component: TripsListComponent },
-    { path: 'trips/new', component: TripsControlComponent },
-    { path: 'trips/:id', component: TripsControlComponent },
+    // { path: 'trips/new', component: TripsControlComponent },
+    // { path: 'trips/:id', component: TripsControlComponent },
     { path: 'manage', component: ManageComponent },
 ];

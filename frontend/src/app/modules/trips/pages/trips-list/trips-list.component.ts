@@ -6,16 +6,25 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
-import { Drawer, DrawerModule } from 'primeng/drawer';
+import { DrawerModule } from 'primeng/drawer';
 
 import { TripsService } from '../../services/trips.service';
 import { PAGE_SIZE } from '../../../../shared/constants';
 import { TripsApiResponse } from '../../models/trips.models';
-import { TripDrawerComponent } from '../../../../components/trip-drawer/trip-drawer.component'
+import { TripDrawerComponent } from '../../../../components/trip-drawer/trip-drawer.component';
+import { Trip } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
-    imports: [TableModule, CommonModule, ButtonModule, PaginatorModule, DialogModule, Drawer, DrawerModule, TripDrawerComponent],
+    imports: [
+        TableModule,
+        CommonModule,
+        ButtonModule,
+        PaginatorModule,
+        DialogModule,
+        DrawerModule,
+        TripDrawerComponent,
+    ],
     templateUrl: './trips-list.component.html',
     styleUrl: './trips-list.component.css',
 })
@@ -27,8 +36,9 @@ export class TripsListComponent {
     skip = computed(() => (this.page() - 1) * PAGE_SIZE);
     tripId: string = '';
     isDeleteDialogVisible = false;
-    isDrawOpened = false;
-    selectedTrip: any = null;
+    tripToDeleteId = '';
+    isDrawOpen = false;
+    selectedTrip = signal<Trip | null>(null);
 
     trips = resource({
         loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
@@ -45,17 +55,40 @@ export class TripsListComponent {
     }
 
     deleteTrip(tripId: string) {
+        if (!this.tripToDeleteId) return;
         this.tripsService.deleteTrip(tripId).subscribe(() => {
             this.trips.reload();
+            this.isDeleteDialogVisible = false;
         });
     }
 
-    showDeleteDialog() {
+    showDeleteDialog(tripId: string) {
+        this.tripToDeleteId = tripId;
         this.isDeleteDialogVisible = true;
     }
 
-    showDraw(trip: any) {
-      this.selectedTrip = trip;
-      this.isDrawOpened = true;
+    openDraw(trip?: Trip) {
+        this.selectedTrip.set(trip || null);
+        this.isDrawOpen = true;
+    }
+
+    closeDraw() {
+        this.isDrawOpen = false;
+        this.selectedTrip.set(null);
+    }
+
+    onTripSubmit(formValue: any) {
+        const editingTrip = this.selectedTrip();
+        if (!editingTrip) {
+            this.tripsService.createTrip(formValue).subscribe(() => {
+                this.trips.reload();
+                this.closeDraw();
+            });
+        } else {
+            this.tripsService.updateTrip(editingTrip!.id!, formValue).subscribe(() => {
+                this.trips.reload();
+                this.closeDraw();
+            });
+        }
     }
 }
