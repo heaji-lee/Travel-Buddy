@@ -50,3 +50,13 @@ body {
   background-color: rgba(255, 255, 255, 0) !important;
   border-color: rgba(255, 255, 255, 0) !important;
 }
+
+.p-drawer-close-button {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border-color: rgba(255, 255, 255, 0) !important;
+}
+
+.p-drawer-close-button:hover {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border-color: rgba(255, 255, 255, 0) !important;
+}

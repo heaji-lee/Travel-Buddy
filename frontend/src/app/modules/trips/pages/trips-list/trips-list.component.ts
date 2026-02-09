@@ -106,14 +106,23 @@ export class TripsListComponent {
     }
 
     onTripSubmit(formValue: any) {
+        const payload = {
+            name: formValue.name,
+            city: formValue.city,
+            startAt: formValue.startAt,
+            endAt: formValue.endAt,
+            companionIds: formValue.companions,
+            travelStyleIds: formValue.travelStyles,
+            interestIds: formValue.interests
+        };
         const editingTrip = this.selectedTrip();
         if (editingTrip) {
-            this.tripsService.updateTrip(editingTrip!.id!, formValue).subscribe(() => {
+            this.tripsService.updateTrip(editingTrip!.id!, payload).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
             });
         } else {
-            this.tripsService.createTrip(formValue).subscribe(() => {
+            this.tripsService.createTrip(payload).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
             });

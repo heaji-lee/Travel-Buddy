@@ -64,12 +64,10 @@ public class TripsRepository {
         trip.StartAt = dto.StartAt;
         trip.EndAt = dto.EndAt;
 
-        // Clear existing relationships
         trip.TripCompanions.Clear();
         trip.TripInterests.Clear();
         trip.TripTravelStyles.Clear();
 
-        // Add new relationships
         trip.TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { TripId = id, CompanionId = cid }).ToList();
         trip.TripInterests = dto.InterestIds.Select(iid => new TripInterest { TripId = id, InterestId = iid }).ToList();
         trip.TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TripId = id, TravelStyleId = tsid }).ToList();

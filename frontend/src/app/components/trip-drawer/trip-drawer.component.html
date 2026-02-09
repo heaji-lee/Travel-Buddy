@@ -1,15 +1,13 @@
-<p-drawer
-    [(visible)]="visible"
-    position="right"
-    [style]="{ width: '50%' }"
-    (onHide)="close()"
->
-
-    <form (ngSubmit)="onSubmit()">
-        <div class="text-center border-b-2 border-gray-200 mb-8">
-            <h1>{{ title }}</h1>
-            <p class="text-gray-500 text-sm pb-5">{{ subTitle }}</p>
+<p-drawer [(visible)]="visible" position="right" [style]="{ width: '50%' }" (onHide)="close()">
+    <ng-template pTemplate="header">
+        <div class="pl-5 pt-3">
+            <div>
+                <h1>{{ title }}</h1>
+                <p class="text-gray-500 text-sm">{{ subTitle }}</p>
+            </div>
         </div>
+    </ng-template>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
         <p-accordion [value]="['0']" [multiple]="true">
             <p-accordion-panel value="0">
@@ -91,9 +89,7 @@
                     <div>
                         <div class="grid grid-cols-2 gap-6">
                             <div class="flex flex-col gap-1">
-                                <label
-                                    for="travelCompanions"
-                                    class="font-semibold text-gray-700"
+                                <label for="travelCompanions" class="font-semibold text-gray-700"
                                     >Who are you traveling with?</label
                                 >
                                 <p-multiselect
@@ -101,7 +97,7 @@
                                     formControlName="companions"
                                     [options]="companions"
                                     optionLabel="name"
-                                    optionsValue="id"
+                                    optionValue="id"
                                     placeholder="Select travel companions"
                                     class="w-full border-2 border-gray-200 rounded-xl"
                                     [filter]="true"
@@ -118,7 +114,7 @@
                                     [options]="travelStyles"
                                     formControlName="travelStyles"
                                     optionLabel="name"
-                                    optionsValue="id"
+                                    optionValue="id"
                                     placeholder="Choose your style"
                                     class="w-full border-2 border-gray-200 rounded-xl"
                                     [filter]="true"
@@ -136,7 +132,7 @@
                                 formControlName="interests"
                                 [options]="interests"
                                 optionLabel="name"
-                                optionsValue="id"
+                                optionValue="id"
                                 placeholder="What interests you?"
                                 class="w-full border-2 border-gray-200 rounded-xl"
                                 [filter]="true"
