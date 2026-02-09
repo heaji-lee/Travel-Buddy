@@ -9,10 +9,12 @@ import { DialogModule } from 'primeng/dialog';
 import { DrawerModule } from 'primeng/drawer';
 
 import { TripsService } from '../../services/trips.service';
+import { CompanionsService } from '../../../manage/services/companions.services';
+import { InterestsService } from '../../../manage/services/interests.services';
+import { TravelStylesService } from '../../../manage/services/travelStyles.services';
 import { PAGE_SIZE } from '../../../../shared/constants';
-import { TripsApiResponse } from '../../models/trips.models';
+import { TripsApiResponse, Trip } from '../../models/trips.models';
 import { TripDrawerComponent } from '../../../../components/trip-drawer/trip-drawer.component';
-import { Trip } from '../../models/trips.models';
 
 @Component({
     selector: 'app-trips-list',
@@ -30,6 +32,9 @@ import { Trip } from '../../models/trips.models';
 })
 export class TripsListComponent {
     private readonly tripsService = inject(TripsService);
+    private readonly companionsService = inject(CompanionsService);
+    private readonly interestsService = inject(InterestsService);
+    private readonly travelStylesService = inject(TravelStylesService);
 
     page = signal(1);
     pageSize = PAGE_SIZE;
@@ -40,9 +45,25 @@ export class TripsListComponent {
     isDrawOpen = false;
     selectedTrip = signal<Trip | null>(null);
 
+    companions = signal<any[]>([]);
+    interests = signal<any[]>([]);
+    travelStyles = signal<any[]>([]);
+
     trips = resource({
         loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
     });
+
+    constructor() {
+        this.companionsService.getPaginatedCompanions(0, 100).subscribe((response) => {
+            this.companions.set(response.items);
+        });
+        this.interestsService.getPaginatedInterests(0, 100).subscribe((response) => {
+            this.interests.set(response.items);
+        });
+        this.travelStylesService.getPaginatedTravelStyles(0, 100).subscribe((response) => {
+            this.travelStyles.set(response.items);
+        });
+    }
 
     totalRecords = computed(() => {
         const value = this.trips.value();
@@ -68,8 +89,15 @@ export class TripsListComponent {
     }
 
     openDraw(trip?: Trip) {
-        this.selectedTrip.set(trip || null);
-        this.isDrawOpen = true;
+        if (trip?.id) {
+            this.tripsService.getTripById(trip.id.toString()).subscribe((fullTrip) => {
+                this.selectedTrip.set(fullTrip);
+                this.isDrawOpen = true;
+            });
+        } else {
+            this.selectedTrip.set(null);
+            this.isDrawOpen = true;
+        }
     }
 
     closeDraw() {
@@ -79,13 +107,13 @@ export class TripsListComponent {
 
     onTripSubmit(formValue: any) {
         const editingTrip = this.selectedTrip();
-        if (!editingTrip) {
-            this.tripsService.createTrip(formValue).subscribe(() => {
+        if (editingTrip) {
+            this.tripsService.updateTrip(editingTrip!.id!, formValue).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
             });
         } else {
-            this.tripsService.updateTrip(editingTrip!.id!, formValue).subscribe(() => {
+            this.tripsService.createTrip(formValue).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
             });

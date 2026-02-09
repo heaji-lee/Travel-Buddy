@@ -44,6 +44,9 @@
     <app-trip-drawer
         [(visible)]="isDrawOpen"
         [selectedTrip]="selectedTrip()"
+        [companions]="companions()"
+        [interests]="interests()"
+        [travelStyles]="travelStyles()"
         (submit)="onTripSubmit($event)"
     ></app-trip-drawer>
   </div>
