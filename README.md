@@ -89,7 +89,13 @@ Travel-Buddy/
    npm install
    ```
 
-3. **Setup Backend**
+3. Database Seup
+    ```bash
+    cd backend
+    dotnet ef database update
+    ```
+
+4. **Setup Backend**
    ```bash
    cd backend
    dotnet restore
