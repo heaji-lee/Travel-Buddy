@@ -18,11 +18,11 @@ public class TravelStylesRepository {
         .Take(take)
         .ToListAsync();
 
-    var total = items.Count;
+    var total = await query.CountAsync();
     return (items, total);
   }
 
-  public async Task<TravelStyle> CreateTravelStyle (TravelStyle travelStyle) {
+  public async Task<TravelStyle> CreateTravelStyle(TravelStyle travelStyle) {
     _context.TravelStyles.Add(travelStyle);
     await _context.SaveChangesAsync();
     return travelStyle;

@@ -113,7 +113,7 @@ export class TripsListComponent {
             endAt: formValue.endAt,
             companionIds: formValue.companions,
             travelStyleIds: formValue.travelStyles,
-            interestIds: formValue.interests
+            interestIds: formValue.interests,
         };
         const editingTrip = this.selectedTrip();
         if (editingTrip) {

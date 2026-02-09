@@ -18,7 +18,7 @@ public class CompanionsRepository {
         .Take(take)
         .ToListAsync();
 
-    var total = items.Count;
+    var total = await query.CountAsync();
     return (items, total);
   }
 
