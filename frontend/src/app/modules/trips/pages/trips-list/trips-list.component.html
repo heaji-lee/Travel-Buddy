@@ -58,14 +58,18 @@
                 </tr>
             </ng-template>
 
-            <ng-template #emptymessage>
-                @if (trips.error()) {
-                    <p>Error while loading trips</p>
-                } @else if (trips.isLoading()) {
-                    <p>Loading trips...</p>
-                } @else {
-                    <p>No trips available.</p>
-                }
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="text-center py-4">
+                        @if (trips.error()) {
+                            <p>Error while loading trips</p>
+                        } @else if (trips.isLoading()) {
+                            <p>Loading trips...</p>
+                        } @else {
+                            <p>No trips available.</p>
+                        }
+                    </td>
+                </tr>
             </ng-template>
         </p-table>
 

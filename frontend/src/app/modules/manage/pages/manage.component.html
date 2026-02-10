@@ -11,35 +11,24 @@
                 <ul class="space-y-2">
                     @if (companions.error()) {
                         <p class="text-red-500">Failed to load companions</p>
-                    }
-                    @if (companions.isLoading()) {
+                    } @else if (companions.isLoading()) {
                         <p>Loading...</p>
-                    }
-                    @if (companions.hasValue()) {
-                        @for (companion of companions.value().items; track companion.id) {
-                            <li class="flex justify-between items-center">
-                                <span>{{ companion.name }}</span>
-                                <button
-                                    (click)="deleteCompanion(companion.id!)"
-                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                                ></button>
-                            </li>
+                    } @else if (companions.hasValue()) {
+                        @if (companions.value().items.length === 0) {
+                            <p>No companions added yet.</p>
+                        } @else {
+                            @for (companion of companions.value().items; track companion.id) {
+                                <li class="flex justify-between items-center">
+                                    <span>{{ companion.name }}</span>
+                                    <button
+                                        (click)="deleteCompanion(companion.id!)"
+                                        class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                    ></button>
+                                </li>
+                            }
                         }
                     }
                 </ul>
-
-                <div>
-                    <p-paginator
-                        (onPageChange)="onCompanionsPageChange($event)"
-                        [first]="(companionsPage() - 1) * pageSize"
-                        [rows]="pageSize"
-                        [totalRecords]="companionsTotalRecords()"
-                        [showCurrentPageReport]="true"
-                        [showPageLinks]="false"
-                        [showJumpToPageDropdown]="false"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                    />
-                </div>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
                     <input
@@ -56,6 +45,26 @@
                         (onClick)="createCompanion(newCompanionName)"
                     />
                 </div>
+
+                <div class="flex gap-3 items-center justify-center pt-3">
+                    <button
+                        type="button"
+                        (click)="prevCompanions()"
+                        [disabled]="isCompanionsFirstPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-left"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        (click)="nextCompanions()"
+                        [disabled]="isCompanionsLastPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-right"></i>
+                    </button>
+                </div>
             </div>
             <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
                 <h2 class="text-xl font-semibold mb-4">
@@ -65,35 +74,24 @@
                 <ul class="space-y-2">
                     @if (interests.error()) {
                         <p class="text-red-500">Failed to load interests</p>
-                    }
-                    @if (interests.isLoading()) {
+                    } @else if (interests.isLoading()) {
                         <p>Loading...</p>
-                    }
-                    @if (interests.hasValue()) {
-                        @for (interest of interests.value().items; track interest.id) {
-                            <li class="flex justify-between items-center">
-                                <span>{{ interest.name }}</span>
-                                <button
-                                    (click)="deleteInterest(interest.id!)"
-                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                                ></button>
-                            </li>
+                    } @else if (interests.hasValue()) {
+                        @if (interests.value().items.length === 0) {
+                            <p>No interests added yet.</p>
+                        } @else {
+                            @for (interest of interests.value().items; track interest.id) {
+                                <li class="flex justify-between items-center">
+                                    <span>{{ interest.name }}</span>
+                                    <button
+                                        (click)="deleteInterest(interest.id!)"
+                                        class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                    ></button>
+                                </li>
+                            }
                         }
                     }
                 </ul>
-
-                <div>
-                    <p-paginator
-                        (onPageChange)="onInterestsPageChange($event)"
-                        [first]="(interestsPage() - 1) * pageSize"
-                        [rows]="pageSize"
-                        [totalRecords]="interestsTotalRecords()"
-                        [showCurrentPageReport]="true"
-                        [showPageLinks]="false"
-                        [showJumpToPageDropdown]="false"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                    />
-                </div>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
                     <input
@@ -110,6 +108,26 @@
                         (onClick)="createInterest(newInterestName)"
                     />
                 </div>
+
+                <div class="flex gap-3 items-center justify-center pt-3">
+                    <button
+                        type="button"
+                        (click)="prevInterests()"
+                        [disabled]="isInterestsFirstPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-left"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        (click)="nextInterests()"
+                        [disabled]="isInterestsLastPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-right"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="rounded-2xl border-2 border-[#c5a257ab] p-4">
@@ -120,35 +138,24 @@
                 <ul class="space-y-2">
                     @if (travelStyles.error()) {
                         <p class="text-red-500">Failed to load travel styles</p>
-                    }
-                    @if (travelStyles.isLoading()) {
+                    } @else if (travelStyles.isLoading()) {
                         <p>Loading...</p>
-                    }
-                    @if (travelStyles.hasValue()) {
-                        @for (style of travelStyles.value().items; track style.id) {
-                            <li class="flex justify-between items-center">
-                                <span>{{ style.name }}</span>
-                                <button
-                                    (click)="deleteTravelStyle(style.id!)"
-                                    class="pi pi-trash cursor-pointer pr-2 text-red-400"
-                                ></button>
-                            </li>
+                    } @else if (travelStyles.hasValue()) {
+                        @if (travelStyles.value().items.length === 0) {
+                            <p>No travel styles added yet.</p>
+                        } @else {
+                            @for (travelStyle of travelStyles.value().items; track travelStyle.id) {
+                                <li class="flex justify-between items-center">
+                                    <span>{{ travelStyle.name }}</span>
+                                    <button
+                                        (click)="deleteTravelStyle(travelStyle.id!)"
+                                        class="pi pi-trash cursor-pointer pr-2 text-red-400"
+                                    ></button>
+                                </li>
+                            }
                         }
                     }
                 </ul>
-
-                <div>
-                    <p-paginator
-                        (onPageChange)="onTravelStylesPageChange($event)"
-                        [first]="(travelStylesPage() - 1) * pageSize"
-                        [rows]="pageSize"
-                        [totalRecords]="travelStylesTotalRecords()"
-                        [showCurrentPageReport]="true"
-                        [showPageLinks]="false"
-                        [showJumpToPageDropdown]="false"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                    />
-                </div>
 
                 <div class="flex justify-between gap-3 pt-4 items-center">
                     <input
@@ -164,6 +171,26 @@
                         size="small"
                         (onClick)="createTravelStyle(newTravelStyleName)"
                     />
+                </div>
+
+                <div class="flex gap-3 items-center justify-center pt-3">
+                    <button
+                        type="button"
+                        (click)="prevTravelStyles()"
+                        [disabled]="isTravelStylesFirstPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-left"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        (click)="nextTravelStyles()"
+                        [disabled]="isTravelStylesLastPage()"
+                        class="icon-button"
+                    >
+                        <i class="pi pi-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>

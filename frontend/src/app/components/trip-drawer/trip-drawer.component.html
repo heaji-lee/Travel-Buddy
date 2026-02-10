@@ -8,7 +8,6 @@
         </div>
     </ng-template>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-
         <p-accordion [value]="['0']" [multiple]="true">
             <p-accordion-panel value="0">
                 <p-accordion-header><p>Basic Information</p></p-accordion-header>
@@ -24,7 +23,7 @@
                                     type="text"
                                     pInputText
                                     placeholder="e.g., Summer in Paris"
-                                    class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
+                                    class="w-full p-3 border border-[#ad9c8e] focus:border-[#ad9c8e]"
                                     formControlName="name"
                                 />
                             </div>
@@ -38,7 +37,7 @@
                                     type="text"
                                     pInputText
                                     placeholder="e.g., Paris"
-                                    class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-yellow-100 focus:border-yellow-300"
+                                    class="w-full p-3 borderborder-[#ad9c8e] focus:border-[#ad9c8e]"
                                     formControlName="city"
                                 />
                             </div>
@@ -54,7 +53,7 @@
                                     ngSkipHydration
                                     appendTo="body"
                                     placeholder="Select start date"
-                                    class="w-full border-gray-200 rounded-xl"
+                                    class="w-full"
                                     showIcon
                                     iconDisplay="input"
                                     dateFormat="dd-MM-yy"
@@ -71,7 +70,7 @@
                                     ngSkipHydration
                                     appendTo="body"
                                     placeholder="Select end date"
-                                    class="w-full border-gray-200 rounded-xl"
+                                    class="w-full"
                                     showIcon
                                     iconDisplay="input"
                                     dateFormat="dd-MM-yy"

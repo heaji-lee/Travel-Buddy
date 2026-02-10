@@ -9,12 +9,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { CompanionsService } from '../services/companions.services';
 import { InterestsService } from '../services/interests.services';
 import { TravelStylesService } from '../services/travelStyles.services';
-import { PAGE_SIZE } from '../../../shared/constants';
-import {
-    CompanionsApiResponse,
-    InterestsApiResponse,
-    TravelStylesApiResponse,
-} from '../models/manage.models';
 
 @Component({
     selector: 'app-manage',
@@ -48,6 +42,16 @@ export class ManageComponent {
     );
     travelStylesTotalRecords = computed(() =>
         this.travelStyles.hasValue() ? this.travelStyles.value().total : 0,
+    );
+
+    companionsTotalPages = computed(() =>
+        Math.ceil(this.companionsTotalRecords() / this.pageSize)
+    );
+    interestsTotalPages = computed(() =>
+        Math.ceil(this.interestsTotalRecords() / this.pageSize)
+    );
+    travelStylesTotalPages = computed(() =>
+        Math.ceil(this.travelStylesTotalRecords() / this.pageSize)
     );
 
     companions = resource({
@@ -119,18 +123,69 @@ export class ManageComponent {
         });
     }
 
-    onCompanionsPageChange(event: any) {
-        this.companionsPage.set(event.page + 1);
-        this.companions.reload();
+    prevCompanions() {
+        if (this.companionsPage() > 1) {
+            this.companionsPage.set(this.companionsPage() - 1);
+            this.companions.reload();
+        }
     }
 
-    onInterestsPageChange(event: any) {
-        this.interestsPage.set(event.page + 1);
-        this.interests.reload();
+    nextCompanions() {
+        if (!this.isCompanionsLastPage()) {
+            this.companionsPage.update((p) => p + 1);
+            this.companions.reload();
+        }
     }
 
-    onTravelStylesPageChange(event: any) {
-        this.travelStylesPage.set(event.page + 1);
-        this.travelStyles.reload();
+    isCompanionsFirstPage() {
+        return this.companionsPage() === 1;
+    }
+
+    isCompanionsLastPage() {
+        return this.companionsPage() >= this.companionsTotalPages();
+    }
+
+    prevInterests() {
+        if (this.interestsPage() > 1) {
+            this.interestsPage.set(this.interestsPage() - 1);
+            this.interests.reload();
+        }
+    }
+
+    nextInterests() {
+        if (!this.isInterestsLastPage()) {
+            this.interestsPage.update((p) => p + 1);
+            this.interests.reload();
+        }
+    }
+
+    isInterestsFirstPage() {
+        return this.interestsPage() === 1;
+    }
+
+    isInterestsLastPage() {
+        return this.interestsPage() >= this.interestsTotalPages();
+    }
+
+    prevTravelStyles() {
+        if (this.travelStylesPage() > 1) {
+            this.travelStylesPage.set(this.travelStylesPage() - 1);
+            this.travelStyles.reload();
+        }
+    }
+
+    nextTravelStyles() {
+        if (!this.isTravelStylesLastPage()) {
+            this.travelStylesPage.update((p) => p + 1);
+            this.travelStyles.reload();
+        }
+    }
+
+    isTravelStylesFirstPage() {
+        return this.travelStylesPage() === 1;
+    }
+
+    isTravelStylesLastPage() {
+        return this.travelStylesPage() >= this.travelStylesTotalPages();
     }
 }
