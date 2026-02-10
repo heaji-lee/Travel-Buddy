@@ -119,16 +119,26 @@ export class TripsListComponent {
         };
         const editingTrip = this.selectedTrip();
         if (editingTrip) {
-            this.tripsService.updateTrip(editingTrip!.id!, payload).subscribe(() => {
-                this.trips.reload();
-                this.closeDraw();
-                this.showToastSuccess();
+            this.tripsService.updateTrip(editingTrip!.id!, payload).subscribe({
+                next: () => {
+                    this.trips.reload();
+                    this.closeDraw();
+                    this.showToastSuccess();
+                },
+                error: () => {
+                    this.showToastError();
+                },
             });
         } else {
-            this.tripsService.createTrip(payload).subscribe(() => {
-                this.trips.reload();
-                this.closeDraw();
-                this.showToastError();
+            this.tripsService.createTrip(payload).subscribe({
+                next: () => {
+                    this.trips.reload();
+                    this.closeDraw();
+                    this.showToastError();
+                },
+                error: () => {
+                    this.showToastError();
+                },
             });
         }
     }
