@@ -1,5 +1,5 @@
 import { Companion, Interest, TravelStyle } from "../../manage/models/manage.models";
-
+import { TripItinerary } from "./tripItinerary.models";
 export interface Trip {
     id?: string;
     name: string;
@@ -9,6 +9,7 @@ export interface Trip {
     companions?: Companion[];
     interests?: Interest[];
     travelStyles?: TravelStyle[];
+    tripItineraries?: TripItinerary[];
 }
 
 export interface TripsApiResponse {

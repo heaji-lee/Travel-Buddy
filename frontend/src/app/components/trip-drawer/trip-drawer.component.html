@@ -145,19 +145,38 @@
             <p-accordion-panel value="2">
                 <p-accordion-header><p>Itinerary Planning</p></p-accordion-header>
                 <p-accordion-content>
-                    <div
-                        class="py-6 bg-yellow-50 border-l-4 border-yellow-300 rounded-lg shadow-sm p-6"
-                    >
-                        <p class="text-sm text-gray-600 mb-2">📅 Daily itinerary builder</p>
-                        <p class="text-xs text-gray-500">
-                            This section will be enabled once you select your travel dates above
-                        </p>
-                        <ul class="mt-4 text-xs text-gray-500 list-disc list-inside space-y-1">
-                            <li>Plan activities for each day</li>
-                            <li>Estimate daily costs</li>
-                            <li>Add notes and reminders</li>
-                        </ul>
-                    </div>
+                    <p-table [value]="tripItinerariesArray.controls">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Day</th>
+                                <th>Notes</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-day let-i="rowIndex">
+                            <tr [formGroup]="day">
+                                <td>
+                                    <div class="flex flex-col items-center">
+                                        <span>Day {{ day.get('dayNumber')?.value }}</span>
+                                        <span class="text-gray-500 text-sm">
+                                            {{
+                                                getDateForDay(day.get('dayNumber')?.value)
+                                                    | date: 'dd MMM yyyy'
+                                            }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input
+                                        pInputText
+                                        type="text"
+                                        formControlName="notes"
+                                        class="w-full"
+                                    />
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </p-accordion-content>
             </p-accordion-panel>
 
@@ -222,7 +241,7 @@
                 icon="pi pi-check"
                 rounded="true"
                 class="text-white transition px-6 py-3 font-semibold"
-                [disabled]="!form.get('name')?.value || !form.get('city')?.value"
+                [disabled]="!form.get('name')?.value || !form.get('city')?.value || isSubmitting()"
             />
         </div>
     </form>

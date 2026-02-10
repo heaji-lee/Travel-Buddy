@@ -34,6 +34,8 @@ public class TripsController(TripsService tripsService) : ControllerBase {
     try {
       var createdTrip = await tripsService.CreateTrip(modifyTripRequestDto);
       var trip = await tripsService.GetTripById(createdTrip.Id);
+      if (trip == null) return NotFound($"Trip with ID {createdTrip.Id} not found.");
+
       return Ok(TripDto.FromModel(trip));
     }
     catch (Exception ex) {
@@ -58,7 +60,9 @@ public class TripsController(TripsService tripsService) : ControllerBase {
   public async Task<IActionResult> GetTripById(int id) {
     try {
       var trip = await tripsService.GetTripById(id);
-      var dtoTrip = trip != null ? TripDto.FromModel(trip) : null;
+      if (trip == null) return NotFound($"Trip with ID {id} not found.");
+
+      var dtoTrip = TripDto.FromModel(trip);
       return Ok(dtoTrip);
     }
     catch (Exception ex) {
@@ -81,10 +85,21 @@ public class TripsController(TripsService tripsService) : ControllerBase {
       if (!updated) return NotFound($"Trip with ID {id} could not be updated");
 
       var updatedTrip = await tripsService.GetTripById(id);
+      if (updatedTrip == null) return NotFound($"Trip with ID {id} not found.");
+
       return Ok(TripDto.FromModel(updatedTrip));
     }
     catch (Exception ex) {
       return BadRequest(ex.Message);
     }
+  }
+
+  // GET: api/{id}/itinerary
+  [HttpGet("{id}/itinerary")]
+  public async Task<IActionResult> GetItinerary([FromRoute]int id) {
+    var days = await tripsService.GetItinerary(id);
+
+    var dtoTripDays = days.Select(TripDayDto.FromModel);
+    return Ok(dtoTripDays);
   }
 }

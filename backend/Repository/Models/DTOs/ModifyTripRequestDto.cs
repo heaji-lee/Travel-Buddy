@@ -9,4 +9,5 @@ public class ModifyTripRequestDto {
   public List<int> CompanionIds { get; set; } = new();
   public List<int> InterestIds { get; set; } = new();
   public List<int> TravelStyleIds { get; set; } = new();
+  public List<TripDayDto> TripItineraries { get; set; } = new();
 }

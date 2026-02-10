@@ -1,12 +1,23 @@
-import { Component, Input, Output, EventEmitter, inject, SimpleChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    inject,
+    SimpleChanges,
+    signal,
+    computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { Trip } from '../../modules/trips/models/trips.models';
 
@@ -20,7 +31,9 @@ import { Trip } from '../../modules/trips/models/trips.models';
         AccordionModule,
         DatePickerModule,
         MultiSelectModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TableModule,
+        InputTextModule,
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
@@ -41,36 +54,66 @@ export class TripDrawerComponent {
     @Output() visibleChange = new EventEmitter<boolean>();
     @Output() submit = new EventEmitter<any>();
 
+    startAt = signal<Date | null>(null);
+    endAt = signal<Date | null>(null);
+
+    isSubmitting = signal(false);
+
     form!: FormGroup;
+
+    tripItineraries = computed(() => {
+        const start = this.startAt();
+        const end = this.endAt();
+
+        if (!start || !end) return this.fb.array([]);
+
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        if (endDate < startDate) return this.fb.array([]);
+
+        const days =
+            Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+        // Keep existing notes if present
+        const existingNotes = (this.form.get('tripItineraries') as FormArray)?.value || [];
+
+        return this.fb.array(
+            Array.from({ length: days }, (_, i) =>
+                this.fb.group({
+                    dayNumber: [i + 1, Validators.required],
+                    notes: [existingNotes[i]?.notes || ''],
+                }),
+            ),
+        );
+    });
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['selectedTrip']) {
             const trip = changes['selectedTrip'].currentValue as Trip | null;
-            
-            if (trip?.id) {
-                this.form = this.fb.group({
-                    name: [trip.name, Validators.required],
-                    city: [trip.city, Validators.required],
-                    startAt: [new Date(trip.startAt), Validators.required],
-                    endAt: [new Date(trip.endAt), Validators.required],
-                    companions: [(trip.companions ?? []).map(c => c.id)],
-                    travelStyles: [(trip.travelStyles ?? []).map(c => c.id)],
-                    interests: [(trip.interests ?? []).map(c => c.id)],
-                });
-                this.setInitialValues(true);
-            } else {
-                this.form = this.fb.group({
-                    name: ['', Validators.required],
-                    city: ['', Validators.required],
-                    startAt: ['', Validators.required],
-                    endAt: ['', Validators.required],
-                    companions: [[]],
-                    travelStyles: [[]],
-                    interests: [[]],
-                });
-                this.setInitialValues(false);
-            }
+            this.buildForm(trip);
         }
+    }
+
+    private buildForm(trip: Trip | null) {
+        this.startAt.set(trip?.startAt ? new Date(trip.startAt) : null);
+        this.endAt.set(trip?.endAt ? new Date(trip.endAt) : null);
+
+        this.form = this.fb.group({
+            name: [trip?.name || '', Validators.required],
+            city: [trip?.city || '', Validators.required],
+            startAt: [this.startAt(), Validators.required],
+            endAt: [this.endAt(), Validators.required],
+            companions: [trip?.companions?.map((c) => c.id) || []],
+            travelStyles: [trip?.travelStyles?.map((t) => t.id) || []],
+            interests: [trip?.interests?.map((i) => i.id) || []],
+            tripItineraries: this.fb.array([]),
+        });
+
+        this.setInitialValues(!!trip?.id);
+    }
+
+    get tripItinerariesArray(): FormArray {
+        return this.tripItineraries() as FormArray;
     }
 
     private setInitialValues(isExistingTrip: boolean) {
@@ -81,10 +124,18 @@ export class TripDrawerComponent {
         this.submitLabel = isExistingTrip ? 'Update Trip' : 'Create Trip';
     }
 
+    getDateForDay(dayNumber: number | null): Date | null {
+        if (!dayNumber || !this.form.get('startAt')?.value) return null;
+        const startDate = new Date(this.form.get('startAt')!.value);
+        startDate.setDate(startDate.getDate() + dayNumber - 1);
+        return startDate;
+    }
+
     onSubmit() {
-        if (this.form.valid) {
-            this.submit.emit(this.form.value);
-        }
+        if (this.form.invalid || this.isSubmitting()) return;
+
+        this.isSubmitting.set(true);
+        this.submit.emit(this.form.value);
     }
 
     close() {

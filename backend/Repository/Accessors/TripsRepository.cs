@@ -30,6 +30,7 @@ public class TripsRepository {
         .Include(t => t.TripCompanions).ThenInclude(tc => tc.Companion)
         .Include(t => t.TripInterests).ThenInclude(ti => ti.Interest)
         .Include(t => t.TripTravelStyles).ThenInclude(tts => tts.TravelStyle)
+        .Include(t => t.TripItineraries)
         .AsSplitQuery()
         .FirstOrDefaultAsync(t => t.Id == id);
   }
@@ -42,7 +43,11 @@ public class TripsRepository {
       EndAt = dto.EndAt,
       TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { CompanionId = cid }).ToList(),
       TripInterests = dto.InterestIds.Select(iid => new TripInterest { InterestId = iid }).ToList(),
-      TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TravelStyleId = tsid }).ToList()
+      TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TravelStyleId = tsid }).ToList(),
+      TripItineraries = dto.TripItineraries.Select(ti => new TripItinerary {
+        DayNumber = ti.DayNumber,
+        Notes = ti.Notes
+      }).ToList()
     };
 
     _context.Trips.Add(trip);
@@ -67,10 +72,16 @@ public class TripsRepository {
     trip.TripCompanions.Clear();
     trip.TripInterests.Clear();
     trip.TripTravelStyles.Clear();
+    trip.TripItineraries.Clear();
 
     trip.TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { TripId = id, CompanionId = cid }).ToList();
     trip.TripInterests = dto.InterestIds.Select(iid => new TripInterest { TripId = id, InterestId = iid }).ToList();
     trip.TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TripId = id, TravelStyleId = tsid }).ToList();
+    trip.TripItineraries = dto.TripItineraries.Select(ti => new TripItinerary {
+      TripId = id,
+      DayNumber = ti.DayNumber,
+      Notes = ti.Notes
+    }).ToList();
 
     await _context.SaveChangesAsync();
     return true;
@@ -82,5 +93,13 @@ public class TripsRepository {
 
     _context.Trips.Remove(trip);
     await _context.SaveChangesAsync();
+  }
+
+  public async Task<List<TripItinerary>> GetItinerary(int id) {
+    return await _context.TripItineraries
+      .AsNoTracking()
+      .Where(ti => ti.TripId == id)
+      .OrderBy(ti => ti.DayNumber)
+      .ToListAsync();
   }
 }

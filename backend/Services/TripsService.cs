@@ -21,11 +21,15 @@ public class TripsService(TripsRepository tripsRepository) {
     await tripsRepository.DeleteTrip(id);
   }
 
-  public async Task<Trip> GetTripById(int id) {
+  public async Task<Trip?> GetTripById(int id) {
     return await tripsRepository.GetTripById(id);
   }
 
   public async Task<bool> UpdateTrip(int id, ModifyTripRequestDto modifyTripRequestDto) {
     return await tripsRepository.UpdateTrip(id, modifyTripRequestDto);
+  }
+
+  public async Task<List<TripItinerary>> GetItinerary (int id) {
+    return await tripsRepository.GetItinerary(id);
   }
 }

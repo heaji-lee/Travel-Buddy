@@ -118,12 +118,14 @@ export class TripsListComponent {
             interestIds: formValue.interests,
         };
         const editingTrip = this.selectedTrip();
+        const isUpdate = !!editingTrip;
+
         if (editingTrip) {
             this.tripsService.updateTrip(editingTrip!.id!, payload).subscribe({
                 next: () => {
-                    this.trips.reload();
+                    this.showToastSuccess(isUpdate);
                     this.closeDraw();
-                    this.showToastSuccess();
+                    this.trips.reload();
                 },
                 error: () => {
                     this.showToastError();
@@ -132,9 +134,9 @@ export class TripsListComponent {
         } else {
             this.tripsService.createTrip(payload).subscribe({
                 next: () => {
-                    this.trips.reload();
+                    this.showToastSuccess(isUpdate);
                     this.closeDraw();
-                    this.showToastError();
+                    this.trips.reload();
                 },
                 error: () => {
                     this.showToastError();
@@ -143,14 +145,12 @@ export class TripsListComponent {
         }
     }
 
-    showToastSuccess() {
+    showToastSuccess(isUpdate: boolean) {
         this.messageService.add({
             key: 'globalToast',
             severity: 'success',
-            summary: this.selectedTrip() ? 'Trip updated' : 'Trip created',
-            detail: this.selectedTrip()
-                ? 'Your changes have been saved'
-                : 'Your trip is ready to go',
+            summary: isUpdate ? 'Trip updated' : 'Trip created',
+            detail: isUpdate ? 'Your changes have been saved' : 'Your trip is ready to go',
             life: 3000,
         });
     }
