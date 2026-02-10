@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
 import { DrawerModule } from 'primeng/drawer';
+import { MessageService } from 'primeng/api';
 
 import { TripsService } from '../../services/trips.service';
 import { CompanionsService } from '../../../manage/services/companions.services';
@@ -35,6 +36,7 @@ export class TripsListComponent {
     private readonly companionsService = inject(CompanionsService);
     private readonly interestsService = inject(InterestsService);
     private readonly travelStylesService = inject(TravelStylesService);
+    private readonly messageService = inject(MessageService);
 
     page = signal(1);
     pageSize = PAGE_SIZE;
@@ -120,12 +122,36 @@ export class TripsListComponent {
             this.tripsService.updateTrip(editingTrip!.id!, payload).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
+                this.showToastSuccess();
             });
         } else {
             this.tripsService.createTrip(payload).subscribe(() => {
                 this.trips.reload();
                 this.closeDraw();
+                this.showToastError();
             });
         }
+    }
+
+    showToastSuccess() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'success',
+            summary: this.selectedTrip() ? 'Trip updated' : 'Trip created',
+            detail: this.selectedTrip()
+                ? 'Your changes have been saved'
+                : 'Your trip is ready to go',
+            life: 3000,
+        });
+    }
+
+    showToastError() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'error',
+            summary: 'Something went wrong',
+            detail: 'Please try again later',
+            life: 3000,
+        });
     }
 }

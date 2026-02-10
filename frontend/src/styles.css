@@ -80,3 +80,7 @@ body {
     opacity: 0.4;
     cursor: default;
 }
+
+.p.datepicker-input {
+    border-color: #9a8a7e !important;
+}
