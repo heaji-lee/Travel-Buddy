@@ -24,4 +24,5 @@ public class Trip {
   public ICollection<TripCompanion> TripCompanions { get; set; } = new List<TripCompanion>();
   public ICollection<TripInterest> TripInterests { get; set; } = new List<TripInterest>();
   public ICollection<TripTravelStyle> TripTravelStyles { get; set; } = new List<TripTravelStyle>();
+  public ICollection<TripItinerary> TripItineraries { get; set; } = new List<TripItinerary>();
 }

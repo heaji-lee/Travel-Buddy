@@ -14,6 +14,7 @@ namespace TravelBuddy.Data {
     public DbSet<TripInterest> TripInterests { get; set; }
     public DbSet<TravelStyle> TravelStyles { get; set; }
     public DbSet<TripTravelStyle> TripTravelStyles { get; set; }
+    public DbSet<TripItinerary> TripItineraries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
       base.OnModelCreating(modelBuilder);
@@ -25,6 +26,7 @@ namespace TravelBuddy.Data {
       modelBuilder.Entity<TripCompanion>().ToTable("trip_companions");
       modelBuilder.Entity<TripInterest>().ToTable("trip_interests");
       modelBuilder.Entity<TripTravelStyle>().ToTable("trip_travel_styles");
+      modelBuilder.Entity<TripItinerary>().ToTable("trip_itineraries");
 
       modelBuilder.Entity<TripCompanion>()
           .HasKey(tc => new { tc.TripId, tc.CompanionId });
@@ -65,6 +67,12 @@ namespace TravelBuddy.Data {
           .WithMany(ts => ts.TripTravelStyles)
           .HasForeignKey(tts => tts.TravelStyleId);
 
+      modelBuilder.Entity<TripItinerary>()
+          .HasOne(ti => ti.Trip)
+          .WithMany(t => t.TripItineraries)
+          .HasForeignKey(ti => ti.TripId)
+          .OnDelete(DeleteBehavior.Cascade);
+
       modelBuilder.Entity<Trip>().HasIndex(t => t.City);
       modelBuilder.Entity<Trip>().HasIndex(t => t.StartAt);
       modelBuilder.Entity<Trip>().HasIndex(t => t.EndAt);
@@ -77,6 +85,9 @@ namespace TravelBuddy.Data {
 
       modelBuilder.Entity<TripTravelStyle>().HasIndex(tts => new { tts.TripId, tts.TravelStyleId });
       modelBuilder.Entity<TripTravelStyle>().HasIndex(tts => tts.TravelStyleId);
+
+      modelBuilder.Entity<TripItinerary>().HasIndex(ti => new { ti.TripId, ti.DayNumber }).IsUnique();
+      modelBuilder.Entity<TripItinerary>().HasIndex(ti => ti.TripId);
     }
   }
 }
