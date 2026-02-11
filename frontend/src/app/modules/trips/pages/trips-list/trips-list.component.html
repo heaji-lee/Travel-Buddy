@@ -1,9 +1,9 @@
 <div class="min-h-full flex items-center justify-center p-6">
-    <div class="bg-white p-5 rounded-xl shadow-2xl w-full max-w-4xl">
-        <div class="flex justify-end mb-4">
-            <p-button rounded label="Create Trip" icon="pi pi-plus" (onClick)="openDraw()" />
-        </div>
-
+  <div class="flex flex-col">
+    <div class="flex justify-end mb-4">
+        <p-button rounded label="Create Trip" icon="pi pi-plus" (onClick)="openDraw()" />
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow-2xl max-w-4xl">
         <p-table
             [value]="trips.value()?.items || []"
             [customSort]="true"
@@ -95,5 +95,6 @@
             [travelStyles]="travelStyles()"
             (submit)="onTripSubmit($event)"
         ></app-trip-drawer>
+    </div>
     </div>
 </div>
