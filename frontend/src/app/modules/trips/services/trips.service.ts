@@ -11,10 +11,12 @@ import { TripItinerary } from '../models/tripItinerary.models';
 export class TripsService {
     private readonly http = inject(HttpClient);
 
-    getPaginatedTrips(skip: number, take: number) {
+    getPaginatedTrips(skip: number, take: number, sortField: string = 'City', sortDirection: string = 'Ascending') {
         const params = {
             skip,
             take,
+            sortField,
+            sortDirection
         };
 
         return this.http.get<TripsApiResponse>(`${API_URL}/api/trips`, { params }).pipe(

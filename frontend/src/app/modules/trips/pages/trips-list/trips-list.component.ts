@@ -47,12 +47,23 @@ export class TripsListComponent {
     isDrawOpen = false;
     selectedTrip = signal<Trip | null>(null);
 
+    sortField = signal<'Id'| 'City' | 'StartDate' | 'EndDate'>('Id');
+    sortDirection = signal<'Ascending' | 'Descending'>('Ascending');
+
     companions = signal<any[]>([]);
     interests = signal<any[]>([]);
     travelStyles = signal<any[]>([]);
 
     trips = resource({
-        loader: () => firstValueFrom(this.tripsService.getPaginatedTrips(this.skip(), PAGE_SIZE)),
+        loader: () =>
+            firstValueFrom(
+                this.tripsService.getPaginatedTrips(
+                    this.skip(),
+                    PAGE_SIZE,
+                    this.sortField(),
+                    this.sortDirection(),
+                ),
+            ),
     });
 
     constructor() {
@@ -172,5 +183,12 @@ export class TripsListComponent {
             detail: 'Please try again later',
             life: 3000,
         });
+    }
+
+    sortBy(event: { field: string; order: number }) {
+        this.sortField.set(
+            event.field === 'id' ? 'Id' : event.field === 'city' ? 'City' : event.field === 'startDate' ? 'StartDate' : 'EndDate',
+        );
+        this.sortDirection.set(event.order === 1 ? 'Ascending' : 'Descending');
     }
 }

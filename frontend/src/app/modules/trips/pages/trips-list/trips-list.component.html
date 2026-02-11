@@ -4,13 +4,17 @@
             <p-button rounded label="Create Trip" icon="pi pi-plus" (onClick)="openDraw()" />
         </div>
 
-        <p-table [value]="trips.value()?.items || []">
+        <p-table
+            [value]="trips.value()?.items || []"
+            [customSort]="true"
+            (sortFunction)="sortBy($event)"
+        >
             <ng-template pTemplate="header">
                 <tr>
                     <th>Trip Name</th>
-                    <th>City</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th pSortableColumn="city">City <p-sortIcon field="city" /></th>
+                    <th pSortableColumn="startDate">Start Date <p-sortIcon field="startDate" /></th>
+                    <th pSortableColumn="endDate">End Date <p-sortIcon field="endDate" /></th>
                     <th></th>
                     <th></th>
                 </tr>

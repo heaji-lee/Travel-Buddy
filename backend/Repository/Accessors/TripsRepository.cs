@@ -12,7 +12,7 @@ public class TripsRepository {
     _context = context;
   }
 
-  public async Task<(List<Trip> Items, int Total)> GetTripsPage(int skip, int take) {
+  public async Task<(List<Trip> Items, int Total)> GetTripsPage(int skip, int take, string sortField, SortDirection sortDirection) {
     var query = _context.Trips
         .AsNoTracking()
         .AsSplitQuery()

@@ -11,8 +11,13 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // GET: api/trips?skip=0&take=10
   [HttpGet]
-  public async Task<IActionResult> GetTrips([FromQuery] int skip = 0, [FromQuery] int take = 10) {
-    var (trips, total) = await tripsService.GetTripsPage(skip, take);
+  public async Task<IActionResult> GetTrips(
+    [FromQuery] int skip = 0,
+    [FromQuery] int take = 10,
+    [FromQuery] string sortField = "Id",
+    [FromQuery] SortDirection sortDirection = SortDirection.Ascending
+    ) {
+    var (trips, total) = await tripsService.GetTripsPage(skip, take, sortField, sortDirection);
 
     var dtoTrips = trips
         .Select(TripDto.FromModel)
@@ -96,7 +101,7 @@ public class TripsController(TripsService tripsService) : ControllerBase {
 
   // GET: api/{id}/itinerary
   [HttpGet("{id}/itinerary")]
-  public async Task<IActionResult> GetItinerary([FromRoute]int id) {
+  public async Task<IActionResult> GetItinerary([FromRoute] int id) {
     var days = await tripsService.GetItinerary(id);
 
     var dtoTripDays = days.Select(TripDayDto.FromModel);
