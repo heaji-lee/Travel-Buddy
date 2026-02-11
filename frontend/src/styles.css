@@ -22,7 +22,6 @@ body {
     overflow: hidden;
 }
 
-/* Button styles */
 .p-button {
     background-color: #ad9c8e !important;
     border-color: #ad9c8e !important;
@@ -37,7 +36,7 @@ body {
     color: white !important;
 }
 
-.p-input {
+.p-inputtext {
     border-color: #ad9c8e !important;
 }
 
@@ -82,5 +81,9 @@ body {
 }
 
 .p.datepicker-input {
+    border-color: #9a8a7e !important;
+}
+
+.p-textarea {
     border-color: #9a8a7e !important;
 }

@@ -6,7 +6,6 @@ import {
     inject,
     SimpleChanges,
     signal,
-    computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
@@ -18,6 +17,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 
 import { Trip } from '../../modules/trips/models/trips.models';
 import { TRIP_ITINERARIES } from '../../shared/constants';
@@ -35,6 +35,7 @@ import { TRIP_ITINERARIES } from '../../shared/constants';
         ReactiveFormsModule,
         TableModule,
         InputTextModule,
+        TextareaModule
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
