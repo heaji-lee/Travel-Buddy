@@ -57,35 +57,7 @@ export class TripDrawerComponent {
     startAt = signal<Date | null>(null);
     endAt = signal<Date | null>(null);
 
-    isSubmitting = signal(false);
-
     form!: FormGroup;
-
-    tripItineraries = computed(() => {
-        const start = this.startAt();
-        const end = this.endAt();
-
-        if (!start || !end) return this.fb.array([]);
-
-        const startDate = new Date(start);
-        const endDate = new Date(end);
-        if (endDate < startDate) return this.fb.array([]);
-
-        const days =
-            Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-
-        // Keep existing notes if present
-        const existingNotes = (this.form.get('tripItineraries') as FormArray)?.value || [];
-
-        return this.fb.array(
-            Array.from({ length: days }, (_, i) =>
-                this.fb.group({
-                    dayNumber: [i + 1, Validators.required],
-                    notes: [existingNotes[i]?.notes || ''],
-                }),
-            ),
-        );
-    });
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['selectedTrip']) {
@@ -109,11 +81,54 @@ export class TripDrawerComponent {
             tripItineraries: this.fb.array([]),
         });
 
+        this.form.get('startAt')?.valueChanges.subscribe((date) => {
+            this.startAt.set(date);
+            this.updateItineraries();
+        });
+
+        this.form.get('endAt')?.valueChanges.subscribe((date) => {
+            this.endAt.set(date);
+            this.updateItineraries();
+        });
+
+        this.updateItineraries();
         this.setInitialValues(!!trip?.id);
     }
 
+    private updateItineraries() {
+        const start = this.startAt();
+        const end = this.endAt();
+
+        if (!start || !end) {
+            this.form.setControl('tripItineraries', this.fb.array([]));
+            return;
+        }
+
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        if (endDate < startDate) {
+            this.form.setControl('tripItineraries', this.fb.array([]));
+            return;
+        }
+
+        const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        const existingNotes = (this.form.get('tripItineraries') as FormArray)?.value || [];
+
+        const tripItinerariesArray = this.fb.array(
+            Array.from({ length: days }, (_, i) =>
+                this.fb.group({
+                    dayNumber: [i + 1, Validators.required],
+                    notes: [existingNotes[i]?.notes || ''],
+                }),
+            ),
+        );
+
+        this.form.setControl('tripItineraries', tripItinerariesArray)
+    }
+
     get tripItinerariesArray(): FormArray {
-        return this.tripItineraries() as FormArray;
+        return this.form.get('tripItineraries') as FormArray;
     }
 
     private setInitialValues(isExistingTrip: boolean) {
@@ -132,9 +147,8 @@ export class TripDrawerComponent {
     }
 
     onSubmit() {
-        if (this.form.invalid || this.isSubmitting()) return;
+        if (this.form.invalid) return;
 
-        this.isSubmitting.set(true);
         this.submit.emit(this.form.value);
     }
 

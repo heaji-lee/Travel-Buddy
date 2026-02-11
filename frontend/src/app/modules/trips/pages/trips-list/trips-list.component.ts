@@ -116,6 +116,10 @@ export class TripsListComponent {
             companionIds: formValue.companions,
             travelStyleIds: formValue.travelStyles,
             interestIds: formValue.interests,
+            tripItineraries: formValue.tripItineraries.map((itinerary: any) => ({
+                dayNumber: itinerary.dayNumber,
+                notes: itinerary.notes,
+            })),
         };
         const editingTrip = this.selectedTrip();
         const isUpdate = !!editingTrip;
