@@ -30,7 +30,6 @@ public class TripsRepository {
         .Include(t => t.TripCompanions).ThenInclude(tc => tc.Companion)
         .Include(t => t.TripInterests).ThenInclude(ti => ti.Interest)
         .Include(t => t.TripTravelStyles).ThenInclude(tts => tts.TravelStyle)
-        .Include(t => t.TripItineraries)
         .AsSplitQuery()
         .FirstOrDefaultAsync(t => t.Id == id);
   }
@@ -60,6 +59,7 @@ public class TripsRepository {
         .Include(t => t.TripCompanions)
         .Include(t => t.TripInterests)
         .Include(t => t.TripTravelStyles)
+        .Include(t => t.TripItineraries)
         .FirstOrDefaultAsync(t => t.Id == id);
 
     if (trip == null) return false;

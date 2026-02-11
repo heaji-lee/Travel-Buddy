@@ -20,6 +20,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { Trip } from '../../modules/trips/models/trips.models';
+import { TRIP_ITINERARIES } from '../../shared/constants';
 
 @Component({
     selector: 'app-trip-drawer',
@@ -69,7 +70,6 @@ export class TripDrawerComponent {
     private buildForm(trip: Trip | null) {
         this.startAt.set(trip?.startAt ? new Date(trip.startAt) : null);
         this.endAt.set(trip?.endAt ? new Date(trip.endAt) : null);
-
         this.form = this.fb.group({
             name: [trip?.name || '', Validators.required],
             city: [trip?.city || '', Validators.required],
@@ -78,7 +78,14 @@ export class TripDrawerComponent {
             companions: [trip?.companions?.map((c) => c.id) || []],
             travelStyles: [trip?.travelStyles?.map((t) => t.id) || []],
             interests: [trip?.interests?.map((i) => i.id) || []],
-            tripItineraries: this.fb.array([]),
+            tripItineraries: this.fb.array(
+                trip?.tripItineraries?.map((day) =>
+                    this.fb.group({
+                        dayNumber: [day.dayNumber, Validators.required],
+                        notes: [day.notes || ''],
+                    }),
+                ) || [],
+            ),
         });
 
         this.form.get('startAt')?.valueChanges.subscribe((date) => {
@@ -91,7 +98,10 @@ export class TripDrawerComponent {
             this.updateItineraries();
         });
 
-        this.updateItineraries();
+        if (!trip?.tripItineraries?.length) {
+            this.updateItineraries();
+        }
+
         this.setInitialValues(!!trip?.id);
     }
 
@@ -100,7 +110,7 @@ export class TripDrawerComponent {
         const end = this.endAt();
 
         if (!start || !end) {
-            this.form.setControl('tripItineraries', this.fb.array([]));
+            this.form.setControl(TRIP_ITINERARIES, this.fb.array([]));
             return;
         }
 
@@ -108,12 +118,13 @@ export class TripDrawerComponent {
         const endDate = new Date(end);
 
         if (endDate < startDate) {
-            this.form.setControl('tripItineraries', this.fb.array([]));
+            this.form.setControl(TRIP_ITINERARIES, this.fb.array([]));
             return;
         }
 
-        const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-        const existingNotes = (this.form.get('tripItineraries') as FormArray)?.value || [];
+        const days =
+            Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        const existingNotes = (this.form.get(TRIP_ITINERARIES) as FormArray)?.value || [];
 
         const tripItinerariesArray = this.fb.array(
             Array.from({ length: days }, (_, i) =>
@@ -124,11 +135,11 @@ export class TripDrawerComponent {
             ),
         );
 
-        this.form.setControl('tripItineraries', tripItinerariesArray)
+        this.form.setControl(TRIP_ITINERARIES, tripItinerariesArray);
     }
 
     get tripItinerariesArray(): FormArray {
-        return this.form.get('tripItineraries') as FormArray;
+        return this.form.get(TRIP_ITINERARIES) as FormArray;
     }
 
     private setInitialValues(isExistingTrip: boolean) {

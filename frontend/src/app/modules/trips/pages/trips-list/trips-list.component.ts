@@ -91,10 +91,15 @@ export class TripsListComponent {
     }
 
     openDraw(trip?: Trip) {
-        if (trip?.id) {
-            this.tripsService.getTripById(trip.id.toString()).subscribe((fullTrip) => {
-                this.selectedTrip.set(fullTrip);
-                this.isDrawOpen = true;
+        const id = trip?.id?.toString();
+
+        if (id) {
+            this.tripsService.getTripById(id).subscribe((fullTrip) => {
+                this.tripsService.getTripItineraries(id).subscribe((itinerary) => {
+                    fullTrip.tripItineraries = itinerary;
+                    this.selectedTrip.set(fullTrip);
+                    this.isDrawOpen = true;
+                });
             });
         } else {
             this.selectedTrip.set(null);
