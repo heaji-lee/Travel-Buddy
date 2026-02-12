@@ -15,8 +15,23 @@ public class TripsRepository {
   public async Task<(List<Trip> Items, int Total)> GetTripsPage(int skip, int take, string sortField, SortDirection sortDirection) {
     var query = _context.Trips
         .AsNoTracking()
-        .AsSplitQuery()
-        .OrderBy(t => t.Id);
+        .AsSplitQuery();
+
+    query = sortField?.ToLower() switch {
+      "name" => sortDirection == SortDirection.Ascending
+        ? query.OrderBy(t => t.Name)
+        : query.OrderByDescending(t => t.Name),
+      "city" => sortDirection == SortDirection.Ascending
+        ? query.OrderBy(t => t.City)
+        : query.OrderByDescending(t => t.City),
+      "startAt" => sortDirection == SortDirection.Ascending
+        ? query.OrderBy(t => t.StartAt)
+        : query.OrderByDescending(t => t.StartAt),
+      "endAt" => sortDirection == SortDirection.Ascending
+        ? query.OrderBy(t => t.EndAt)
+        : query.OrderByDescending(t => t.EndAt),
+      _ => query.OrderBy(t => t.Id)
+    };
 
     var total = await query.CountAsync();
     var items = await query.Skip(skip).Take(take).ToListAsync();
