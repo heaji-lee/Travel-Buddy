@@ -37,6 +37,8 @@ builder.Services.AddScoped<InterestsRepository>();
 builder.Services.AddScoped<InterestsService>();
 builder.Services.AddScoped<TravelStylesRepository>();
 builder.Services.AddScoped<TravelStylesService>();
+builder.Services.AddScoped<DestinationsRepository>();
+builder.Services.AddScoped<DestinationsService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -64,5 +66,9 @@ app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+await DbSeeder.SeedAllAsync(context);
 
 app.Run();

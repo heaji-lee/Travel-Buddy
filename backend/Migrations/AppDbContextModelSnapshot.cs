@@ -41,6 +41,37 @@ namespace TravelBuddy.Migrations
                     b.ToTable("companions", (string)null);
                 });
 
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Destination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City");
+
+                    b.HasIndex("Country");
+
+                    b.HasIndex("City", "Country")
+                        .IsUnique();
+
+                    b.ToTable("destinations", (string)null);
+                });
+
             modelBuilder.Entity("TravelBuddy.Repository.Models.Interest", b =>
                 {
                     b.Property<int>("Id")
