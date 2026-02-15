@@ -32,14 +32,21 @@
                                 <label for="destination" class="font-semibold text-gray-700"
                                     >Destination</label
                                 >
-                                <input
+                                <p-autocomplete
                                     id="destination"
-                                    type="text"
-                                    pInputText
+                                    [suggestions]="destinations()"
+                                    (completeMethod)="searchDestinations($event)"
                                     placeholder="e.g., Paris"
-                                    class="w-full p-3 border border-[#ad9c8e] rounded-xl focus:outline-none"
-                                    formControlName="city"
-                                />
+                                    class="w-50"
+                                    formControlName="destination"
+                                    [dropdown]="false"
+                                    [forceSelection]="false"
+                                    [showClear]="true"
+                                >
+                                    <ng-template let-item pTemplate="item">
+                                        {{ item.city }}, {{ item.country }}
+                                    </ng-template>
+                                </p-autocomplete>
                             </div>
                         </div>
 
@@ -240,7 +247,7 @@
                 icon="pi pi-check"
                 rounded="true"
                 class="text-white transition px-6 py-3 font-semibold"
-                [disabled]="!form.get('name')?.value || !form.get('city')?.value"
+                [disabled]="!form.get('name')?.value || !form.get('destination')?.value"
                 (onClick)="onSubmit()"
             />
         </div>

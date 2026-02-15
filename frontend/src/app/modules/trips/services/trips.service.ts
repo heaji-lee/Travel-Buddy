@@ -4,6 +4,7 @@ import { Trip, TripsApiResponse } from '../models/trips.models';
 import { map } from 'rxjs/internal/operators/map';
 import { API_URL } from '../../../shared/constants';
 import { TripItinerary } from '../models/tripItinerary.models';
+import { Destination } from '../models/destinations.models';
 
 @Injectable({
     providedIn: 'root',
@@ -11,12 +12,17 @@ import { TripItinerary } from '../models/tripItinerary.models';
 export class TripsService {
     private readonly http = inject(HttpClient);
 
-    getPaginatedTrips(skip: number, take: number, sortField: string = 'City', sortDirection: string = 'Ascending') {
+    getPaginatedTrips(
+        skip: number,
+        take: number,
+        sortField: string = 'City',
+        sortDirection: string = 'Ascending',
+    ) {
         const params = {
             skip,
             take,
             sortField,
-            sortDirection
+            sortDirection,
         };
 
         return this.http.get<TripsApiResponse>(`${API_URL}/api/trips`, { params }).pipe(
@@ -48,6 +54,11 @@ export class TripsService {
     }
 
     getTripItineraries(id: string) {
-      return this.http.get<TripItinerary[]>(`${API_URL}/api/trips/${id}/itinerary`);
+        return this.http.get<TripItinerary[]>(`${API_URL}/api/trips/${id}/itinerary`);
+    }
+
+    getDestinations(search: string) {
+        return this.http
+            .get<Destination[]>(`${API_URL}/api/destinations?search=${search}`);
     }
 }

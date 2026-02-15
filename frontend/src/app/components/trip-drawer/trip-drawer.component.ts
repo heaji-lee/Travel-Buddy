@@ -18,9 +18,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { Trip } from '../../modules/trips/models/trips.models';
 import { TRIP_ITINERARIES } from '../../shared/constants';
+import { TripsService } from '../../modules/trips/services/trips.service';
+import { Destination } from '../../modules/trips/models/destinations.models';
 
 @Component({
     selector: 'app-trip-drawer',
@@ -35,17 +38,20 @@ import { TRIP_ITINERARIES } from '../../shared/constants';
         ReactiveFormsModule,
         TableModule,
         InputTextModule,
-        TextareaModule
+        TextareaModule,
+        AutoCompleteModule,
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
 })
 export class TripDrawerComponent {
     private readonly fb = inject(FormBuilder);
+    private readonly tripsServices = inject(TripsService);
 
     title = '';
     subTitle = '';
     submitLabel = '';
+    destinations = signal<Destination[]>([]);
 
     @Input() visible = false;
     @Input() selectedTrip!: Trip | null;
@@ -73,7 +79,10 @@ export class TripDrawerComponent {
         this.endAt.set(trip?.endAt ? new Date(trip.endAt) : null);
         this.form = this.fb.group({
             name: [trip?.name || '', Validators.required],
-            city: [trip?.city || '', Validators.required],
+            destination: [
+                trip ? { city: trip.city, country: trip.country } : null,
+                Validators.required,
+            ],
             startAt: [this.startAt(), Validators.required],
             endAt: [this.endAt(), Validators.required],
             companions: [trip?.companions?.map((c) => c.id) || []],
@@ -158,10 +167,30 @@ export class TripDrawerComponent {
         return startDate;
     }
 
+    searchDestinations(event: any) {
+        const query = event.query?.trim();
+        if (query.length < 2) {
+            this.destinations.set([]);
+            return;
+        }
+        this.tripsServices.getDestinations(query).subscribe((results) => {
+            this.destinations.set(results);
+        });
+    }
+
     onSubmit() {
         if (this.form.invalid) return;
 
-        this.submit.emit(this.form.value);
+        const formValue = this.form.value;
+        const destination: Destination = formValue.destination;
+
+        const payload = {
+            ...formValue,
+            city: destination.city,
+            country: destination.country,
+        };
+
+        this.submit.emit(payload);
     }
 
     close() {

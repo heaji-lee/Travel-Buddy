@@ -132,6 +132,7 @@ export class TripsListComponent {
         const payload = {
             name: formValue.name,
             city: formValue.city,
+            country: formValue.country,
             startAt: formValue.startAt,
             endAt: formValue.endAt,
             companionIds: formValue.companions,
