@@ -37,12 +37,12 @@
                                     [suggestions]="destinations()"
                                     (completeMethod)="searchDestinations($event)"
                                     placeholder="e.g., Paris"
-                                    class="w-50"
                                     formControlName="destination"
                                     [dropdown]="false"
                                     [forceSelection]="false"
                                     [showClear]="true"
                                     optionLabel="display"
+                                    inputStyleClass="w-full rounded-xl"
                                 >
                                     <ng-template let-item pTemplate="item">
                                         {{ item.city }}, {{ item.country }}
@@ -78,7 +78,7 @@
                                     ngSkipHydration
                                     appendTo="body"
                                     placeholder="Select end date"
-                                    class="w-full"
+                                    class="w-full rounded-xl"
                                     showIcon
                                     iconDisplay="input"
                                     dateFormat="dd-MM-yy"
