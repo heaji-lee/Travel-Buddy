@@ -37,10 +37,9 @@ Travel-Buddy/
 │   │   │   ├── components/
 │   │   │   │   └── navbar/
 │   │   │   │   └── toast/
+│   │   │   │   └── trip-drawer/
 │   │   │   └── modules/
-│   │   │       ├── home/
-│   │   │       ├── new-trip/
-│   │   │       └── all-trips/
+│   │   │       ├── trips/
 |   |   |       └── manage/
 │   │   ├── styles.css
 │   │   └── main.ts
@@ -50,6 +49,8 @@ Travel-Buddy/
 │
 ├── backend/
 │   ├── Controllers/
+│   ├── Data/
+│   ├── Migrations/
 │   ├── Repositories/
 │   │   ├── Accessors/
 │   │   ├── Models/
@@ -190,4 +191,5 @@ Once you have your account:
 - Integrate Weather API to display live weather for trip locations
 - Improve UI/UX animations
 - Implement itinerary table when user inputs date
+
 
