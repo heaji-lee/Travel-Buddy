@@ -15,6 +15,9 @@ public class Trip {
   [Column("city")]
   public required string City { get; set; }
 
+  [Column("country")]
+  public required string Country { get; set; }
+
   [Column("start_at")]
   public DateTime StartAt { get; set; }
 

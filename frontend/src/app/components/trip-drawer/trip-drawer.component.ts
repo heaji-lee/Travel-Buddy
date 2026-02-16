@@ -80,7 +80,13 @@ export class TripDrawerComponent {
         this.form = this.fb.group({
             name: [trip?.name || '', Validators.required],
             destination: [
-                trip ? { city: trip.city, country: trip.country } : null,
+                trip
+                    ? {
+                          city: trip.city,
+                          country: trip.country,
+                          display: `${trip.city}, ${trip.country}`,
+                      }
+                    : null,
                 Validators.required,
             ],
             startAt: [this.startAt(), Validators.required],
@@ -174,7 +180,11 @@ export class TripDrawerComponent {
             return;
         }
         this.tripsServices.getDestinations(query).subscribe((results) => {
-            this.destinations.set(results);
+            const destinations = results.map((d) => ({
+                ...d,
+                display: `${d.city}, ${d.country}`,
+            }));
+            this.destinations.set(destinations);
         });
     }
 

@@ -53,6 +53,7 @@ public class TripsRepository {
     var trip = new Trip {
       Name = dto.Name,
       City = dto.City,
+      Country = dto.Country,
       StartAt = dto.StartAt,
       EndAt = dto.EndAt,
       TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { CompanionId = cid }).ToList(),
@@ -81,6 +82,7 @@ public class TripsRepository {
 
     trip.Name = dto.Name;
     trip.City = dto.City;
+    trip.Country = dto.Country;
     trip.StartAt = dto.StartAt;
     trip.EndAt = dto.EndAt;
 

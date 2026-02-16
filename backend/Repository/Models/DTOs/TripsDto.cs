@@ -4,6 +4,7 @@ public class TripDto {
   public int Id { get; set; }
   public required string Name { get; set; }
   public required string City { get; set; }
+  public required string Country { get; set; }
   public DateTime StartAt { get; set; }
   public DateTime EndAt { get; set; }
 
@@ -16,6 +17,7 @@ public class TripDto {
       Id = trip.Id, 
       Name = trip.Name,
       City = trip.City,
+      Country = trip.Country,
       StartAt = trip.StartAt,
       EndAt = trip.EndAt,
       Companions = trip.TripCompanions?.Select(tc => CompanionDto.FromModel(tc.Companion)).ToList() ?? new(),

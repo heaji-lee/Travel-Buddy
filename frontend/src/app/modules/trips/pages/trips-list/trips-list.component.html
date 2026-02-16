@@ -13,6 +13,7 @@
                     <tr>
                         <th>Trip Name</th>
                         <th pSortableColumn="city">City <p-sortIcon field="city" /></th>
+                        <th>Country</th>
                         <th pSortableColumn="startDate">
                             Start Date <p-sortIcon field="startDate" />
                         </th>
@@ -26,6 +27,7 @@
                     <tr>
                         <td>{{ trip.name }}</td>
                         <td>{{ trip.city }}</td>
+                        <td>{{ trip.country }}</td>
                         <td>{{ trip.startAt | date: 'dd-MM-yyyy' }}</td>
                         <td>{{ trip.endAt | date: 'dd-MM-yyyy' }}</td>
                         <td>
