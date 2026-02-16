@@ -24,6 +24,9 @@ public class TripsRepository {
       "city" => sortDirection == SortDirection.Ascending
         ? query.OrderBy(t => t.City)
         : query.OrderByDescending(t => t.City),
+      "country" => sortDirection == SortDirection.Ascending
+        ? query.OrderBy(t => t.Country)
+        : query.OrderByDescending(t => t.Country),
       "startAt" => sortDirection == SortDirection.Ascending
         ? query.OrderBy(t => t.StartAt)
         : query.OrderByDescending(t => t.StartAt),

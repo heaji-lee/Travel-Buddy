@@ -47,7 +47,7 @@ export class TripsListComponent {
     isDrawOpen = false;
     selectedTrip = signal<Trip | null>(null);
 
-    sortField = signal<'Id'| 'City' | 'StartAt' | 'EndAt'>('Id');
+    sortField = signal<'Id' | 'City' | 'Country' | 'StartAt' | 'EndAt'>('Id');
     sortDirection = signal<'Ascending' | 'Descending'>('Ascending');
 
     companions = signal<any[]>([]);
@@ -55,11 +55,11 @@ export class TripsListComponent {
     travelStyles = signal<any[]>([]);
 
     trips = resource({
-      params:() => ({
-        skip: this.skip, 
-        sortField: this.sortField(),
-        sortDirection: this.sortDirection(),
-      }),
+        params: () => ({
+            skip: this.skip,
+            sortField: this.sortField(),
+            sortDirection: this.sortDirection(),
+        }),
         loader: () =>
             firstValueFrom(
                 this.tripsService.getPaginatedTrips(
@@ -193,7 +193,15 @@ export class TripsListComponent {
 
     sortBy(event: { field: string; order: number }) {
         this.sortField.set(
-            event.field === 'id' ? 'Id' : event.field === 'city' ? 'City' : event.field === 'startDate' ? 'StartAt' : 'EndAt',
+            event.field === 'id'
+                ? 'Id'
+                : event.field === 'city'
+                  ? 'City'
+                  : event.field === 'country'
+                    ? 'Country'
+                    : event.field === 'startDate'
+                      ? 'StartAt'
+                      : 'EndAt',
         );
         this.sortDirection.set(event.order === 1 ? 'Ascending' : 'Descending');
     }
