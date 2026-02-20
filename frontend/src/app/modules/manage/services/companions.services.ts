@@ -16,7 +16,7 @@ export class CompanionsService {
             take,
         };
 
-        return this.http.get<CompanionsApiResponse>(`${API_URL}/api/companions`, { params })
+        return this.http.get<CompanionsApiResponse>(`${API_URL}/api/companions`, { params });
     }
 
     createCompanion(companion: Companion) {

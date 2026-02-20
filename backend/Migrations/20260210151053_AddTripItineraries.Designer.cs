@@ -9,15 +9,12 @@ using TravelBuddy.Data;
 
 #nullable disable
 
-namespace TravelBuddy.Migrations
-{
+namespace TravelBuddy.Migrations {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260210151053_AddTripItineraries")]
-    partial class AddTripItineraries
-    {
+    partial class AddTripItineraries {
         /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
+        protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "10.0.2")
@@ -25,276 +22,260 @@ namespace TravelBuddy.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Companion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Companion", b => {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("companions", (string)null);
-                });
+                b.ToTable("companions", (string)null);
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Interest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Interest", b => {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("interests", (string)null);
-                });
+                b.ToTable("interests", (string)null);
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.TravelStyle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.TravelStyle", b => {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("travel_styles", (string)null);
-                });
+                b.ToTable("travel_styles", (string)null);
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Trip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Trip", b => {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("city");
+                b.Property<string>("City")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("city");
 
-                    b.Property<DateTime>("EndAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("end_at");
+                b.Property<DateTime>("EndAt")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("end_at");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("name");
 
-                    b.Property<DateTime>("StartAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("start_at");
+                b.Property<DateTime>("StartAt")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("start_at");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("City");
+                b.HasIndex("City");
 
-                    b.HasIndex("EndAt");
+                b.HasIndex("EndAt");
 
-                    b.HasIndex("StartAt");
+                b.HasIndex("StartAt");
 
-                    b.ToTable("trips", (string)null);
-                });
+                b.ToTable("trips", (string)null);
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.TripItinerary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.TripItinerary", b => {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DayNumber")
-                        .HasColumnType("integer")
-                        .HasColumnName("day_number");
+                b.Property<int>("DayNumber")
+                    .HasColumnType("integer")
+                    .HasColumnName("day_number");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
+                b.Property<string>("Notes")
+                    .HasColumnType("text")
+                    .HasColumnName("notes");
 
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer")
-                        .HasColumnName("trip_id");
+                b.Property<int>("TripId")
+                    .HasColumnType("integer")
+                    .HasColumnName("trip_id");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("TripId");
+                b.HasIndex("TripId");
 
-                    b.HasIndex("TripId", "DayNumber")
-                        .IsUnique();
+                b.HasIndex("TripId", "DayNumber")
+                    .IsUnique();
 
-                    b.ToTable("trip_itineraries", (string)null);
-                });
+                b.ToTable("trip_itineraries", (string)null);
+            });
 
-            modelBuilder.Entity("TripCompanion", b =>
-                {
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
+            modelBuilder.Entity("TripCompanion", b => {
+                b.Property<int>("TripId")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("CompanionId")
-                        .HasColumnType("integer");
+                b.Property<int>("CompanionId")
+                    .HasColumnType("integer");
 
-                    b.HasKey("TripId", "CompanionId");
+                b.HasKey("TripId", "CompanionId");
 
-                    b.HasIndex("CompanionId");
+                b.HasIndex("CompanionId");
 
-                    b.HasIndex("TripId", "CompanionId");
+                b.HasIndex("TripId", "CompanionId");
 
-                    b.ToTable("trip_companions", (string)null);
-                });
+                b.ToTable("trip_companions", (string)null);
+            });
 
-            modelBuilder.Entity("TripInterest", b =>
-                {
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
+            modelBuilder.Entity("TripInterest", b => {
+                b.Property<int>("TripId")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("InterestId")
-                        .HasColumnType("integer");
+                b.Property<int>("InterestId")
+                    .HasColumnType("integer");
 
-                    b.HasKey("TripId", "InterestId");
+                b.HasKey("TripId", "InterestId");
 
-                    b.HasIndex("InterestId");
+                b.HasIndex("InterestId");
 
-                    b.HasIndex("TripId", "InterestId");
+                b.HasIndex("TripId", "InterestId");
 
-                    b.ToTable("trip_interests", (string)null);
-                });
+                b.ToTable("trip_interests", (string)null);
+            });
 
-            modelBuilder.Entity("TripTravelStyle", b =>
-                {
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
+            modelBuilder.Entity("TripTravelStyle", b => {
+                b.Property<int>("TripId")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("TravelStyleId")
-                        .HasColumnType("integer");
+                b.Property<int>("TravelStyleId")
+                    .HasColumnType("integer");
 
-                    b.HasKey("TripId", "TravelStyleId");
+                b.HasKey("TripId", "TravelStyleId");
 
-                    b.HasIndex("TravelStyleId");
+                b.HasIndex("TravelStyleId");
 
-                    b.HasIndex("TripId", "TravelStyleId");
+                b.HasIndex("TripId", "TravelStyleId");
 
-                    b.ToTable("trip_travel_styles", (string)null);
-                });
+                b.ToTable("trip_travel_styles", (string)null);
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.TripItinerary", b =>
-                {
-                    b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
-                        .WithMany("TripItineraries")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("TravelBuddy.Repository.Models.TripItinerary", b => {
+                b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
+                    .WithMany("TripItineraries")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Trip");
-                });
+                b.Navigation("Trip");
+            });
 
-            modelBuilder.Entity("TripCompanion", b =>
-                {
-                    b.HasOne("TravelBuddy.Repository.Models.Companion", "Companion")
-                        .WithMany("TripCompanions")
-                        .HasForeignKey("CompanionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("TripCompanion", b => {
+                b.HasOne("TravelBuddy.Repository.Models.Companion", "Companion")
+                    .WithMany("TripCompanions")
+                    .HasForeignKey("CompanionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
-                        .WithMany("TripCompanions")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
+                    .WithMany("TripCompanions")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Companion");
+                b.Navigation("Companion");
 
-                    b.Navigation("Trip");
-                });
+                b.Navigation("Trip");
+            });
 
-            modelBuilder.Entity("TripInterest", b =>
-                {
-                    b.HasOne("TravelBuddy.Repository.Models.Interest", "Interest")
-                        .WithMany("TripInterests")
-                        .HasForeignKey("InterestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("TripInterest", b => {
+                b.HasOne("TravelBuddy.Repository.Models.Interest", "Interest")
+                    .WithMany("TripInterests")
+                    .HasForeignKey("InterestId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
-                        .WithMany("TripInterests")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
+                    .WithMany("TripInterests")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Interest");
+                b.Navigation("Interest");
 
-                    b.Navigation("Trip");
-                });
+                b.Navigation("Trip");
+            });
 
-            modelBuilder.Entity("TripTravelStyle", b =>
-                {
-                    b.HasOne("TravelBuddy.Repository.Models.TravelStyle", "TravelStyle")
-                        .WithMany("TripTravelStyles")
-                        .HasForeignKey("TravelStyleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("TripTravelStyle", b => {
+                b.HasOne("TravelBuddy.Repository.Models.TravelStyle", "TravelStyle")
+                    .WithMany("TripTravelStyles")
+                    .HasForeignKey("TravelStyleId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
-                        .WithMany("TripTravelStyles")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("TravelBuddy.Repository.Models.Trip", "Trip")
+                    .WithMany("TripTravelStyles")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("TravelStyle");
+                b.Navigation("TravelStyle");
 
-                    b.Navigation("Trip");
-                });
+                b.Navigation("Trip");
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Companion", b =>
-                {
-                    b.Navigation("TripCompanions");
-                });
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Companion", b => {
+                b.Navigation("TripCompanions");
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Interest", b =>
-                {
-                    b.Navigation("TripInterests");
-                });
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Interest", b => {
+                b.Navigation("TripInterests");
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.TravelStyle", b =>
-                {
-                    b.Navigation("TripTravelStyles");
-                });
+            modelBuilder.Entity("TravelBuddy.Repository.Models.TravelStyle", b => {
+                b.Navigation("TripTravelStyles");
+            });
 
-            modelBuilder.Entity("TravelBuddy.Repository.Models.Trip", b =>
-                {
-                    b.Navigation("TripCompanions");
+            modelBuilder.Entity("TravelBuddy.Repository.Models.Trip", b => {
+                b.Navigation("TripCompanions");
 
-                    b.Navigation("TripInterests");
+                b.Navigation("TripInterests");
 
-                    b.Navigation("TripItineraries");
+                b.Navigation("TripItineraries");
 
-                    b.Navigation("TripTravelStyles");
-                });
+                b.Navigation("TripTravelStyles");
+            });
 #pragma warning restore 612, 618
         }
     }

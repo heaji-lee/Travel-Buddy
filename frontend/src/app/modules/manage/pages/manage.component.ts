@@ -44,14 +44,10 @@ export class ManageComponent {
         this.travelStyles.hasValue() ? this.travelStyles.value().total : 0,
     );
 
-    companionsTotalPages = computed(() =>
-        Math.ceil(this.companionsTotalRecords() / this.pageSize)
-    );
-    interestsTotalPages = computed(() =>
-        Math.ceil(this.interestsTotalRecords() / this.pageSize)
-    );
+    companionsTotalPages = computed(() => Math.ceil(this.companionsTotalRecords() / this.pageSize));
+    interestsTotalPages = computed(() => Math.ceil(this.interestsTotalRecords() / this.pageSize));
     travelStylesTotalPages = computed(() =>
-        Math.ceil(this.travelStylesTotalRecords() / this.pageSize)
+        Math.ceil(this.travelStylesTotalRecords() / this.pageSize),
     );
 
     companions = resource({

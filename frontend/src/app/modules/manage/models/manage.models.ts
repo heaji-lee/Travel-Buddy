@@ -9,8 +9,8 @@ export interface Interest {
 }
 
 export interface TravelStyle {
-  id?: string;
-  name: string;
+    id?: string;
+    name: string;
 }
 
 export interface CompanionsApiResponse {
@@ -24,6 +24,6 @@ export interface InterestsApiResponse {
 }
 
 export interface TravelStylesApiResponse {
-  items: TravelStyle[];
-  total: number;
+    items: TravelStyle[];
+    total: number;
 }

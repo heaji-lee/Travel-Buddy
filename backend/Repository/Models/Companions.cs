@@ -5,11 +5,11 @@ namespace TravelBuddy.Repository.Models;
 
 [Table("companions")]
 public class Companion {
-  [Key]
-  [Column("id")]
-  public int Id { get; set; }
+    [Key]
+    [Column("id")]
+    public int Id { get; set; }
 
-  [Column("name")]
-  public required string Name { get; set; }
-  public ICollection<TripCompanion> TripCompanions { get; set; } = new List<TripCompanion>();
+    [Column("name")]
+    public required string Name { get; set; }
+    public ICollection<TripCompanion> TripCompanions { get; set; } = new List<TripCompanion>();
 }

@@ -58,7 +58,6 @@ export class TripsService {
     }
 
     getDestinations(search: string) {
-        return this.http
-            .get<Destination[]>(`${API_URL}/api/destinations?search=${search}`);
+        return this.http.get<Destination[]>(`${API_URL}/api/destinations?search=${search}`);
     }
 }

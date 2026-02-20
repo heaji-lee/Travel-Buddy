@@ -2,14 +2,11 @@
 
 #nullable disable
 
-namespace TravelBuddy.Migrations
-{
+namespace TravelBuddy.Migrations {
     /// <inheritdoc />
-    public partial class AddTotalBudgetColumn : Migration
-    {
+    public partial class AddTotalBudgetColumn : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<float>(
                 name: "total_budget",
                 table: "trips",
@@ -19,8 +16,7 @@ namespace TravelBuddy.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "total_budget",
                 table: "trips");

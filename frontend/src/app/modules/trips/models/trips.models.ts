@@ -1,5 +1,5 @@
-import { Companion, Interest, TravelStyle } from "../../manage/models/manage.models";
-import { TripItinerary } from "./tripItinerary.models";
+import { Companion, Interest, TravelStyle } from '../../manage/models/manage.models';
+import { TripItinerary } from './tripItinerary.models';
 export interface Trip {
     id?: string;
     name: string;

@@ -43,7 +43,7 @@ import { Destination } from '../../modules/trips/models/destinations.models';
         TextareaModule,
         AutoCompleteModule,
         MeterGroupModule,
-        InputNumberModule
+        InputNumberModule,
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
@@ -106,7 +106,7 @@ export class TripDrawerComponent {
                     }),
                 ) || [],
             ),
-            totalBudget: [trip?.totalBudget || '', Validators.required]
+            totalBudget: [trip?.totalBudget || '', Validators.required],
         });
 
         this.form.get('startAt')?.valueChanges.subscribe((date) => {

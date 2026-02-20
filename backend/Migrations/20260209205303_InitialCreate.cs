@@ -4,57 +4,47 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace TravelBuddy.Migrations
-{
+namespace TravelBuddy.Migrations {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
-    {
+    public partial class InitialCreate : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "companions",
-                columns: table => new
-                {
+                columns: table => new {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_companions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "interests",
-                columns: table => new
-                {
+                columns: table => new {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_interests", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "travel_styles",
-                columns: table => new
-                {
+                columns: table => new {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_travel_styles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "trips",
-                columns: table => new
-                {
+                columns: table => new {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
@@ -62,20 +52,17 @@ namespace TravelBuddy.Migrations
                     start_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     end_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_trips", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "trip_companions",
-                columns: table => new
-                {
+                columns: table => new {
                     TripId = table.Column<int>(type: "integer", nullable: false),
                     CompanionId = table.Column<int>(type: "integer", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_trip_companions", x => new { x.TripId, x.CompanionId });
                     table.ForeignKey(
                         name: "FK_trip_companions_companions_CompanionId",
@@ -93,13 +80,11 @@ namespace TravelBuddy.Migrations
 
             migrationBuilder.CreateTable(
                 name: "trip_interests",
-                columns: table => new
-                {
+                columns: table => new {
                     TripId = table.Column<int>(type: "integer", nullable: false),
                     InterestId = table.Column<int>(type: "integer", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_trip_interests", x => new { x.TripId, x.InterestId });
                     table.ForeignKey(
                         name: "FK_trip_interests_interests_InterestId",
@@ -117,13 +102,11 @@ namespace TravelBuddy.Migrations
 
             migrationBuilder.CreateTable(
                 name: "trip_travel_styles",
-                columns: table => new
-                {
+                columns: table => new {
                     TripId = table.Column<int>(type: "integer", nullable: false),
                     TravelStyleId = table.Column<int>(type: "integer", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_trip_travel_styles", x => new { x.TripId, x.TravelStyleId });
                     table.ForeignKey(
                         name: "FK_trip_travel_styles_travel_styles_TravelStyleId",
@@ -186,8 +169,7 @@ namespace TravelBuddy.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "trip_companions");
 
