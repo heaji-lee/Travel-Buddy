@@ -19,6 +19,8 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MeterGroupModule } from 'primeng/metergroup';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { Trip } from '../../modules/trips/models/trips.models';
 import { TRIP_ITINERARIES } from '../../shared/constants';
@@ -40,6 +42,8 @@ import { Destination } from '../../modules/trips/models/destinations.models';
         InputTextModule,
         TextareaModule,
         AutoCompleteModule,
+        MeterGroupModule,
+        InputNumberModule
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
@@ -102,6 +106,7 @@ export class TripDrawerComponent {
                     }),
                 ) || [],
             ),
+            totalBudget: [trip?.totalBudget || '', Validators.required]
         });
 
         this.form.get('startAt')?.valueChanges.subscribe((date) => {

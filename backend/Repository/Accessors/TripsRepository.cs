@@ -59,6 +59,7 @@ public class TripsRepository {
       Country = dto.Country,
       StartAt = dto.StartAt,
       EndAt = dto.EndAt,
+      TotalBudget = dto.TotalBudget,
       TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { CompanionId = cid }).ToList(),
       TripInterests = dto.InterestIds.Select(iid => new TripInterest { InterestId = iid }).ToList(),
       TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TravelStyleId = tsid }).ToList(),
@@ -88,6 +89,7 @@ public class TripsRepository {
     trip.Country = dto.Country;
     trip.StartAt = dto.StartAt;
     trip.EndAt = dto.EndAt;
+    trip.TotalBudget = dto.TotalBudget;
 
     trip.TripCompanions.Clear();
     trip.TripInterests.Clear();

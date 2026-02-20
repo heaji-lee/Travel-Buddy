@@ -142,6 +142,7 @@ export class TripsListComponent {
                 dayNumber: itinerary.dayNumber,
                 notes: itinerary.notes,
             })),
+            totalBudget: formValue.totalBudget
         };
         const editingTrip = this.selectedTrip();
         const isUpdate = !!editingTrip;

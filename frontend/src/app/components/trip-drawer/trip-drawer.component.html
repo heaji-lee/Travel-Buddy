@@ -196,46 +196,14 @@
                             <label for="totalBudget" class="font-semibold text-gray-700"
                                 >Total Budget</label
                             >
-                            <input
+                            <p-inputNumber
                                 id="totalBudget"
-                                type="number"
-                                pInputText
-                                placeholder="e.g., 5000"
-                                class="w-full p-3 border-2 border-gray-200 rounded-xl"
+                                mode="currency"
+                                currency="GBP"
+                                locale="en-GB"
+                                class="w-full rounded-xl"
+                                formControlName="totalBudget"
                             />
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-3 mt-6">
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                ✈️ Transportation
-                            </div>
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                🏨 Accommodation
-                            </div>
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                🍽️ Food & Dining
-                            </div>
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                🎭 Activities
-                            </div>
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                🛍️ Shopping
-                            </div>
-                            <div
-                                class="bg-[#e0a979] p-3 rounded-lg text-center text-white shadow hover:bg-[#8a5936] transition cursor-pointer"
-                            >
-                                💵 Miscellaneous
-                            </div>
                         </div>
                     </div>
                 </p-accordion-content>

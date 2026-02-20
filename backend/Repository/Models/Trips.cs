@@ -24,6 +24,9 @@ public class Trip {
   [Column("end_at")]
   public DateTime EndAt { get; set; }
 
+  [Column("total_budget")]
+  public float TotalBudget { get; set; }
+
   public ICollection<TripCompanion> TripCompanions { get; set; } = new List<TripCompanion>();
   public ICollection<TripInterest> TripInterests { get; set; } = new List<TripInterest>();
   public ICollection<TripTravelStyle> TripTravelStyles { get; set; } = new List<TripTravelStyle>();
