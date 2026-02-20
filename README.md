@@ -187,9 +187,7 @@ Once you have your account:
 
 - Make the app fully responsive for mobile devices
 - Add user authentication and profiles
-- Integrate Google Maps API to show destinations and activities
-- Integrate Weather API to display live weather for trip locations
+- Integrate Google Maps API (or some sort of location service )to show destinations and activities
 - Improve UI/UX animations
-- Implement itinerary table when user inputs date
-
+- Add a chatbot to allow users to ask things like weather/living cost/recommended days of stay etc.
 
