@@ -108,7 +108,7 @@ export class TripDrawerComponent {
                     }),
                 ) || [],
             ),
-            totalBudget: [trip?.totalBudget || '', Validators.required]
+            totalBudget: [trip?.totalBudget || '']
         });
 
         this.form.get('startAt')?.valueChanges.subscribe((date) => {
