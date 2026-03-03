@@ -142,7 +142,10 @@ export class TripsListComponent {
                 dayNumber: itinerary.dayNumber,
                 notes: itinerary.notes,
             })),
-            totalBudget: formValue.totalBudget,
+            tripBudgets: formValue.tripBudgets.map((budget: any) => ({
+                category: budget.category,
+                allocatedAmount: budget.allocatedAmount
+            }))
         };
         const editingTrip = this.selectedTrip();
         const isUpdate = !!editingTrip;

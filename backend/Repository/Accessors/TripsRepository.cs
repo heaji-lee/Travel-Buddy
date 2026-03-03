@@ -59,13 +59,16 @@ public class TripsRepository {
             Country = dto.Country,
             StartAt = dto.StartAt,
             EndAt = dto.EndAt,
-            TotalBudget = dto.TotalBudget,
             TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { CompanionId = cid }).ToList(),
             TripInterests = dto.InterestIds.Select(iid => new TripInterest { InterestId = iid }).ToList(),
             TripTravelStyles = dto.TravelStyleIds.Select(tsid => new TripTravelStyle { TravelStyleId = tsid }).ToList(),
             TripItineraries = dto.TripItineraries.Select(ti => new TripItinerary {
                 DayNumber = ti.DayNumber,
                 Notes = ti.Notes
+            }).ToList(),
+            TripBudgets = dto.TripBudgets.Select(tb => new TripBudget {
+              Category = tb.Category,
+              AllocatedAmount = tb.AllocatedAmount
             }).ToList()
         };
 
@@ -89,12 +92,12 @@ public class TripsRepository {
         trip.Country = dto.Country;
         trip.StartAt = dto.StartAt;
         trip.EndAt = dto.EndAt;
-        trip.TotalBudget = dto.TotalBudget;
 
         trip.TripCompanions.Clear();
         trip.TripInterests.Clear();
         trip.TripTravelStyles.Clear();
         trip.TripItineraries.Clear();
+        trip.TripBudgets.Clear();
 
         trip.TripCompanions = dto.CompanionIds.Select(cid => new TripCompanion { TripId = id, CompanionId = cid }).ToList();
         trip.TripInterests = dto.InterestIds.Select(iid => new TripInterest { TripId = id, InterestId = iid }).ToList();
@@ -103,6 +106,10 @@ public class TripsRepository {
             TripId = id,
             DayNumber = ti.DayNumber,
             Notes = ti.Notes
+        }).ToList();
+        trip.TripBudgets = dto.TripBudgets.Select(tb => new TripBudget {
+          Category = tb.Category,
+          AllocatedAmount = tb.AllocatedAmount
         }).ToList();
 
         await _context.SaveChangesAsync();

@@ -45,7 +45,7 @@ import { Destination } from '../../modules/trips/models/destinations.models';
         AutoCompleteModule,
         MeterGroupModule,
         InputNumberModule,
-        FloatLabelModule
+        FloatLabelModule,
     ],
     templateUrl: './trip-drawer.component.html',
     styleUrl: './trip-drawer.component.css',
@@ -108,7 +108,25 @@ export class TripDrawerComponent {
                     }),
                 ) || [],
             ),
-            totalBudget: [trip?.totalBudget || '']
+
+            transport: [
+                trip?.totalBudget?.find((b) => b.category === 'Transport')?.allocatedAmount || 0,
+            ],
+            accommodation: [
+                trip?.totalBudget?.find((b) => b.category === 'Accommodation')?.allocatedAmount ||
+                    0,
+            ],
+            shopping: [
+                trip?.totalBudget?.find((b) => b.category === 'Shopping')?.allocatedAmount || 0,
+            ],
+            food: [trip?.totalBudget?.find((b) => b.category === 'Food')?.allocatedAmount || 0],
+            activity: [
+                trip?.totalBudget?.find((b) => b.category === 'Activity')?.allocatedAmount || 0,
+            ],
+            miscellaneous: [
+                trip?.totalBudget?.find((b) => b.category === 'Miscellaneous')?.allocatedAmount ||
+                    0,
+            ],
         });
 
         this.form.get('startAt')?.valueChanges.subscribe((date) => {
@@ -201,10 +219,20 @@ export class TripDrawerComponent {
         const formValue = this.form.value;
         const destination: Destination = formValue.destination;
 
+        const tripBudgets = [
+            { category: 'Transport', allocatedAmount: formValue.transport },
+            { category: 'Accommodation', allocatedAmount: formValue.accommodation },
+            { category: 'Shopping', allocatedAmount: formValue.shopping },
+            { category: 'Food', allocatedAmount: formValue.food },
+            { category: 'Activity', allocatedAmount: formValue.activity },
+            { category: 'Miscellaneous', allocatedAmount: formValue.miscellaneous },
+        ];
+
         const payload = {
             ...formValue,
             city: destination.city,
             country: destination.country,
+            tripBudgets,
         };
 
         this.submit.emit(payload);

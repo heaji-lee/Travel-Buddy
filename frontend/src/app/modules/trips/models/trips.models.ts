@@ -11,10 +11,15 @@ export interface Trip {
     interests?: Interest[];
     travelStyles?: TravelStyle[];
     tripItineraries?: TripItinerary[];
-    totalBudget?: number;
+    totalBudget?: TripBudget[];
 }
 
 export interface TripsApiResponse {
     items: Trip[];
     total: number;
+}
+
+export interface TripBudget {
+    category: string;
+    allocatedAmount: number;
 }

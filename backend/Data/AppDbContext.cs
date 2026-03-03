@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Repository.Models;
 
@@ -16,6 +17,7 @@ namespace TravelBuddy.Data {
         public DbSet<TripTravelStyle> TripTravelStyles { get; set; }
         public DbSet<TripItinerary> TripItineraries { get; set; }
         public DbSet<Destination> Destinations { get; set; }
+        public DbSet<TripBudget> TripBudgets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
@@ -29,6 +31,7 @@ namespace TravelBuddy.Data {
             modelBuilder.Entity<TripTravelStyle>().ToTable("trip_travel_styles");
             modelBuilder.Entity<TripItinerary>().ToTable("trip_itineraries");
             modelBuilder.Entity<Destination>().ToTable("destinations");
+            modelBuilder.Entity<TripBudget>().ToTable("trip_budget");
 
             modelBuilder.Entity<TripCompanion>()
                 .HasKey(tc => new { tc.TripId, tc.CompanionId });
@@ -75,6 +78,12 @@ namespace TravelBuddy.Data {
                 .HasForeignKey(ti => ti.TripId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<TripBudget>()
+                .HasOne(tb => tb.Trip)
+                .WithMany(t => t.TripBudgets)
+                .HasForeignKey(tb => tb.TripId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Trip>().HasIndex(t => t.City);
             modelBuilder.Entity<Trip>().HasIndex(t => t.StartAt);
             modelBuilder.Entity<Trip>().HasIndex(t => t.EndAt);
@@ -94,6 +103,9 @@ namespace TravelBuddy.Data {
             modelBuilder.Entity<Destination>().HasIndex(d => d.City);
             modelBuilder.Entity<Destination>().HasIndex(d => d.Country);
             modelBuilder.Entity<Destination>().HasIndex(d => new { d.City, d.Country }).IsUnique();
+
+            modelBuilder.Entity<TripBudget>().HasIndex(tb => new { tb.TripId, tb.Category }).IsUnique();
+            modelBuilder.Entity<TripBudget>().Property(tb => tb.Category).HasConversion<int>();
         }
     }
 }
