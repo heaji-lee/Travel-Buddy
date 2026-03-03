@@ -29,7 +29,15 @@
                 severity="success"
                 class="w-full max-w-[17.35rem]"
                 styleClass="w-full mx-auto"
+                (click)="showLoginDialog()"
             />
         </div>
     </div>
+
+    <p-dialog
+        header="Sign up to TravelBuddy!"
+        [(visible)]="isLoginDialogVisible"
+    >
+        <p>Hello</p>
+    </p-dialog>
 </div>
