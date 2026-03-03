@@ -11,7 +11,7 @@ export interface Trip {
     interests?: Interest[];
     travelStyles?: TravelStyle[];
     tripItineraries?: TripItinerary[];
-    totalBudget?: TripBudget[];
+    tripBudgets?: TripBudget[];
 }
 
 export interface TripsApiResponse {

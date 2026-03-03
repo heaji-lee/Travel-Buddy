@@ -108,23 +108,23 @@ export class TripDrawerComponent {
                     }),
                 ) || [],
             ),
-
+            total: [trip?.tripBudgets?.find((b) => b.category === 'Total')?.allocatedAmount || 0],
             transport: [
-                trip?.totalBudget?.find((b) => b.category === 'Transport')?.allocatedAmount || 0,
+                trip?.tripBudgets?.find((b) => b.category === 'Transport')?.allocatedAmount || 0,
             ],
             accommodation: [
-                trip?.totalBudget?.find((b) => b.category === 'Accommodation')?.allocatedAmount ||
+                trip?.tripBudgets?.find((b) => b.category === 'Accommodation')?.allocatedAmount ||
                     0,
             ],
             shopping: [
-                trip?.totalBudget?.find((b) => b.category === 'Shopping')?.allocatedAmount || 0,
+                trip?.tripBudgets?.find((b) => b.category === 'Shopping')?.allocatedAmount || 0,
             ],
-            food: [trip?.totalBudget?.find((b) => b.category === 'Food')?.allocatedAmount || 0],
+            food: [trip?.tripBudgets?.find((b) => b.category === 'Food')?.allocatedAmount || 0],
             activity: [
-                trip?.totalBudget?.find((b) => b.category === 'Activity')?.allocatedAmount || 0,
+                trip?.tripBudgets?.find((b) => b.category === 'Activity')?.allocatedAmount || 0,
             ],
             miscellaneous: [
-                trip?.totalBudget?.find((b) => b.category === 'Miscellaneous')?.allocatedAmount ||
+                trip?.tripBudgets?.find((b) => b.category === 'Miscellaneous')?.allocatedAmount ||
                     0,
             ],
         });
@@ -220,6 +220,7 @@ export class TripDrawerComponent {
         const destination: Destination = formValue.destination;
 
         const tripBudgets = [
+            { category: 'Total', allocatedAmount: formValue.total },
             { category: 'Transport', allocatedAmount: formValue.transport },
             { category: 'Accommodation', allocatedAmount: formValue.accommodation },
             { category: 'Shopping', allocatedAmount: formValue.shopping },
@@ -227,11 +228,17 @@ export class TripDrawerComponent {
             { category: 'Activity', allocatedAmount: formValue.activity },
             { category: 'Miscellaneous', allocatedAmount: formValue.miscellaneous },
         ];
-
+        
         const payload = {
-            ...formValue,
+            name: formValue.name,
             city: destination.city,
             country: destination.country,
+            startAt: formValue.startAt,
+            endAt: formValue.endAt,
+            companionIds: formValue.companions,
+            travelStyleIds: formValue.travelStyles,
+            interestIds: formValue.interests,
+            tripItineraries: formValue.tripItineraries,
             tripBudgets,
         };
 

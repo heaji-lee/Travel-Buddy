@@ -32,6 +32,7 @@ export class TripsService {
                     ...a,
                     startAt: new Date(a.startAt as unknown as string),
                     endAt: new Date(a.endAt as unknown as string),
+                    tripBudgets: a.tripBudgets
                 })),
             })),
         );

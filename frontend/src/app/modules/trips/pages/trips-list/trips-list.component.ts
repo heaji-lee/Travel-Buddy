@@ -128,25 +128,7 @@ export class TripsListComponent {
         this.selectedTrip.set(null);
     }
 
-    onTripSubmit(formValue: any) {
-        const payload = {
-            name: formValue.name,
-            city: formValue.city,
-            country: formValue.country,
-            startAt: formValue.startAt,
-            endAt: formValue.endAt,
-            companionIds: formValue.companions,
-            travelStyleIds: formValue.travelStyles,
-            interestIds: formValue.interests,
-            tripItineraries: formValue.tripItineraries.map((itinerary: any) => ({
-                dayNumber: itinerary.dayNumber,
-                notes: itinerary.notes,
-            })),
-            tripBudgets: formValue.tripBudgets.map((budget: any) => ({
-                category: budget.category,
-                allocatedAmount: budget.allocatedAmount
-            }))
-        };
+    onTripSubmit(payload: any) {
         const editingTrip = this.selectedTrip();
         const isUpdate = !!editingTrip;
 

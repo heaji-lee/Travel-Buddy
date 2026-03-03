@@ -48,6 +48,7 @@ public class TripsRepository {
             .Include(t => t.TripCompanions).ThenInclude(tc => tc.Companion)
             .Include(t => t.TripInterests).ThenInclude(ti => ti.Interest)
             .Include(t => t.TripTravelStyles).ThenInclude(tts => tts.TravelStyle)
+            .Include(t => t.TripBudgets)
             .AsSplitQuery()
             .FirstOrDefaultAsync(t => t.Id == id);
     }
