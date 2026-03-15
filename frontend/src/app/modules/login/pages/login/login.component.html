@@ -15,6 +15,7 @@
                     icon="pi pi-user"
                     class="w-full max-w-[17.35rem]"
                     styleClass="w-full mx-auto"
+                    (onClick)="login()"
                 />
             </div>
         </div>
@@ -31,13 +32,42 @@
                 styleClass="w-full mx-auto"
                 (click)="showLoginDialog()"
             />
+
+            <p-dialog
+                header="Sign up to TravelBuddy!"
+                [(visible)]="isLoginDialogVisible"
+                [modal]="true"
+            >
+                <div class="flex flex-col pb-4">
+                    <label for="fullName">Full Name</label>
+                    <input pInputText id="fullName" type="text" />
+                </div>
+                <div class="flex flex-col pb-4">
+                    <label for="email">Email</label>
+                    <input pInputText id="email" type="text" />
+                </div>
+                <div class="flex flex-col pb-4">
+                    <label for="password">Password</label>
+                    <input pInputText id="password" type="text" />
+                </div>
+                <div class="flex flex-col">
+                    <p-button
+                        label="Sign up"
+                        icon="pi pi-user-plus"
+                        class="w-ull max-w-[17.35rem]"
+                        styleClass="w-full mx-auto"
+                        [disabled]="true"
+                        (onClick)="signUp()"
+                    />
+                    <p-button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        class="w-ull max-w-[17.35rem] pt-3"
+                        styleClass="w-full mx-auto"
+                        (onClick)="isLoginDialogVisible = false"
+                    />
+                </div>
+            </p-dialog>
         </div>
     </div>
-
-    <p-dialog
-        header="Sign up to TravelBuddy!"
-        [(visible)]="isLoginDialogVisible"
-    >
-        <p>Hello</p>
-    </p-dialog>
 </div>

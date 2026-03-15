@@ -44,6 +44,7 @@ export class TripsListComponent {
     tripId: string = '';
     isDeleteDialogVisible = false;
     tripToDeleteId = '';
+    tripToDeleteName = '';
     isDrawOpen = false;
     selectedTrip = signal<Trip | null>(null);
 
@@ -101,8 +102,9 @@ export class TripsListComponent {
         });
     }
 
-    showDeleteDialog(tripId: string) {
+    showDeleteDialog(tripId: string, tripName: string) {
         this.tripToDeleteId = tripId;
+        this.tripToDeleteName = tripName;
         this.isDeleteDialogVisible = true;
     }
 
