@@ -25,13 +25,23 @@
             </a>
         </div>
 
-        <a
-            routerLink="/login"
-            class="hover:scale-110 transition-transform mt-auto bg-blue-600/60 rounded-3xl items-center flex gap-5 h-10 cursor-pointer justify-center shadow-lg hover:bg-blue-700/80"
-        >
-            <i class="pi pi-info-circle pl-3"></i>
-            <p>Login</p>
-        </a>
+        @if (hasLoggedInUser) {
+            <div
+                class="hover:scale-110 transition-transform mt-auto bg-blue-600/60 rounded-3xl items-center flex gap-5 h-10 cursor-pointer justify-center shadow-lg hover:bg-blue-700/80"
+                (click)="signOut()"
+            >
+                <p>{{ currentUserName }}</p>
+                <i class="pi pi-sign-out"></i>
+            </div>
+        } @else {
+            <a
+                routerLink="/login"
+                class="hover:scale-110 transition-transform mt-auto bg-blue-600/60 rounded-3xl items-center flex gap-5 h-10 cursor-pointer justify-center shadow-lg hover:bg-blue-700/80"
+            >
+                <i class="pi pi-sign-in pl-3"></i>
+                <p>Login</p>
+            </a>
+        }
         <div
             class="fixed bottom-6 right-6 z-60 hover:scale-110 transition-transform bg-orange-600/60 rounded-3xl items-center flex gap-3 h-12 px-4 cursor-pointer justify-center shadow-lg hover:bg-orange-700/80"
             (click)="showDialog()"

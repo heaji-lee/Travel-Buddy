@@ -58,6 +58,11 @@ export class LoginComponent {
         this.authService.login(credentials).subscribe({
             next: (response) => {
                 console.log('Logged in', response);
+                this.authService.setAccessToken(response.accessToken ?? null);
+                this.authService.setCurrentUser({
+                    fullName: response.fullName ?? credentials.email,
+                    email: response.email ?? credentials.email,
+                });
                 this.loginError = '';
                 this.router.navigate(['/home']);
             },
@@ -78,10 +83,13 @@ export class LoginComponent {
 
         this.authService.signUp(details).subscribe({
             next: (response) => {
-                console.log('Signed up', response);
-                this.signUpError = '';
-                this.isSignUpDialogVisible = false;
-                this.loginForm.patchValue({ email: response.email });
+                this.authService.setAccessToken(response.accessToken ?? null);
+                this.authService.setCurrentUser({
+                    fullName: response.fullName ?? details.fullName,
+                    email: response.email ?? details.email,
+                });
+
+                this.router.navigate(['/home']);
             },
             error: (err) => {
                 this.signUpError = err?.error?.message || 'Registration failed. Please try again.';

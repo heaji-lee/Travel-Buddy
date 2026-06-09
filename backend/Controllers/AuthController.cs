@@ -18,7 +18,7 @@ public class AuthController(AuthService authService) : ControllerBase {
 
     try {
       var result = await authService.SignInAsync(request.Email, request.Password);
-      return Ok(result);
+      return Ok(ToClientAuthResponse(result));
     }
     catch (HttpRequestException ex) {
       return Unauthorized(new { error = "Invalid credentials", detail = ex.Message });
@@ -34,7 +34,7 @@ public class AuthController(AuthService authService) : ControllerBase {
 
     try {
       var result = await authService.RefreshTokenAsync(request.RefreshToken);
-      return Ok(result);
+      return Ok(ToClientAuthResponse(result));
     }
     catch (HttpRequestException ex) {
       return Unauthorized(new { error = "Invalid refresh token", detail = ex.Message });
@@ -60,6 +60,16 @@ public class AuthController(AuthService authService) : ControllerBase {
     }
   }
 
+  private static object ToClientAuthResponse(AuthResponseDto result) {
+    return new {
+      accessToken = result.AccessToken,
+      refreshToken = result.RefreshToken,
+      fullName = result.User?.FullName ?? result.User?.DisplayName,
+      email = result.User?.Email,
+      id = result.User?.Id
+    };
+  }
+
   // POST: api/auth/register
   [HttpPost("register")]
   public async Task<IActionResult> Register([FromBody] SignUpRequestDto request) {
@@ -67,7 +77,7 @@ public class AuthController(AuthService authService) : ControllerBase {
 
     try {
       var result = await authService.SignUpAsync(request.Email, request.Password, request.FullName);
-      return Ok(result);
+      return Ok(ToClientAuthResponse(result));
     }
     catch (HttpRequestException ex) {
       return BadRequest(new {

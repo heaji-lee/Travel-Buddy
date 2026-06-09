@@ -43,7 +43,8 @@ public class AuthService {
       email,
       password,
       data = new {
-        fullName
+        full_name = fullName,
+        display_name = fullName
       }
     };
 
@@ -53,8 +54,15 @@ public class AuthService {
       cancellationToken
     );
 
-    response.EnsureSuccessStatusCode();
+    var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
+    if (!response.IsSuccessStatusCode) {
+      throw new HttpRequestException(
+        $"Supabase signup failed ({(int)response.StatusCode}): {responseBody}",
+        null,
+        response.StatusCode);
+    }
 
-    return await response.Content.ReadFromJsonAsync<AuthResponseDto>(cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to deserialise signup response.");
+    return await response.Content.ReadFromJsonAsync<AuthResponseDto>(cancellationToken: cancellationToken)
+      ?? throw new InvalidOperationException("Failed to deserialise signup response.");
   }
 }
