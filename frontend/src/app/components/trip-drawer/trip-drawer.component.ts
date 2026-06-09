@@ -228,7 +228,7 @@ export class TripDrawerComponent {
             { category: 'Activity', allocatedAmount: formValue.activity },
             { category: 'Miscellaneous', allocatedAmount: formValue.miscellaneous },
         ];
-        
+
         const payload = {
             name: formValue.name,
             city: destination.city,

@@ -10,10 +10,10 @@ export class AuthService {
     private readonly http = inject(HttpClient);
 
     login(credentials: LoginRequest) {
-        return this.http.post<AuthResponse>(`${API_URL}/api/login`, credentials);
+        return this.http.post<AuthResponse>(`${API_URL}/api/auth/login`, credentials);
     }
 
     signUp(details: SignUpRequest) {
-        return this.http.post<AuthResponse>(`${API_URL}/api/login/register`, details);
+        return this.http.post<AuthResponse>(`${API_URL}/api/auth/register`, details);
     }
 }

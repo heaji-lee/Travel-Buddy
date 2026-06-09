@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Data;
+using TravelBuddy.Security;
 using TravelBuddy.Services;
 using TravelBuddy.Repositories;
 using Supabase;
@@ -14,20 +16,31 @@ var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions => {
-        npgsqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 3,
-            maxRetryDelay: TimeSpan.FromSeconds(5),
-            errorCodesToAdd: null);
+      npgsqlOptions.EnableRetryOnFailure(
+          maxRetryCount: 3,
+          maxRetryDelay: TimeSpan.FromSeconds(5),
+          errorCodesToAdd: null);
 
-        npgsqlOptions.CommandTimeout(60);
+      npgsqlOptions.CommandTimeout(60);
     }));
 
 builder.Services.AddScoped<Supabase.Client>(_ => {
-    return new Supabase.Client(supabaseUrl!, supabaseKey!, new SupabaseOptions {
-        AutoRefreshToken = true,
-        AutoConnectRealtime = true
-    });
+  return new Supabase.Client(supabaseUrl!, supabaseKey!, new SupabaseOptions {
+    AutoRefreshToken = true,
+    AutoConnectRealtime = true
+  });
 });
+
+builder.Services.AddHttpClient<AuthService>(client => {
+  client.BaseAddress = new Uri(supabaseUrl!);
+  client.DefaultRequestHeaders.Add("apikey", supabaseKey!);
+  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", supabaseKey!);
+});
+
+builder.Services.AddAuthentication("Supabase")
+    .AddScheme<AuthenticationSchemeOptions, SupabaseAuthenticationHandler>("Supabase", _ => { });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<TripsRepository>();
 builder.Services.AddScoped<TripsService>();
@@ -42,29 +55,30 @@ builder.Services.AddScoped<DestinationsService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => {
-        options.JsonSerializerOptions.Converters.Add(
-            new System.Text.Json.Serialization.JsonStringEnumConverter());
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+      options.JsonSerializerOptions.Converters.Add(
+          new System.Text.Json.Serialization.JsonStringEnumConverter());
+      options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     });
 
 builder.Services.AddOpenApi();
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowFrontend", policy => {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+  options.AddPolicy("AllowFrontend", policy => {
+    policy.WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+  });
 });
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) {
-    app.MapOpenApi();
+  app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
