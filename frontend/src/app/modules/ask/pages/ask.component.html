@@ -1,0 +1,179 @@
+<div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div
+        class="w-full max-w-6xl rounded-[2rem] border border-[#eadfc8] bg-white/85 p-6 shadow-[0_20px_80px_rgba(173,156,142,0.18)] backdrop-blur md:p-8 lg:p-10"
+    >
+        <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#9a8a7e]">
+                        AI travel planner
+                    </p>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-[#ad9c8e]">
+                        Ask your digital travel agent
+                    </h1>
+                    <p class="text-base text-slate-600">
+                        Tell us where you’re going and how long you’ll stay, and we’ll shape a warm,
+                        easygoing day-by-day plan.
+                    </p>
+                </div>
+
+                <form
+                    [formGroup]="tripForm"
+                    (ngSubmit)="onGenerate()"
+                    class="space-y-4 rounded-2xl bg-[#fdf7ee] p-5 shadow-sm"
+                >
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-slate-700" for="city"
+                                >City</label
+                            >
+                            <p-autocomplete
+                                id="city"
+                                formControlName="city"
+                                [suggestions]="citySuggestions"
+                                (completeMethod)="searchCities($event)"
+                                (onSelect)="onCitySelect($event.value)"
+                                placeholder="e.g. Paris"
+                                [dropdown]="false"
+                                [forceSelection]="false"
+                                [showClear]="true"
+                                inputStyleClass="w-full rounded-xl"
+                                styleClass="w-full"
+                            />
+
+                            <small
+                                *ngIf="
+                                    tripForm.get('city')?.touched && tripForm.get('city')?.invalid
+                                "
+                                class="text-red-500"
+                            >
+                                Please enter a city.
+                            </small>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-slate-700" for="days"
+                                >Number of days</label
+                            >
+                            <input
+                                pInputText
+                                id="days"
+                                type="number"
+                                min="1"
+                                max="14"
+                                formControlName="days"
+                            />
+                            <small
+                                *ngIf="
+                                    tripForm.get('days')?.touched && tripForm.get('days')?.invalid
+                                "
+                                class="text-red-500"
+                            >
+                                Choose between 1 and 14 days.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-slate-700" for="preferences">
+                            Preferences <span class="font-normal text-slate-500">(optional)</span>
+                        </label>
+                        <textarea
+                            pInputTextarea
+                            id="preferences"
+                            rows="4"
+                            formControlName="preferences"
+                            placeholder="Coffee shops, art, beaches, slow mornings..."
+                        ></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-3 sm:flex-row">
+                        <p-button
+                            label="Generate itinerary"
+                            icon="pi pi-sparkles"
+                            styleClass="p-button primary w-full sm:w-auto"
+                            [disabled]="isGenerating"
+                            (onClick)="onGenerate()"
+                        />
+                        <p-button
+                            label="Reset"
+                            severity="secondary"
+                            text="true"
+                            styleClass="w-full sm:w-auto p-button primary"
+                            (onClick)="resetForm()"
+                        />
+                    </div>
+                </form>
+            </div>
+
+            <div
+                class="rounded-[1.5rem] bg-gradient-to-br from-[#f7e6ca] via-[#efe0c0] to-[#ead2c7] p-6 shadow-inner"
+            >
+                <div class="flex items-center justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#9a8a7e]">
+                            Preview
+                        </p>
+                        <h2 class="text-2xl font-semibold text-[#8b6f62]">
+                            {{
+                                generated
+                                    ? 'Your itinerary is ready'
+                                    : 'A polished plan is on the way'
+                            }}
+                        </h2>
+                    </div>
+                    <span
+                        *ngIf="isGenerating"
+                        class="rounded-full bg-white/70 px-3 py-1 text-sm text-[#8b6f62]"
+                        >Creating...</span
+                    >
+                </div>
+
+                <div class="mt-6 space-y-4">
+                    <div
+                        *ngIf="!generated && !isGenerating"
+                        class="rounded-2xl border border-dashed border-[#cdb7a5] bg-white/70 p-5 text-sm text-slate-600"
+                    >
+                        <p class="font-semibold text-[#8b6f62]">Example output</p>
+                        <p class="mt-2">
+                            Once you submit a city and trip length, this panel will show a sample
+                            route with cafés, landmarks, and a relaxed pace.
+                        </p>
+                    </div>
+
+                    <div
+                        *ngIf="isGenerating"
+                        class="rounded-2xl border border-[#e2c9ad] bg-white/70 p-5"
+                    >
+                        <div class="flex items-center gap-3">
+                            <i class="pi pi-spin pi-spinner text-[#ad9c8e]"></i>
+                            <p class="text-sm text-slate-600">
+                                Building a custom itinerary for
+                                {{ tripForm.value.city || 'your destination' }}...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="generated" class="space-y-3">
+                        <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
+                            <p class="text-sm font-semibold text-[#8b6f62]">Trip summary</p>
+                            <p class="mt-2 text-sm text-slate-600">
+                                {{ submittedDays }} days in {{ submittedCity }} with a calm,
+                                experience-first pace.
+                            </p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div
+                                *ngFor="let item of itinerary; let i = index"
+                                class="rounded-2xl border border-[#e7d6c2] bg-white/70 p-4"
+                            >
+                                <p class="text-sm font-semibold text-[#8b6f62]">{{ item }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
