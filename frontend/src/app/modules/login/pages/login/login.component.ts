@@ -8,6 +8,7 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { AuthService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent {
     private readonly fb = inject(FormBuilder);
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
+    private readonly messageService = inject(MessageService);
 
     loginForm = this.fb.nonNullable.group({
         email: ['', [Validators.required, Validators.email]],
@@ -57,7 +59,6 @@ export class LoginComponent {
 
         this.authService.login(credentials).subscribe({
             next: (response) => {
-                console.log('Logged in', response);
                 this.authService.setAccessToken(response.accessToken ?? null);
                 this.authService.setCurrentUser({
                     fullName: response.fullName ?? credentials.email,
@@ -65,10 +66,12 @@ export class LoginComponent {
                 });
                 this.loginError = '';
                 this.router.navigate(['/home']);
+                this.showToastSuccess(response.fullName);
             },
             error: (err) => {
                 this.loginError =
                     err?.error?.message || 'Login failed. Please verify your credentials.';
+                this.showToastError();
             },
         });
     }
@@ -90,10 +93,31 @@ export class LoginComponent {
                 });
 
                 this.router.navigate(['/home']);
+                this.showToastSuccess(response.fullName);
             },
             error: (err) => {
                 this.signUpError = err?.error?.message || 'Registration failed. Please try again.';
+                this.showToastError();
             },
+        });
+    }
+
+    showToastSuccess(fullName: string) {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'success',
+            summary: `Welcome ${fullName}!`,
+            life: 3000,
+        });
+    }
+
+    showToastError() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'error',
+            summary: 'Something went wrong',
+            detail: 'Please try again later',
+            life: 3000,
         });
     }
 }

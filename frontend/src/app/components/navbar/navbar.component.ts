@@ -1,7 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
+
 import { AuthService } from '../../modules/login/services/auth.service';
 
 @Component({
@@ -13,23 +16,51 @@ import { AuthService } from '../../modules/login/services/auth.service';
 export class NavbarComponent {
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
+    private readonly messageService = inject(MessageService);
 
     isInfoDialogVisible = false;
+    isLogOutDialogVisible = false;
 
-    get currentUserName(): string {
-        return this.authService.currentUser()?.fullName ?? 'Login';
-    }
+    currentUserName = computed(() => this.authService.currentUser()?.fullName ?? 'Login');
 
-    get hasLoggedInUser(): boolean {
-        return !!this.authService.currentUser();
-    }
+    hasLoggedInUser = computed(() => !!this.authService.currentUser());
 
     showDialog() {
         this.isInfoDialogVisible = true;
     }
 
+    showLogOutDialog() {
+        this.isLogOutDialogVisible = true;
+    }
+
     signOut() {
-        this.authService.signOut();
-        this.router.navigate(['/login']);
+        try {
+            this.authService.signOut();
+            this.showToastSuccess();
+        } catch {
+            this.showToastError();
+        } finally {
+            this.router.navigate(['/login']);
+            this.isLogOutDialogVisible = false;
+        }
+    }
+
+    showToastSuccess() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'success',
+            summary: 'You have successfully logged out',
+            life: 3000,
+        });
+    }
+
+    showToastError() {
+        this.messageService.add({
+            key: 'globalToast',
+            severity: 'error',
+            summary: 'Something went wrong',
+            detail: 'Please try again later',
+            life: 3000,
+        });
     }
 }

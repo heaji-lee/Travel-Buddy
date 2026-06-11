@@ -17,8 +17,7 @@
                     <p-button
                         label="Login"
                         icon="pi pi-user"
-                        class="w-full max-w-[17.35rem]"
-                        styleClass="w-full mx-auto"
+                        styleClass="w-full mx-auto p-button primary"
                         (onClick)="login()"
                     />
                 </div>
@@ -35,8 +34,7 @@
                 label="Sign Up"
                 icon="pi pi-user-plus"
                 severity="success"
-                class="w-full max-w-[17.35rem]"
-                styleClass="w-full mx-auto"
+                styleClass="w-full mx-auto p-button primary"
                 (click)="showSignUpDialog()"
             />
 
@@ -70,16 +68,15 @@
                         <p-button
                             label="Sign up"
                             icon="pi pi-user-plus"
-                            class="w-full max-w-[17.35rem]"
-                            styleClass="w-full mx-auto"
+                            styleClass="p-button primary w-full mx-auto"
                             [disabled]="signUpForm.invalid"
                             (onClick)="signUp()"
                         />
                         <p-button
                             label="Cancel"
                             icon="pi pi-times"
-                            class="w-full max-w-[17.35rem] pt-3"
-                            styleClass="w-full mx-auto"
+                            class="pt-3"
+                            styleClass="p-button primary w-full mx-auto"
                             (onClick)="isSignUpDialogVisible = false"
                         />
                     </div>

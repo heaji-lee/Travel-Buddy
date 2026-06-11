@@ -308,6 +308,7 @@
                 icon="pi pi-check"
                 rounded="true"
                 class="text-white transition px-6 py-3 font-semibold"
+                styleClass="p-button primary"
                 [disabled]="!form.get('name')?.value || !form.get('destination')?.value"
                 (onClick)="onSubmit()"
             />
